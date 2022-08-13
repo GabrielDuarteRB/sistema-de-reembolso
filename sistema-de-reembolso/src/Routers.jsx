@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "./pages/Login/Login";
 import Main from "./pages/Main/Main";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 
 const Routers = () => {
   return (
@@ -8,6 +9,10 @@ const Routers = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/principal" element={<Main />} />
+      </Routes>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/cadastro" element={<Register />} />
       </Routes>
     </BrowserRouter>
   );
