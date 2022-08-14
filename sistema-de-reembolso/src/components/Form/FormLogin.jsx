@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { CardForm, FieldForm, SubTituloForm, TextoForm, TituloForm } from './Form.style'
 import { handleLogin } from '../../store/actions/authActions'
 import {useNavigate} from 'react-router-dom'
+import { ButtonForm } from '../Button/Button'
 
 const FormLogin = ({auth, dispatch}) => {
 
@@ -47,7 +48,7 @@ const FormLogin = ({auth, dispatch}) => {
                         name='senha'
                     />
 
-                    <button type='submit'>Entrar</button>
+                    <ButtonForm type='submit'>Entrar</ButtonForm>
                 </FieldForm>
             )}
         </Formik>

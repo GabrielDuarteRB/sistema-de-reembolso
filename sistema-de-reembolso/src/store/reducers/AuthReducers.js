@@ -2,24 +2,27 @@ const INITIAL_STATE = {
     auth: {
         token: '',
         isLogged: false,
-        isLoading: false,
+        isLoading: true,
     }
 }
 
 const authReducer = (state = INITIAL_STATE, action) => {
-    if(state.type === 'SET_LOGIN'){
+    if(action.type === 'SET_LOGIN'){
+        console.log('oi')
         return {
             auth: {
                 token: action.token,
-                isLogged: true
+                isLogged: true,
+                isLoading: false
             }
         }
     }
-    else if(state.type === 'SET_SIGNUP'){
+    else if(action.type === 'SET_SIGNUP'){
         return {
             auth: {
                 token: action.token,
-                isLogged: true
+                isLogged: true,
+                isLoading: false
             }
         }
     }

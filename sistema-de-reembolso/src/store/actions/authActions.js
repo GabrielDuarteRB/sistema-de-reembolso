@@ -1,4 +1,5 @@
 import { apiRefund } from "../../api"
+import { toast } from "../../components/Toaster/Toaster"
 
 export const handleLogin = async (dispatch, values, navigate) => {
     try {
@@ -12,6 +13,10 @@ export const handleLogin = async (dispatch, values, navigate) => {
         dispatch(logged)
         navigate('/principal')
     } catch (error) {
+        toast.fire({
+            icon: 'error',
+            title: 'Login ou Senha Inválidos'
+        })
         console.log(error)
     }
 }
@@ -31,4 +36,16 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     } catch (error) {   
         console.log(error)
     }   
+}
+
+export const isAuth = (dispatch) => {
+    const token = localStorage.getItem('token')
+    if(token) {
+        apiRefund.defaults.headers.common['Authorization'] = token
+        const logged = {
+            type: 'SET_LOGIN',
+            token: token,
+        }
+        dispatch(logged)
+    }
 }
