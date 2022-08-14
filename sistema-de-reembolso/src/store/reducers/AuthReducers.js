@@ -15,6 +15,14 @@ const authReducer = (state = INITIAL_STATE, action) => {
             }
         }
     }
+    else if(state.type === 'SET_SIGNUP'){
+        return {
+            auth: {
+                token: action.token,
+                isLogged: true
+            }
+        }
+    }
     return state
 }
 

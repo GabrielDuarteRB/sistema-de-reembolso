@@ -1,10 +1,11 @@
+import { Container } from "../../components/Container/Container"
 import FormLogin from "../../components/Form/FormLogin"
 
 const Login = () => {
   return (
-    <div>
+    <Container>
         <FormLogin/>
-    </div>
+    </Container>
   )
 }
 

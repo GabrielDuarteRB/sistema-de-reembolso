@@ -9,9 +9,6 @@ const Routers = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/principal" element={<Main />} />
-      </Routes>
-      <Routes>
-        <Route path="/" element={<Login />} />
         <Route path="/cadastro" element={<Register />} />
       </Routes>
     </BrowserRouter>

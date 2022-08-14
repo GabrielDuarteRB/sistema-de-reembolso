@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import {wrongMensager} from '../../utils/colors'
 
 export const CardForm = styled.div`
     align-items: center;
@@ -9,7 +10,7 @@ export const CardForm = styled.div`
     flex-direction: column ;
     height: auto;
     justify-content: center ;
-    padding: 24px 8px;
+    padding: 24px 32px;
     width: 380px;
 `
 
@@ -23,7 +24,7 @@ export const FieldForm = styled.form`
         border-radius: 8px;
         height:42px ;
         padding-left: 16px;
-        margin: 8px 0 24px;
+        margin-top: 8px;
         width: 316px ;
         ::placeholder {
             color: #4B506D;
@@ -66,6 +67,10 @@ export const FieldForm = styled.form`
         color: #9FA2B4;
         font-weight: 700;
         text-transform: uppercase;
+        margin-top: 24px;
+    }
+    & button {
+        margin-top: 24px
     }
 `
 
@@ -105,7 +110,13 @@ export const SubTituloForm = styled.h4`
 export const TextoForm = styled.p(({color, cursor}) => ({
     color: color,
     fontSize: '14px',
-    marginBottom: '40px',
+    marginBottom: '30px',
     cursor: cursor ? cursor : 'auto'
 }));
+
+export const TextError = styled.small` 
+    color: ${wrongMensager};
+    font-weight: bold;
+    margin-top: 8px;
+`
 

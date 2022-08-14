@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { validationPassword } from './regex';
 
 const validationEmail = (email) => {
     if(email === undefined) {
@@ -6,12 +7,7 @@ const validationEmail = (email) => {
     }
 
     email = email.split('@')
-
-    if(email.length !== 2){
-        return false
-    }
-
-    if(email[1] !== 'dbccompany.com.br'){
+    if(email.length !== 2 || email[1] !== 'dbccompany.com.br'){
         return false
     }
 
@@ -23,21 +19,17 @@ export const ValidationRegister = Yup.object().shape({
       .min(2, 'Nome muito curto!')
       .max(50, 'Nome muito longo!')
       .required('Nome obrigatorio!'),
-    login: Yup.string()
+    email: Yup.string()
       .test('EmailValidation', 'Email inválida!', (value) => validationEmail(value))
       .email('Email inválido!')
       .required('Email obrigatório!'),
     senha: Yup.string()
-    .matches(
-        "^(?=.*[A-Za-z])(?=.*d)(?=.*[@$!%*#?&])[A-Za-zd@$!%*#?&]{8,}$",
-        `
-        Obrigatório conter:
-            - 8 caracters
-            - Uma letra maiúscula
-            - Uma letra minúscula
-            - Um número
-            - Um caracter especial
-        `
+    .test(
+        'regex',
+        `Obrigatório conter: 8 caracters, uma letra maiúscula, uma letra minúscula, um número, um caracter especial.`,
+        val => {
+            return validationPassword.test(val)
+        }
     )
     .required('Senha obrigatório!'),
     confirmarSenha: Yup.string()

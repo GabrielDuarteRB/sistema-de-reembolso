@@ -1,32 +1,15 @@
 import { Field, Formik } from 'formik'
 import logo from '../../img/logo.svg'
 import { connect } from 'react-redux'
-import { CardForm, FieldForm, InputFile, SubTituloForm, TextoForm, TituloForm } from './Form.style'
-import { handleLogin } from '../../store/actions/authActions'
+import { CardForm, FieldForm, InputFile, SubTituloForm, TextError, TextoForm, TituloForm } from './Form.style'
+import { handleSignUp } from '../../store/actions/authActions'
 import {useNavigate} from 'react-router-dom'
 import { ValidationRegister } from '../../utils/validationsForm'
-import { toast } from '../Toaster/Toaster'
+import {ButtonForm} from '../Button/Button'
 
 const FormRegister = ({auth, dispatch}) => {
 
   const navigate = useNavigate()
-
-  const buttonSubmit = (props) => {
-    console.log(props.errors)
-    
-    // toast.fire({
-    //     icon: 'error',
-    //     title: props.errors.login
-    // })
-    // toast.fire({
-    //     icon: 'error',
-    //     title: props.errors.senha
-    // })
-    // toast.fire({
-    //     icon: 'error',
-    //     title: props.errors.confirmarSenha
-    // })
-  }
 
   return (
     <CardForm>
@@ -36,14 +19,19 @@ const FormRegister = ({auth, dispatch}) => {
         <Formik
             initialValues={{
                 nome: '',
-                login: '',
+                email: '',
                 senha: '',
                 confirmarSenha: '',
                 foto: ''
             }}
             onSubmit={(values, errors) => {
                 console.log(values)
-                // handleLogin(dispatch, values, navigate)
+                const newValues = {
+                    nome: values.nome,
+                    email: values.email,
+                    senha: values.senha,
+                }
+                handleSignUp(dispatch, values, navigate)
             }}
             validationSchema={ValidationRegister}
         >
@@ -57,37 +45,45 @@ const FormRegister = ({auth, dispatch}) => {
                         name='nome'
                     />
                     {props.errors.nome && props.touched.nome ? ( 
-                        <div>{props.errors.nome}</div>
+                        <TextError>{props.errors.nome}</TextError>
                         ) : null
                     }
 
-                    <label htmlFor="login">email*</label> 
+                    <label htmlFor="email">email*</label> 
                     <Field 
                         type="text" 
                         onChange={props.handleChange}
-                        value={props.values.login}
-                        name='login'
+                        value={props.values.email}
+                        name='email'
                     />
-                    {props.errors.login && props.touched.login ? ( 
-                        <div>{props.errors.login}</div>
+                    {props.errors.email && props.touched.email ? ( 
+                        <TextError>{props.errors.email}</TextError>
                         ) : null
                     }                  
 
                     <label htmlFor="senha">senha*</label>                
-                    <input 
-                        type="password" 
+                    <Field 
+                        type="text" 
                         onChange={props.handleChange}
                         value={props.values.senha}
                         name='senha'
                     />
+                    {props.errors.senha && props.touched.senha ? ( 
+                        <TextError>{props.errors.senha}</TextError>
+                        ) : null
+                    }
 
                     <label htmlFor="confirmarSenha">Confirme senha*</label>                
-                    <input 
-                        type="password" 
+                    <Field 
+                        type="text" 
                         onChange={props.handleChange}
                         value={props.values.confirmarSenha}
                         name='confirmarSenha'
                     />
+                    {props.errors.confirmarSenha && props.touched.confirmarSenha ? ( 
+                        <TextError>{props.errors.confirmarSenha}</TextError>
+                        ) : null
+                    }
                     
                     <label>Escolha uma foto</label>
                     <InputFile 
@@ -98,7 +94,7 @@ const FormRegister = ({auth, dispatch}) => {
                         name='foto'
                     />
                     
-                    <button onClick={() => buttonSubmit(props)} type='submit'>Cadastrar</button>
+                    <ButtonForm type='submit'>Cadastrar</ButtonForm>
                 </FieldForm>
             )}
         </Formik>

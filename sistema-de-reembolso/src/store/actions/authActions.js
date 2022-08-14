@@ -1,7 +1,6 @@
 import { apiRefund } from "../../api"
 
 export const handleLogin = async (dispatch, values, navigate) => {
-    console.log(values)
     try {
         const {data} = await apiRefund.post('/usuario/login', values)
         const logged = {
@@ -15,4 +14,21 @@ export const handleLogin = async (dispatch, values, navigate) => {
     } catch (error) {
         console.log(error)
     }
+}
+
+export const handleSignUp = async (dispatch, values, navigate) => {
+    try {
+        const {data} = await apiRefund.post('/usuario/cadastro', values)
+        console.log(data)
+        const signUp = {
+            type: 'SET_SIGNUP',
+            token: data,
+        }
+        localStorage.setItem('token', data)
+        apiRefund.defaults.headers.common['Authorization'] = data
+        dispatch(signUp)
+        navigate('/principal')
+    } catch (error) {   
+        console.log(error)
+    }   
 }
