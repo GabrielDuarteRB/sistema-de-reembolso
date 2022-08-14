@@ -4,25 +4,27 @@ import { connect } from "react-redux";
 import {
   CardForm,
   FieldForm,
+  FormItem,
+  HeaderForm,
   InputFile,
-  SubTituloForm,
   TextError,
-  TextoForm,
-  TituloForm,
 } from "./Form.style";
 import { handleSignUp } from "../../store/actions/AuthActions";
-import { useNavigate } from "react-router-dom";
-import { ValidationRegister } from "../../utils/validationsForm";
-import { ButtonForm } from "../Button/Button";
+import { Link, useNavigate } from "react-router-dom";
+import { validationRegister } from "../../utils/validationsForm";
+import { ButtonPrimary } from "../Button/Button";
 
 const FormRegister = ({ auth, dispatch }) => {
   const navigate = useNavigate();
 
   return (
     <CardForm>
-      <img src={logo} />
-      <SubTituloForm>Sistema de reembolso</SubTituloForm>
-      <TituloForm>Cadastrar usuário</TituloForm>
+      <HeaderForm>
+        <img src={logo} alt={"logo DBC"} />
+        <h4>Sistema de reembolso</h4>
+        <h1>Cadastrar usuário</h1>
+      </HeaderForm>
+
       <Formik
         initialValues={{
           nome: "",
@@ -31,8 +33,8 @@ const FormRegister = ({ auth, dispatch }) => {
           confirmarSenha: "",
           foto: "",
         }}
-        onSubmit={(values, errors) => {
-          console.log(values);
+        validationSchema={validationRegister}
+        onSubmit={(values) => {
           const newValues = {
             nome: values.nome,
             email: values.email,
@@ -40,74 +42,58 @@ const FormRegister = ({ auth, dispatch }) => {
           };
           handleSignUp(dispatch, values, navigate);
         }}
-        validationSchema={ValidationRegister}
       >
-        {(props) => (
-          <FieldForm
-            onSubmit={props.handleSubmit}
-            encType="multipart/form-data"
-          >
-            <label htmlFor="nome">nome*</label>
-            <Field
-              type="text"
-              onChange={props.handleChange}
-              value={props.values.nome}
-              name="nome"
-            />
-            {props.errors.nome && props.touched.nome ? (
-              <TextError>{props.errors.nome}</TextError>
-            ) : null}
+        {({ errors, touched, handleSubmit }) => (
+          <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
+            <FormItem>
+              <label htmlFor="nome">nome*</label>
+              <Field type="text" name="nome" placeholder="Nome" />
+              {errors.nome && touched.nome ? (
+                <TextError>{errors.nome}</TextError>
+              ) : null}
+            </FormItem>
 
-            <label htmlFor="email">email*</label>
-            <Field
-              type="text"
-              onChange={props.handleChange}
-              value={props.values.email}
-              name="email"
-            />
-            {props.errors.email && props.touched.email ? (
-              <TextError>{props.errors.email}</TextError>
-            ) : null}
+            <FormItem>
+              <label htmlFor="email">email*</label>
+              <Field type="email" name="email" placeholder="Email" />
+              {errors.email && touched.email ? (
+                <TextError>{errors.email}</TextError>
+              ) : null}
+            </FormItem>
 
-            <label htmlFor="senha">senha*</label>
-            <Field
-              type="text"
-              onChange={props.handleChange}
-              value={props.values.senha}
-              name="senha"
-            />
-            {props.errors.senha && props.touched.senha ? (
-              <TextError>{props.errors.senha}</TextError>
-            ) : null}
+            <FormItem>
+              <label htmlFor="senha">senha*</label>
+              <Field type="text" name="senha" placeholder="Senha" />
+              {errors.senha && touched.senha ? (
+                <TextError>{errors.senha}</TextError>
+              ) : null}
+            </FormItem>
 
-            <label htmlFor="confirmarSenha">Confirme senha*</label>
-            <Field
-              type="text"
-              onChange={props.handleChange}
-              value={props.values.confirmarSenha}
-              name="confirmarSenha"
-            />
-            {props.errors.confirmarSenha && props.touched.confirmarSenha ? (
-              <TextError>{props.errors.confirmarSenha}</TextError>
-            ) : null}
+            <FormItem>
+              <label htmlFor="confirmarSenha">Confirme a senha*</label>
+              <Field
+                type="text"
+                name="confirmarSenha"
+                placeholder="Confirme a senha"
+              />
+              {errors.confirmarSenha && touched.confirmarSenha ? (
+                <TextError>{errors.confirmarSenha}</TextError>
+              ) : null}
+            </FormItem>
 
-            <label>Escolha uma foto</label>
-            <InputFile
-              type="file"
-              id="file"
-              onChange={props.handleChange}
-              value={props.values.foto}
-              name="foto"
-            />
+            <FormItem>
+              <label htmlFor="foto">Escolha uma foto</label>
+              <InputFile type="file" id="foto" name="foto" />
+            </FormItem>
 
-            <ButtonForm type="submit">Cadastrar</ButtonForm>
+            <ButtonPrimary padding={"12px 16px"} type="submit">
+              Cadastrar
+            </ButtonPrimary>
           </FieldForm>
         )}
       </Formik>
 
-      <TextoForm color="#3751FF" cursor="pointer" onClick={() => navigate("/")}>
-        Voltar para o login
-      </TextoForm>
+      <Link to="/">Voltar para o login</Link>
     </CardForm>
   );
 };

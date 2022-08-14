@@ -1,12 +1,15 @@
 import { LoadingContainer, LoadingDot } from "./Loading.styled";
+import { Container } from "../Container/Container";
 
 const Loading = () => {
   return (
-    <LoadingContainer>
-      <LoadingDot />
-      <LoadingDot />
-      <LoadingDot />
-    </LoadingContainer>
+    <Container>
+      <LoadingContainer>
+        <LoadingDot />
+        <LoadingDot />
+        <LoadingDot />
+      </LoadingContainer>
+    </Container>
   );
 };
 export default Loading;

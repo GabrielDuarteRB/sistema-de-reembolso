@@ -4,6 +4,7 @@ import { primaryColor, secondaryColor } from "../../utils/colors";
 export const ButtonPrimary = styled.button`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
   background: ${primaryColor};
   border: none;
@@ -20,19 +21,3 @@ export const ButtonPrimary = styled.button`
     color: ${primaryColor};
   }
 `;
-
-export const ButtonForm = styled.button`
-  background: ${primaryColor};
-  border: 2px solid ${primaryColor};
-  border-radius: 8px;
-  color: ${secondaryColor};
-  cursor: pointer;
-  font-size: 1rem;
-  font-weight: bold;
-  height: 42px;
-  transition: 0.2s;
-  :hover {
-    background-color: white;
-    color: ${primaryColor};
-  }
-`
