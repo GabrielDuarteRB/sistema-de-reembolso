@@ -1,5 +1,12 @@
 import styled from "styled-components";
 
+export const LoadingContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+`;
+
 export const LoadingDot = styled.span`
   width: 8px;
   height: 8px;
@@ -9,15 +16,15 @@ export const LoadingDot = styled.span`
   margin: 0 4px;
   display: inline-block;
 
-  :nth-child(3) {
+  :nth-child(1) {
     animation-delay: 0.2s;
   }
 
-  :nth-child(4) {
+  :nth-child(2) {
     animation-delay: 0.4s;
   }
 
-  :nth-child(5) {
+  :nth-child(3) {
     animation-delay: 0.6s;
   }
 

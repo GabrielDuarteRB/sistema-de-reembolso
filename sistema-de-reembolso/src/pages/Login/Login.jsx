@@ -1,12 +1,24 @@
-import { Container } from "../../components/Container/Container"
-import FormLogin from "../../components/Form/FormLogin"
+import { useEffect } from "react";
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { Container } from "../../components/Container/Container";
+import FormLogin from "../../components/Form/FormLogin";
 
-const Login = () => {
+const Login = ({ auth }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    auth.isLogged && navigate("/principal");
+  }, []);
+
   return (
     <Container>
-        <FormLogin/>
+      <FormLogin />
     </Container>
-  )
-}
+  );
+};
 
-export default Login
+const mapStateToProps = (state) => ({
+  auth: state.authReducer.auth,
+});
+export default connect(mapStateToProps)(Login);
