@@ -3,7 +3,6 @@ const INITIAL_STATE = {
   isLogged: false,
   isLoading: true,
   typePassword: "password",
-  welcomeMessage: true,
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
@@ -38,12 +37,6 @@ const authReducer = (state = INITIAL_STATE, action) => {
       typePassword: action.typePassword,
     };
   }
-  // else if (action.type === "SET_WELCOME") {
-  //   return {
-  //     ...state,
-  //     welcomeMessage: false,
-  //   };
-  // }
 
   return state;
 };
