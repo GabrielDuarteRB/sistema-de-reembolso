@@ -36,8 +36,8 @@ export const FormItem = styled.div`
   align-content: start;
   gap: 8px;
 
-  & input[type='file'] {
-    cursor: pointer ;
+  & input[type="file"] {
+    cursor: pointer;
 
     ::file-selector-button {
       display: none;
@@ -45,11 +45,11 @@ export const FormItem = styled.div`
 
     ::before {
       content: "📂";
-      margin-right: 8px ;
+      margin-right: 8px;
     }
   }
 
-  &  input {
+  & input {
     padding: 12px 16px;
     background: #fcfdfe;
     border: 2px solid #f0f1f7;
@@ -65,24 +65,24 @@ export const FormItem = styled.div`
   }
 
   & label {
-      color: #9fa2b4;
-      font-weight: 700;
-      text-transform: uppercase;
-    }
-`
+    color: #9fa2b4;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+`;
 
 export const Password = styled.div`
   align-items: center;
   display: flex;
   & input {
-    width: 100% ;
+    width: 100%;
   }
   & > svg {
     cursor: pointer;
     font-size: 14px;
     margin-left: -30px;
   }
-`
+`;
 
 export const HeaderForm = styled.div`
   display: grid;

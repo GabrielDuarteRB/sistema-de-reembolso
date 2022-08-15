@@ -20,10 +20,6 @@ export const handleLogin = async (dispatch, values, navigate) => {
     });
     navigate("/principal");
   } catch (error) {
-    toast.fire({
-      icon: "error",
-      title: "Login ou Senha Inválidos",
-    });
     console.log(error);
   }
 };
@@ -43,6 +39,10 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     navigate("/principal");
   } catch (error) {
     console.log(error);
+    toast.fire({
+      icon: "error",
+      title: "Dados incorretos",
+    });
   }
 };
 

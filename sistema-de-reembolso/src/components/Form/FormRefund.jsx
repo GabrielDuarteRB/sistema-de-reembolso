@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Container } from "../Container/Container";
-import CurrencyInput from 'react-currency-input';
+import CurrencyInput from "react-currency-input";
 import { validationRefund } from "../../utils/validationsForm";
 import { formatNumber } from "../../utils/regex";
 
@@ -26,54 +26,61 @@ const FormRefund = ({ typePassword, dispatch }) => {
           <img src={logo} alt="Logo DBC" />
           <h1>Criar reembolso</h1>
         </HeaderForm>
-            <Formik
-                initialValues={{
-                    titulo: "",
-                    valor: "",
-                    foto: ""
-                }}
-                validationSchema={validationRefund}
-                onSubmit={(values) => {
-                    const newValues = {
-                        titulo: values.titulo,
-                        valor: formatNumber(values.valor),
-                        foto: values.foto
-                    }
-                    console.log(newValues);
-                }}
-            >
-                {({ errors, touched, handleSubmit, values, setFieldValue, handleChange }) => (
-                    <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
-                        <FormItem>
-                            <label htmlFor="titulo">titulo*</label>
-                            <Field type="text" name="titulo" placeholder="titulo" />
-                            {errors.titulo && touched.titulo ? (
-                                <TextError>{errors.titulo}</TextError>
-                            ) : null}
-                        </FormItem>
+        <Formik
+          initialValues={{
+            titulo: "",
+            valor: "",
+            foto: "",
+          }}
+          validationSchema={validationRefund}
+          onSubmit={(values) => {
+            const newValues = {
+              titulo: values.titulo,
+              valor: formatNumber(values.valor),
+              foto: values.foto,
+            };
+            console.log(newValues);
+          }}
+        >
+          {({
+            errors,
+            touched,
+            handleSubmit,
+            values,
+            setFieldValue,
+            handleChange,
+          }) => (
+            <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
+              <FormItem>
+                <label htmlFor="titulo">titulo*</label>
+                <Field type="text" name="titulo" placeholder="titulo" />
+                {errors.titulo && touched.titulo ? (
+                  <TextError>{errors.titulo}</TextError>
+                ) : null}
+              </FormItem>
 
-                        <FormItem>
-                            <label htmlFor="valor">valor*</label>
-                            <CurrencyInput 
-                              type='text' 
-                                prefix='R$'
-                                name='valor'
-                                decimalSeparator="," 
-                                thousandSeparator="."
-                                value={values.valor}
-                                onChange={(value) => {
-                                    setFieldValue('valor', value)
-                                }}
-                            />
-                            {errors.valor && touched.valor ? (
-                                <TextError>{errors.valor}</TextError>
-                            ) : null}
-                        </FormItem>
+              <FormItem>
+                <label htmlFor="valor">valor*</label>
+                <CurrencyInput
+                  type="text"
+                  prefix="R$"
+                  name="valor"
+                  decimalSeparator=","
+                  thousandSeparator="."
+                  value={values.valor}
+                  onChange={(value) => {
+                    setFieldValue("valor", value);
+                  }}
+                />
+                {errors.valor && touched.valor ? (
+                  <TextError>{errors.valor}</TextError>
+                ) : null}
+              </FormItem>
 
-                        <FormItem>
-                            <label htmlFor="foto">Escolha uma foto</label>
-                            <Field type='file' name='foto'/>                            
-                        </FormItem>
+              <FormItem>
+                <label htmlFor="foto">Escolha uma foto</label>
+                <Field type="file" name="foto" />
+              </FormItem>
 
               <Button
                 background={primaryColor}
