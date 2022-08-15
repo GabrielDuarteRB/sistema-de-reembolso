@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Field } from "formik";
 import { errorMessage, primaryColor } from "../../utils/colors";
 
 export const CardForm = styled.div`
@@ -36,6 +37,19 @@ export const FormItem = styled.div`
   align-content: start;
   gap: 8px;
 
+  & input[type='file'] {
+    cursor: pointer ;
+
+    ::file-selector-button {
+      display: none;
+    }
+
+    ::before {
+      content: "📂";
+      margin-right: 8px ;
+    }
+  }
+
   &  input {
     padding: 12px 16px;
     background: #fcfdfe;
@@ -50,34 +64,13 @@ export const FormItem = styled.div`
       outline: 1px solid ${primaryColor};
     }
   }
-
+  
   & label {
-    color: #9fa2b4;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-`;
-
-export const InputFile = styled.input`
-  color: transparent;
-  cursor: pointer;
-  position: relative;
-
-  ::file-selector-button {
-    display: none;
-  }
-
-  ::before {
-    content: "🔍 Procurar";
-    color: black;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    position: absolute;
-    top: 20%;
-    right: 35%;
-  }
-`;
+      color: #9fa2b4;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+`
 
 export const Password = styled.div`
   align-items: center;

@@ -6,7 +6,6 @@ import {
   FieldForm,
   FormItem,
   HeaderForm,
-  InputFile,
   Password,
   TextError,
 } from "./Form.style";
@@ -94,7 +93,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="foto">Escolha uma foto</label>
-              <InputFile type="file" id="foto" name="foto" />
+              <Field type="file" id="foto" name="foto" />
             </FormItem>
 
             <Button

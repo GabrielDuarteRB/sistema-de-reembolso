@@ -6,14 +6,15 @@ import {
   FieldForm,
   FormItem,
   HeaderForm,
-  InputFile,
   TextError,
 } from "./Form.style";
 import {  useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Container } from "../Container/Container";
-import CurrencyInput from 'react-currency-masked-input'
+import CurrencyInput from 'react-currency-input';
+import { validationRefund } from "../../utils/validationsForm";
+import { formatNumber } from "../../utils/regex";
 
 const FormRefund = ({ typePassword, dispatch }) => {
   const navigate = useNavigate();
@@ -32,13 +33,18 @@ const FormRefund = ({ typePassword, dispatch }) => {
                     valor: "",
                     foto: ""
                 }}
-                // validationSchema={validationLogin}
+                validationSchema={validationRefund}
                 onSubmit={(values) => {
-                console.log(values);
+                    const newValues = {
+                        titulo: values.titulo,
+                        valor: formatNumber(values.valor),
+                        foto: values.foto
+                    }
+                    console.log(newValues);
                 }}
             >
-                {({ errors, touched, handleSubmit }) => (
-                    <FieldForm onSubmit={handleSubmit}>
+                {({ errors, touched, handleSubmit, values, setFieldValue, handleChange }) => (
+                    <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
                         <FormItem>
                             <label htmlFor="titulo">titulo*</label>
                             <Field type="text" name="titulo" placeholder="titulo" />
@@ -49,7 +55,17 @@ const FormRefund = ({ typePassword, dispatch }) => {
 
                         <FormItem>
                             <label htmlFor="valor">valor*</label>
-                            <CurrencyInput type='text' separator=',' name="valor"/>
+                            <CurrencyInput 
+                              type='text' 
+                                prefix='R$'
+                                name='valor'
+                                decimalSeparator="," 
+                                thousandSeparator="."
+                                value={values.valor}
+                                onChange={(value) => {
+                                    setFieldValue('valor', value)
+                                }}
+                            />
                             {errors.valor && touched.valor ? (
                                 <TextError>{errors.valor}</TextError>
                             ) : null}
@@ -57,7 +73,7 @@ const FormRefund = ({ typePassword, dispatch }) => {
 
                         <FormItem>
                             <label htmlFor="foto">Escolha uma foto</label>
-                            <InputFile type="file" id="foto" name="foto" />
+                            <Field type='file' name='foto'/>                            
                         </FormItem>
 
                         <Button
