@@ -7,6 +7,7 @@ import { connect } from "react-redux";
 import { isAuth } from "./store/actions/authActions";
 import { NotFound } from "./pages/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
+import FormRefund from "./components/Form/FormRefund";
 
 const Routers = ({ isLogged, isLoading, dispatch }) => {
   useEffect(() => {
@@ -31,6 +32,7 @@ const Routers = ({ isLogged, isLoading, dispatch }) => {
           </>
         )}
         <Route path="*" element={<NotFound />} />
+        <Route path="/criar-reembolso" element={<FormRefund />} />
       </Routes>
     </BrowserRouter>
   );
