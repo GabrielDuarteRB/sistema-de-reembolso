@@ -1,6 +1,6 @@
-import { ButtonPrimary } from "../../components/Button/Button";
+import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
-import { Header } from "../../components/Header/Header";
+import Header from "../../components/Header/Header";
 import { RiRefund2Line } from "react-icons/ri";
 import { MdDelete, MdEdit } from "react-icons/md";
 import {
@@ -10,15 +10,23 @@ import {
   ListTitles,
 } from "../../components/List/List";
 import Pager from "../../components/Pager/Pager";
+import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const Main = () => {
   return (
     <>
       <Header nome={"Marcos"} />
       <Container>
-        <ButtonPrimary padding={"12px 16px"}>
+        <Button
+          background={primaryColor}
+          backgroundHover={secondaryColor}
+          padding={"12px 16px"}
+          color={secondaryColor}
+          colorHover={primaryColor}
+          borderColor={primaryColor}
+        >
           Solicitar reembolso <RiRefund2Line fontSize={"24px"} />
-        </ButtonPrimary>
+        </Button>
 
         <ListContainer>
           <ListHeader>
@@ -41,12 +49,26 @@ const Main = () => {
               <span>R$ 20,00</span>
               <span>reprovado financeiro</span>
               <div>
-                <ButtonPrimary padding={"8px"}>
+                <Button
+                  background={primaryColor}
+                  backgroundHover={secondaryColor}
+                  color={secondaryColor}
+                  colorHover={primaryColor}
+                  borderColor={primaryColor}
+                  padding={"8px"}
+                >
                   <MdEdit fontSize={"20px"} />
-                </ButtonPrimary>
-                <ButtonPrimary padding={"8px"}>
+                </Button>
+                <Button
+                  background={primaryColor}
+                  backgroundHover={secondaryColor}
+                  color={secondaryColor}
+                  colorHover={primaryColor}
+                  borderColor={primaryColor}
+                  padding={"8px"}
+                >
                   <MdDelete fontSize={"20px"} />
-                </ButtonPrimary>
+                </Button>
               </div>
             </li>
             <li>
@@ -55,12 +77,26 @@ const Main = () => {
               <span>R$ 20,00</span>
               <span>reprovado financeiro</span>
               <div>
-                <ButtonPrimary padding={"8px"}>
+                <Button
+                  background={primaryColor}
+                  backgroundHover={secondaryColor}
+                  color={secondaryColor}
+                  colorHover={primaryColor}
+                  borderColor={primaryColor}
+                  padding={"8px"}
+                >
                   <MdEdit fontSize={"20px"} />
-                </ButtonPrimary>
-                <ButtonPrimary padding={"8px"}>
+                </Button>
+                <Button
+                  background={primaryColor}
+                  backgroundHover={secondaryColor}
+                  color={secondaryColor}
+                  colorHover={primaryColor}
+                  borderColor={primaryColor}
+                  padding={"8px"}
+                >
                   <MdDelete fontSize={"20px"} />
-                </ButtonPrimary>
+                </Button>
               </div>
             </li>
             <li>
@@ -69,12 +105,26 @@ const Main = () => {
               <span>R$ 20,00</span>
               <span>reprovado financeiro</span>
               <div>
-                <ButtonPrimary padding={"8px"}>
+                <Button
+                  background={primaryColor}
+                  backgroundHover={secondaryColor}
+                  color={secondaryColor}
+                  colorHover={primaryColor}
+                  borderColor={primaryColor}
+                  padding={"8px"}
+                >
                   <MdEdit fontSize={"20px"} />
-                </ButtonPrimary>
-                <ButtonPrimary padding={"8px"}>
+                </Button>
+                <Button
+                  background={primaryColor}
+                  backgroundHover={secondaryColor}
+                  color={secondaryColor}
+                  colorHover={primaryColor}
+                  borderColor={primaryColor}
+                  padding={"8px"}
+                >
                   <MdDelete fontSize={"20px"} />
-                </ButtonPrimary>
+                </Button>
               </div>
             </li>
           </List>

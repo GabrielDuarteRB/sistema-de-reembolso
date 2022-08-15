@@ -9,11 +9,15 @@ import {
   Password,
   TextError,
 } from "./Form.style";
-import { handleLogin, handleTypePassword } from "../../store/actions/authActions";
+import {
+  handleLogin,
+  handleTypePassword,
+} from "../../store/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
-import { ButtonPrimary } from "../Button/Button";
+import { Button } from "../Button/Button";
 import { validationLogin } from "../../utils/validationsForm";
 import { FaEye } from "react-icons/fa";
+import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const FormLogin = ({ typePassword, dispatch }) => {
   const navigate = useNavigate();
@@ -45,21 +49,31 @@ const FormLogin = ({ typePassword, dispatch }) => {
                 <TextError>{errors.email}</TextError>
               ) : null}
             </FormItem>
-            
+
             <FormItem>
               <label htmlFor="senha">senha*</label>
               <Password>
                 <Field type={typePassword} name="senha" placeholder="Senha" />
-                <FaEye onClick={() => handleTypePassword(dispatch, typePassword)}/>
+                <FaEye
+                  onClick={() => handleTypePassword(dispatch, typePassword)}
+                />
               </Password>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
               ) : null}
             </FormItem>
 
-            <ButtonPrimary padding={"12px 16px"} type="submit">
+            <Button
+              background={primaryColor}
+              backgroundHover={secondaryColor}
+              padding={"12px 16px"}
+              color={secondaryColor}
+              colorHover={primaryColor}
+              borderColor={primaryColor}
+              type="submit"
+            >
               Entrar
-            </ButtonPrimary>
+            </Button>
           </FieldForm>
         )}
       </Formik>
@@ -71,7 +85,6 @@ const FormLogin = ({ typePassword, dispatch }) => {
 const mapStateToProps = (state) => ({
   auth: state.authReducer.auth,
   typePassword: state.authReducer.typePassword,
-  
 });
 
 export default connect(mapStateToProps)(FormLogin);
