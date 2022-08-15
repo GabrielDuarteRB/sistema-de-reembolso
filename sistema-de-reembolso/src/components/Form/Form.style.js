@@ -12,6 +12,9 @@ export const CardForm = styled.div`
   gap: 32px;
 
   & a {
+    align-items: center ;
+    display: flex ;
+    gap: 8px ;
     text-decoration: none;
     color: ${primaryColor};
 
@@ -36,7 +39,20 @@ export const FormItem = styled.div`
   align-content: start;
   gap: 8px;
 
-  &  input {
+  & input[type="file"] {
+    cursor: pointer;
+
+    ::file-selector-button {
+      display: none;
+    }
+
+    ::before {
+      content: "📂";
+      margin-right: 8px;
+    }
+  }
+
+  & input {
     padding: 12px 16px;
     background: #fcfdfe;
     border: 2px solid #f0f1f7;
@@ -58,39 +74,18 @@ export const FormItem = styled.div`
   }
 `;
 
-export const InputFile = styled.input`
-  color: transparent;
-  cursor: pointer;
-  position: relative;
-
-  ::file-selector-button {
-    display: none;
-  }
-
-  ::before {
-    content: "🔍 Procurar";
-    color: black;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    position: absolute;
-    top: 20%;
-    right: 35%;
-  }
-`;
-
 export const Password = styled.div`
   align-items: center;
   display: flex;
   & input {
-    width: 100% ;
+    width: 100%;
   }
   & > svg {
     cursor: pointer;
     font-size: 14px;
     margin-left: -30px;
   }
-`
+`;
 
 export const HeaderForm = styled.div`
   display: grid;
@@ -100,6 +95,10 @@ export const HeaderForm = styled.div`
   & h4 {
     color: #a4a6b3;
     font-weight: 700;
+  }
+
+  & img {
+    width: 140px;
   }
 `;
 

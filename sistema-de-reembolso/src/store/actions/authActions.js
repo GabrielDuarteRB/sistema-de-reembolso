@@ -14,12 +14,12 @@ export const handleLogin = async (dispatch, values, navigate) => {
     };
 
     dispatch(logged);
+    toast.fire({
+      icon: "success",
+      title: "Bem vindo!",
+    });
     navigate("/principal");
   } catch (error) {
-    toast.fire({
-      icon: "error",
-      title: "Login ou Senha Inválidos",
-    });
     console.log(error);
   }
 };
@@ -38,7 +38,17 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     dispatch(signUp);
     navigate("/principal");
   } catch (error) {
+    if (error.response.status === 400) {
+      toast.fire({
+        icon: "error",
+        title: "Email já cadastrado",
+      });
+    }
     console.log(error);
+    toast.fire({
+      icon: "error",
+      title: "Dados incorretos",
+    });
   }
 };
 
@@ -64,6 +74,7 @@ export const isAuth = (dispatch) => {
       type: "SET_LOGIN",
       token: token,
     };
+
     dispatch(logged);
   } else {
     const logged = {

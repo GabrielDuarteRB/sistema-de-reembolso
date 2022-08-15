@@ -11,11 +11,27 @@ import {
 } from "../../components/List/List";
 import Pager from "../../components/Pager/Pager";
 import { primaryColor, secondaryColor } from "../../utils/colors";
+import { useEffect } from "react";
+import { getCollaborator } from "../../store/actions/collaboratorActions";
+import { connect } from "react-redux";
+import Loading from "../../components/Loading/Loading";
+import { useNavigate } from "react-router-dom";
 
-const Main = () => {
+const Main = ({ name, isLoading, dispatch }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    getCollaborator(dispatch);
+    console.log("oi");
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <>
-      <Header nome={"Marcos"} />
+      <Header nome={name} />
       <Container>
         <Button
           background={primaryColor}
@@ -24,6 +40,7 @@ const Main = () => {
           color={secondaryColor}
           colorHover={primaryColor}
           borderColor={primaryColor}
+          onClick={() => navigate("/solicitar-reembolso")}
         >
           Solicitar reembolso <RiRefund2Line fontSize={"24px"} />
         </Button>
@@ -133,4 +150,9 @@ const Main = () => {
     </>
   );
 };
-export default Main;
+
+const mapStateToProps = (state) => ({
+  isLoading: state.collaboratorReducer.isLoading,
+  name: state.collaboratorReducer.name,
+});
+export default connect(mapStateToProps)(Main);

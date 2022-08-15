@@ -1,11 +1,7 @@
 import * as Yup from "yup";
-import { validationPassword } from "./regex";
+import { onlyNumber, validationPassword } from "./regex";
 
 const validationEmail = (email) => {
-  if (email === undefined) {
-    return;
-  }
-
   email = email.split("@");
   if (email.length !== 2 || email[1] !== "dbccompany.com.br") {
     return false;
@@ -14,14 +10,16 @@ const validationEmail = (email) => {
   return true;
 };
 
-export const validationLogin = Yup.object().shape({
-  email: Yup.string()
-    .test("EmailValidation", "Email inválido!", (value) =>
-      validationEmail(value),
-    )
-    .email("Email inválido")
-    .required("Email obrigatório!"),
+const validationCurrency = (number) => {
+  number = onlyNumber(number)
+  if(number <= 0) {
+    return false
+  }
+  return true
+}
 
+export const validationLogin = Yup.object().shape({
+  email: Yup.string().email("Email inválido").required("Email obrigatório!"),
   senha: Yup.string().required("Senha obrigatória!"),
 });
 
@@ -33,7 +31,7 @@ export const validationRegister = Yup.object().shape({
 
   email: Yup.string()
     .test("EmailValidation", "Email inválido!", (value) =>
-      validationEmail(value),
+      value && validationEmail(value),
     )
     .email("Email inválido!")
     .required("Email obrigatório!"),
@@ -55,4 +53,13 @@ export const validationRegister = Yup.object().shape({
   confirmarSenha: Yup.string()
     .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
     .required("Confirme a senha!"),
+});
+
+export const validationRefund = Yup.object().shape({
+  titulo: Yup.string()
+    .required("titulo obrigatorio!"),
+  valor: Yup.string()
+    .test('maiorZero', 'Valor tem que ser maior que zero', (number) => number && validationCurrency(number))
+    .min(1, 'Numero minimo')
+    .required("Valor obrigatória!"),
 });

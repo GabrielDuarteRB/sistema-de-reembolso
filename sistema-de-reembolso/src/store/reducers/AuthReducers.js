@@ -6,39 +6,44 @@ const INITIAL_STATE = {
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
-  if (action.type === "SET_LOGIN") {
-    return {
-      ...state,
-      token: action.token,
-      isLogged: true,
-      isLoading: false,
-    };
-  } else if (action.type === "SET_SIGNUP") {
-    return {
-      ...state,
-      token: action.token,
-      isLogged: true,
-      isLoading: false,
-    };
-  } else if (action.type === "SET_LOGOUT") {
-    return {
-      ...state,
-      token: "",
-      isLogged: false,
-    };
-  } else if (action.type === "SET_LOADING") {
-    return {
-      ...state,
-      isLoading: action.isLoading,
-    };
-  } else if (action.type === "SET_TYPE_PASSWORD") {
-    return {
-      ...state,
-      typePassword: action.typePassword,
-    };
-  }
+  switch (action.type) {
+    case "SET_LOGIN":
+      return {
+        ...state,
+        token: action.token,
+        isLogged: true,
+        isLoading: false,
+      };
 
-  return state;
+    case "SET_SIGNUP":
+      return {
+        ...state,
+        token: action.token,
+        isLogged: true,
+        isLoading: false,
+      };
+
+    case "SET_LOGOUT":
+      return {
+        ...state,
+        token: "",
+        isLogged: false,
+      };
+
+    case "SET_LOADING":
+      return {
+        ...state,
+        isLoading: action.isLoading,
+      };
+
+    case "SET_TYPE_PASSWORD":
+      return {
+        ...state,
+        typePassword: action.typePassword,
+      };
+    default:
+      return state;
+  }
 };
 
 export default authReducer;

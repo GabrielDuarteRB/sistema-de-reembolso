@@ -5,13 +5,14 @@ import { handleLogout } from "../../store/actions/authActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { HeaderContainer } from "./Header.styled";
+import  LogoBranca from '../../img/logoBranca.png'
 
 const Header = ({ nome, handleLogout, dispatch }) => {
   const navigate = useNavigate();
 
   return (
     <HeaderContainer>
-      <img src="" alt="Logo DBC" />
+      <img src={LogoBranca} alt="Logo DBC" />
       <div>
         <span>{nome}</span>
         <img src="" alt="foto do usuário" />

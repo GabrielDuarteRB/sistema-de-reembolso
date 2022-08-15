@@ -1,12 +1,11 @@
 import { Field, Formik } from "formik";
-import logo from "../../img/logo.svg";
+import logoAzul from "../../img/logoAzul.png";
 import { connect } from "react-redux";
 import {
   CardForm,
   FieldForm,
   FormItem,
   HeaderForm,
-  InputFile,
   Password,
   TextError,
 } from "./Form.style";
@@ -17,7 +16,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
 import { Button } from "../Button/Button";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaRegArrowAltCircleLeft } from "react-icons/fa";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const FormRegister = ({ typePassword, dispatch }) => {
@@ -26,7 +25,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
   return (
     <CardForm>
       <HeaderForm>
-        <img src={logo} alt={"logo DBC"} />
+        <img src={logoAzul} alt={"logo DBC"} />
         <h4>Sistema de reembolso</h4>
         <h1>Cadastrar usuário</h1>
       </HeaderForm>
@@ -46,7 +45,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
             email: values.email,
             senha: values.senha,
           };
-          handleSignUp(dispatch, values, navigate);
+          handleSignUp(dispatch, newValues, navigate);
         }}
       >
         {({ errors, touched, handleSubmit }) => (
@@ -94,12 +93,12 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="foto">Escolha uma foto</label>
-              <InputFile type="file" id="foto" name="foto" />
+              <Field type="file" id="foto" name="foto" />
             </FormItem>
 
             <Button
               background={primaryColor}
-              backgroundHover={secondaryColor}
+              backgroundHover={"#FCFDFE"}
               padding={"12px 16px"}
               color={secondaryColor}
               colorHover={primaryColor}
@@ -112,7 +111,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
         )}
       </Formik>
 
-      <Link to="/">Voltar para o login</Link>
+      <Link to="/"><FaRegArrowAltCircleLeft/> Voltar para o login</Link>
     </CardForm>
   );
 };

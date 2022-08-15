@@ -1,5 +1,5 @@
 import { Field, Formik } from "formik";
-import logo from "../../img/logo.svg";
+import logoAzul from "../../img/logoAzul.png";
 import { connect } from "react-redux";
 import {
   CardForm,
@@ -25,7 +25,7 @@ const FormLogin = ({ typePassword, dispatch }) => {
   return (
     <CardForm>
       <HeaderForm>
-        <img src={logo} alt="Logo DBC" />
+        <img src={logoAzul} alt="Logo DBC" />
         <h4>Sistema de reembolso</h4>
         <h1>Fazer login</h1>
       </HeaderForm>
@@ -65,7 +65,7 @@ const FormLogin = ({ typePassword, dispatch }) => {
 
             <Button
               background={primaryColor}
-              backgroundHover={secondaryColor}
+              backgroundHover={"#FCFDFE"}
               padding={"12px 16px"}
               color={secondaryColor}
               colorHover={primaryColor}
