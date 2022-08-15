@@ -7,14 +7,16 @@ import {
   FormItem,
   HeaderForm,
   InputFile,
+  Password,
   TextError,
 } from "./Form.style";
-import { handleSignUp } from "../../store/actions/AuthActions";
+import { handleSignUp, handleTypePassword } from "../../store/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
 import { ButtonPrimary } from "../Button/Button";
+import { FaEye } from "react-icons/fa";
 
-const FormRegister = ({ auth, dispatch }) => {
+const FormRegister = ({ typePassword, dispatch }) => {
   const navigate = useNavigate();
 
   return (
@@ -63,7 +65,10 @@ const FormRegister = ({ auth, dispatch }) => {
 
             <FormItem>
               <label htmlFor="senha">senha*</label>
-              <Field type="text" name="senha" placeholder="Senha" />
+              <Password>
+                <Field type={typePassword} name="senha" placeholder="Senha" />
+                <FaEye onClick={() => handleTypePassword(dispatch, typePassword)}/>
+              </Password>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
               ) : null}
@@ -72,7 +77,7 @@ const FormRegister = ({ auth, dispatch }) => {
             <FormItem>
               <label htmlFor="confirmarSenha">Confirme a senha*</label>
               <Field
-                type="text"
+                type='password'
                 name="confirmarSenha"
                 placeholder="Confirme a senha"
               />
@@ -99,7 +104,7 @@ const FormRegister = ({ auth, dispatch }) => {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.authReducer.auth,
+  typePassword: state.authReducer.typePassword,
 });
 
 export default connect(mapStateToProps)(FormRegister);

@@ -1,4 +1,5 @@
 import { apiRefund } from "../../api";
+import { Password } from "../../components/Form/Form.style";
 import { toast } from "../../components/Toaster/Toaster";
 
 export const handleLogin = async (dispatch, values, navigate) => {
@@ -60,3 +61,20 @@ export const isAuth = (dispatch) => {
     dispatch(logged);
   }
 };
+
+export const handleTypePassword = (dispatch, type) => {
+    if(type === 'password') {
+        const password = {
+            type: "SET_TYPE_PASSWORD",
+            typePassword: 'text',
+        };
+        dispatch(password);
+        return
+    }
+
+    const password = {
+        type: "SET_TYPE_PASSWORD",
+        typePassword: 'password',
+    };
+    dispatch(password);
+}

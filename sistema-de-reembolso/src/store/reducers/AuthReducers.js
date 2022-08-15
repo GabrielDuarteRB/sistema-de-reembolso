@@ -1,38 +1,40 @@
 const INITIAL_STATE = {
-  auth: {
     token: "",
     isLogged: false,
     isLoading: true,
-  },
+    typePassword: 'password'
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
   if (action.type === "SET_LOGIN") {
     return {
-      auth: {
+        ...state,
         token: action.token,
         isLogged: true,
         isLoading: false,
-      },
     };
   }
 
-  if (action.type === "SET_SIGNUP") {
+  else if (action.type === "SET_SIGNUP") {
     return {
-      auth: {
+        ...state,
         token: action.token,
         isLogged: true,
         isLoading: false,
-      },
     };
   }
 
-  if (action.type === "SET_LOADING") {
+  else if (action.type === "SET_LOADING") {
     return {
-      auth: {
         ...state,
         isLoading: action.isLoading,
-      },
+    };
+  }
+
+  else if (action.type === "SET_TYPE_PASSWORD") {
+    return {
+        ...state,
+        typePassword: action.typePassword,
     };
   }
 

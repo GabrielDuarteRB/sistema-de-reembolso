@@ -6,14 +6,16 @@ import {
   FieldForm,
   FormItem,
   HeaderForm,
+  Password,
   TextError,
 } from "./Form.style";
-import { handleLogin } from "../../store/actions/AuthActions";
+import { handleLogin, handleTypePassword } from "../../store/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import { ButtonPrimary } from "../Button/Button";
 import { validationLogin } from "../../utils/validationsForm";
+import { FaEye } from "react-icons/fa";
 
-const FormLogin = ({ auth, dispatch }) => {
+const FormLogin = ({ typePassword, dispatch }) => {
   const navigate = useNavigate();
 
   return (
@@ -43,10 +45,13 @@ const FormLogin = ({ auth, dispatch }) => {
                 <TextError>{errors.email}</TextError>
               ) : null}
             </FormItem>
-
+            
             <FormItem>
               <label htmlFor="senha">senha*</label>
-              <Field type="text" name="senha" placeholder="Senha" />
+              <Password>
+                <Field type={typePassword} name="senha" placeholder="Senha" />
+                <FaEye onClick={() => handleTypePassword(dispatch, typePassword)}/>
+              </Password>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
               ) : null}
@@ -65,6 +70,8 @@ const FormLogin = ({ auth, dispatch }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.authReducer.auth,
+  typePassword: state.authReducer.typePassword,
+  
 });
 
 export default connect(mapStateToProps)(FormLogin);

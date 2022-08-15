@@ -3,13 +3,18 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../components/Container/Container";
 import FormLogin from "../../components/Form/FormLogin";
+import { handleTypePassword } from "../../store/actions/authActions";
 
-const Login = ({ auth }) => {
+const Login = ({ dispatch, isLogged }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    auth.isLogged && navigate("/principal");
+    isLogged && navigate("/principal");
   }, []);
+
+  useEffect(() => {
+    handleTypePassword(dispatch, 'text')
+  }, [])
 
   return (
     <Container>
@@ -19,6 +24,6 @@ const Login = ({ auth }) => {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.authReducer.auth,
+  isLogged: state.authReducer.isLogged,
 });
 export default connect(mapStateToProps)(Login);

@@ -4,23 +4,23 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { isAuth } from "./store/actions/AuthActions";
+import { isAuth } from "./store/actions/authActions";
 import { NotFound } from "./pages/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
 
-const Routers = ({ auth, dispatch }) => {
+const Routers = ({ isLogged, isLoading, dispatch }) => {
   useEffect(() => {
     isAuth(dispatch);
   }, []);
 
-  if (auth.isLoading) {
+  if (isLoading) {
     return <Loading />;
   }
 
   return (
     <BrowserRouter>
       <Routes>
-        {auth.isLogged ? (
+        {isLogged ? (
           <>
             <Route path="/principal" element={<Main />} />
           </>
@@ -37,7 +37,8 @@ const Routers = ({ auth, dispatch }) => {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.authReducer.auth,
+  isLogged: state.authReducer.isLogged,
+  isLoading: state.authReducer.isLoading,
 });
 
 export default connect(mapStateToProps)(Routers);
