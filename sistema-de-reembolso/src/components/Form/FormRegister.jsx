@@ -1,5 +1,5 @@
 import { Field, Formik } from "formik";
-import logo from "../../img/logo.svg";
+import logoAzul from "../../img/logoAzul.png";
 import { connect } from "react-redux";
 import {
   CardForm,
@@ -25,7 +25,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
   return (
     <CardForm>
       <HeaderForm>
-        <img src={logo} alt={"logo DBC"} />
+        <img src={logoAzul} alt={"logo DBC"} />
         <h4>Sistema de reembolso</h4>
         <h1>Cadastrar usuário</h1>
       </HeaderForm>

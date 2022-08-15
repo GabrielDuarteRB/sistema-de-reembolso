@@ -42,6 +42,13 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     dispatch(signUp);
     navigate("/principal");
   } catch (error) {
+    if(error.response.status === 400) {
+      toast.fire({
+        icon: 'error',
+        title: 'Email já cadastrado'
+      })
+    }
+    //400
     console.log(error);
   }
 };

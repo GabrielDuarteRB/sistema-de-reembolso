@@ -14,4 +14,8 @@ export const HeaderContainer = styled.header`
     align-items: center;
     gap: 24px;
   }
+  
+  & img {
+    width: 140px;
+  }
 `;
