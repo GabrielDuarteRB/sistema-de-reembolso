@@ -15,12 +15,7 @@ const validationEmail = (email) => {
 };
 
 export const validationLogin = Yup.object().shape({
-  email: Yup.string()
-    .test("EmailValidation", "Email inválido!", (value) =>
-      validationEmail(value),
-    )
-    .email("Email inválido")
-    .required("Email obrigatório!"),
+  email: Yup.string().email("Email inválido").required("Email obrigatório!"),
 
   senha: Yup.string().required("Senha obrigatória!"),
 });

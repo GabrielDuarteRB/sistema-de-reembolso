@@ -12,7 +12,7 @@ import {
 import Pager from "../../components/Pager/Pager";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 
-const Main = () => {
+const Main = ({ dispatch }) => {
   return (
     <>
       <Header nome={"Marcos"} />
@@ -133,4 +133,5 @@ const Main = () => {
     </>
   );
 };
+
 export default Main;

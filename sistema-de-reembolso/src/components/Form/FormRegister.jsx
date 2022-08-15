@@ -99,7 +99,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <Button
               background={primaryColor}
-              backgroundHover={secondaryColor}
+              backgroundHover={"#FCFDFE"}
               padding={"12px 16px"}
               color={secondaryColor}
               colorHover={primaryColor}

@@ -13,8 +13,8 @@ const Login = ({ dispatch, isLogged }) => {
   }, []);
 
   useEffect(() => {
-    handleTypePassword(dispatch, 'text')
-  }, [])
+    handleTypePassword(dispatch, "text");
+  }, []);
 
   return (
     <Container>
