@@ -46,7 +46,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
             email: values.email,
             senha: values.senha,
           };
-          handleSignUp(dispatch, values, navigate);
+          handleSignUp(dispatch, newValues, navigate);
         }}
       >
         {({ errors, touched, handleSubmit }) => (
