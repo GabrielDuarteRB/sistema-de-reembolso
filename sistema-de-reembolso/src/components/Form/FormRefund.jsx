@@ -8,13 +8,14 @@ import {
   HeaderForm,
   TextError,
 } from "./Form.style";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Container } from "../Container/Container";
 import CurrencyInput from 'react-currency-input';
 import { validationRefund } from "../../utils/validationsForm";
 import { formatNumber } from "../../utils/regex";
+import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 
 const FormRefund = ({ typePassword, dispatch }) => {
   const navigate = useNavigate();
@@ -89,6 +90,10 @@ const FormRefund = ({ typePassword, dispatch }) => {
             </FieldForm>
           )}
         </Formik>
+        <Link to='/principal'>
+          <FaRegArrowAltCircleLeft/>
+          Voltar para a tela principal
+        </Link>
       </CardForm>
     </Container>
   );

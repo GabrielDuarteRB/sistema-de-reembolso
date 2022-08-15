@@ -16,7 +16,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
 import { Button } from "../Button/Button";
-import { FaEye } from "react-icons/fa";
+import { FaEye, FaRegArrowAltCircleLeft } from "react-icons/fa";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const FormRegister = ({ typePassword, dispatch }) => {
@@ -111,7 +111,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
         )}
       </Formik>
 
-      <Link to="/">Voltar para o login</Link>
+      <Link to="/"><FaRegArrowAltCircleLeft/> Voltar para o login</Link>
     </CardForm>
   );
 };
