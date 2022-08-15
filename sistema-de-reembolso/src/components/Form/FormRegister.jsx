@@ -10,11 +10,15 @@ import {
   Password,
   TextError,
 } from "./Form.style";
-import { handleSignUp, handleTypePassword } from "../../store/actions/authActions";
+import {
+  handleSignUp,
+  handleTypePassword,
+} from "../../store/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
-import { ButtonPrimary } from "../Button/Button";
+import { Button } from "../Button/Button";
 import { FaEye } from "react-icons/fa";
+import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const FormRegister = ({ typePassword, dispatch }) => {
   const navigate = useNavigate();
@@ -67,7 +71,9 @@ const FormRegister = ({ typePassword, dispatch }) => {
               <label htmlFor="senha">senha*</label>
               <Password>
                 <Field type={typePassword} name="senha" placeholder="Senha" />
-                <FaEye onClick={() => handleTypePassword(dispatch, typePassword)}/>
+                <FaEye
+                  onClick={() => handleTypePassword(dispatch, typePassword)}
+                />
               </Password>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
@@ -77,7 +83,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
             <FormItem>
               <label htmlFor="confirmarSenha">Confirme a senha*</label>
               <Field
-                type='password'
+                type="password"
                 name="confirmarSenha"
                 placeholder="Confirme a senha"
               />
@@ -91,9 +97,17 @@ const FormRegister = ({ typePassword, dispatch }) => {
               <InputFile type="file" id="foto" name="foto" />
             </FormItem>
 
-            <ButtonPrimary padding={"12px 16px"} type="submit">
+            <Button
+              background={primaryColor}
+              backgroundHover={secondaryColor}
+              padding={"12px 16px"}
+              color={secondaryColor}
+              colorHover={primaryColor}
+              borderColor={primaryColor}
+              type="submit"
+            >
               Cadastrar
-            </ButtonPrimary>
+            </Button>
           </FieldForm>
         )}
       </Formik>
