@@ -93,6 +93,10 @@ export const HeaderForm = styled.div`
     color: #a4a6b3;
     font-weight: 700;
   }
+
+  & img {
+    width: 140px;
+  }
 `;
 
 export const TextError = styled.small`

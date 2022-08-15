@@ -31,7 +31,7 @@ export const validationRegister = Yup.object().shape({
 
   email: Yup.string()
     .test("EmailValidation", "Email inválido!", (value) =>
-      validationEmail(value),
+      value && validationEmail(value),
     )
     .email("Email inválido!")
     .required("Email obrigatório!"),

@@ -1,5 +1,5 @@
 import { Field, Formik } from "formik";
-import logo from "../../img/logo.svg";
+import logoAzul from "../../img/logoAzul.png";
 import { connect } from "react-redux";
 import {
   CardForm,
@@ -23,7 +23,7 @@ const FormRefund = ({ typePassword, dispatch }) => {
     <Container>
       <CardForm>
         <HeaderForm>
-          <img src={logo} alt="Logo DBC" />
+          <img src={logoAzul} alt="Logo DBC" />
           <h1>Criar reembolso</h1>
         </HeaderForm>
         <Formik
@@ -79,7 +79,7 @@ const FormRefund = ({ typePassword, dispatch }) => {
 
               <FormItem>
                 <label htmlFor="foto">Escolha uma foto</label>
-                <Field type="file" name="foto" />
+                <Field accept=".img, .jpeg, .jpg" type="file" name="foto" />
               </FormItem>
 
               <Button

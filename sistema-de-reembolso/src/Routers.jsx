@@ -5,7 +5,7 @@ import Register from "./pages/Register/Register";
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { isAuth } from "./store/actions/authActions";
-import { NotFound } from "./pages/NotFound/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
 import FormRefund from "./components/Form/FormRefund";
 
