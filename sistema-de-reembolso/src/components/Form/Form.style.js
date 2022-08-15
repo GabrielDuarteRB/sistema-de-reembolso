@@ -12,6 +12,9 @@ export const CardForm = styled.div`
   gap: 32px;
 
   & a {
+    align-items: center ;
+    display: flex ;
+    gap: 8px ;
     text-decoration: none;
     color: ${primaryColor};
 

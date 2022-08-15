@@ -24,7 +24,7 @@ const Routers = ({ isLogged, isLoading, dispatch }) => {
         {isLogged ? (
           <>
             <Route path="/principal" element={<Main />} />
-            <Route path="/criar-reembolso" element={<FormRefund />} />
+            <Route path="/solicitar-reembolso" element={<FormRefund />} />
           </>
         ) : (
           <>
