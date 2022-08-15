@@ -1,22 +1,20 @@
+import { useEffect } from "react";
+import { connect } from "react-redux";
+import { Container } from "../../components/Container/Container";
+import FormRegister from "../../components/Form/FormRegister";
+import { handleTypePassword } from "../../store/actions/authActions";
 
-import { useEffect } from "react"
-import { connect } from "react-redux"
-import { Container } from "../../components/Container/Container"
-import FormRegister from "../../components/Form/FormRegister"
-import { handleTypePassword } from "../../store/actions/authActions"
-
-const Register = ({dispatch}) => {
-
+const Register = ({ dispatch }) => {
   useEffect(() => {
-    handleTypePassword(dispatch, 'text')
-  }, [])
+    handleTypePassword(dispatch, "text");
+  }, []);
 
   return (
     <Container>
-      <FormRegister/>   
+      <FormRegister />
     </Container>
-  )
-}
+  );
+};
 
 const mapStateToProps = (state) => ({
   isLogged: state.authReducer.isLogged,

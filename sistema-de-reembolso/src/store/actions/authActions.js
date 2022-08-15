@@ -14,6 +14,10 @@ export const handleLogin = async (dispatch, values, navigate) => {
     };
 
     dispatch(logged);
+    toast.fire({
+      icon: "success",
+      title: "Bem vindo!",
+    });
     navigate("/principal");
   } catch (error) {
     toast.fire({
@@ -64,6 +68,7 @@ export const isAuth = (dispatch) => {
       type: "SET_LOGIN",
       token: token,
     };
+
     dispatch(logged);
   } else {
     const logged = {

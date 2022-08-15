@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Field } from "formik";
 import { errorMessage, primaryColor } from "../../utils/colors";
 
 export const CardForm = styled.div`
@@ -64,7 +63,7 @@ export const FormItem = styled.div`
       outline: 1px solid ${primaryColor};
     }
   }
-  
+
   & label {
       color: #9fa2b4;
       font-weight: 700;

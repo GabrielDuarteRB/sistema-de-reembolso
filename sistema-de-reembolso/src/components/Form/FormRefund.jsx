@@ -8,7 +8,7 @@ import {
   HeaderForm,
   TextError,
 } from "./Form.style";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Container } from "../Container/Container";
@@ -21,12 +21,11 @@ const FormRefund = ({ typePassword, dispatch }) => {
 
   return (
     <Container>
-        <CardForm>
-            <HeaderForm>
-                <img src={logo} alt="Logo DBC" />
-                <h1>Criar reembolso</h1>
-            </HeaderForm>
-
+      <CardForm>
+        <HeaderForm>
+          <img src={logo} alt="Logo DBC" />
+          <h1>Criar reembolso</h1>
+        </HeaderForm>
             <Formik
                 initialValues={{
                     titulo: "",
@@ -76,21 +75,21 @@ const FormRefund = ({ typePassword, dispatch }) => {
                             <Field type='file' name='foto'/>                            
                         </FormItem>
 
-                        <Button
-                            background={primaryColor}
-                            backgroundHover={secondaryColor}
-                            padding={"12px 16px"}
-                            color={secondaryColor}
-                            colorHover={primaryColor}
-                            borderColor={primaryColor}
-                            type="submit"
-                        >
-                            Criar reembolso
-                        </Button>
-                    </FieldForm>
-                )}
-            </Formik>
-        </CardForm>
+              <Button
+                background={primaryColor}
+                backgroundHover={secondaryColor}
+                padding={"12px 16px"}
+                color={secondaryColor}
+                colorHover={primaryColor}
+                borderColor={primaryColor}
+                type="submit"
+              >
+                Criar reembolso
+              </Button>
+            </FieldForm>
+          )}
+        </Formik>
+      </CardForm>
     </Container>
   );
 };
