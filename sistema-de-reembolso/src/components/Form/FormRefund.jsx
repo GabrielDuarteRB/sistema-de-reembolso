@@ -13,7 +13,7 @@ import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Container } from "../Container/Container";
 import CurrencyInput from "react-currency-input";
-import { photo, validationRefund } from "../../utils/validationsForm";
+import { validationRefund } from "../../utils/validationsForm";
 import { formatNumber } from "../../utils/regex";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 

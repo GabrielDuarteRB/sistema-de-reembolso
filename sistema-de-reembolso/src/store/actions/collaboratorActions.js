@@ -8,7 +8,7 @@ export const getCollaborator = async (dispatch) => {
       type: "GET_COLLABORATOR",
       name: data.nome,
       email: data.email,
-      foto: data.foto,
+      foto: data.fotoDTO && data.fotoDTO.data,
     };
     dispatch(get);
   } catch (error) {

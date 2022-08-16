@@ -12,6 +12,7 @@ import {
 import {
   handleSignUp,
   handleTypePassword,
+  signUpImage,
 } from "../../store/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
@@ -44,12 +45,15 @@ const FormRegister = ({ typePassword, dispatch }) => {
             nome: values.nome,
             email: values.email,
             senha: values.senha,
+            file: values.file
           };
           handleSignUp(dispatch, newValues, navigate);
+          // console.log(values.file.split('\\').at(-1))
+          // signUpImage(values.file.split('\\').at(-1))
         }}
       >
         {({ errors, touched, handleSubmit }) => (
-          <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
+          <FieldForm onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
             <FormItem>
               <label htmlFor="nome">nome*</label>
               <Field type="text" name="nome" placeholder="Nome" />
@@ -97,7 +101,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="file">Escolha uma foto</label>
-              <Field accept=".png, .jpeg, .jpg" type="file" id="foto" name="file" />
+              <Field accept=".png, .jpeg, .jpg" type="file" id="foto" name="file" multiple />
               {errors.file && touched.file ? (
                 <TextError>{errors.file}</TextError>
               ) : null}

@@ -5,17 +5,29 @@ import { handleLogout } from "../../store/actions/authActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { HeaderContainer } from "./Header.styled";
-import  LogoBranca from '../../img/logoBranca.png'
+import {Image} from '../Image/Image'
+import LogoBranca from '../../img/logoBranca.png'
+import noUser from '../../img/noUser.jpeg'
 
-const Header = ({ nome, handleLogout, dispatch }) => {
+const Header = ({ nome, foto, handleLogout, dispatch }) => {
   const navigate = useNavigate();
 
   return (
     <HeaderContainer>
-      <img src={LogoBranca} alt="Logo DBC" />
+      <Image 
+        width='140px'
+        src={LogoBranca}
+        alt="Logo DBC"
+      />
       <div>
         <span>{nome}</span>
-        <img src="" alt="foto do usuário" />
+        <Image 
+          borderRadius='100%'
+          height='60px'
+          width='60px'
+          src={foto ? `data:image/jpg;base64,` + foto : noUser} 
+          alt="foto do usuário" 
+        />
         <Button
           background={secondaryColor}
           backgroundHover={primaryColor}
@@ -33,8 +45,9 @@ const Header = ({ nome, handleLogout, dispatch }) => {
   );
 };
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = (state) => ({
   handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
+  foto: state.collaboratorReducer.foto,
 });
 
 export default connect(mapDispatchToProps)(Header);

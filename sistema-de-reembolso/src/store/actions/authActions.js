@@ -33,20 +33,26 @@ export const handleLogin = async (dispatch, values, navigate) => {
 };
 
 export const handleSignUp = async (dispatch, values, navigate) => {
+  let token;
   try {
-    const { data } = await apiRefund.post("/usuario/cadastro", values);
-    console.log(data.token);
+    const { data } = await apiRefund.post("/usuario/cadastro", {
+      nome: values.nome,
+      email: values.email,
+      senha: values.senha
+    });
+    token = data.token
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", data.role);
+    apiRefund.defaults.headers.common["Authorization"] = data.token;
+
     const signUp = {
       type: "SET_SIGNUP",
       token: data.token,
       role: data.role
     };
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("role", data.role);
-    apiRefund.defaults.headers.common["Authorization"] = data.token;
-
     dispatch(signUp);
-    navigate("/principal");
+
+    // navigate("/principal");
   } catch (error) {
     if (error.response.status === 400) {
       toast.fire({
@@ -54,13 +60,36 @@ export const handleSignUp = async (dispatch, values, navigate) => {
         title: "Email já cadastrado",
       });
     }
-    console.log(error);
     toast.fire({
       icon: "error",
       title: "Dados incorretos",
     });
+    console.log(error);
   }
+
+  signUpImage(token, values.file)
 };
+
+export const signUpImage = async (token, file) => {
+
+  console.log(file)
+  try {
+    await apiRefund.post('/upload/foto', 
+    {body: {
+      file: file.split('\\').at(-1)
+    }},
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        "Accept": '*/*',
+        "Authorization": token
+      }      
+    }
+    )
+  } catch (error) {
+    console.log(error)
+  }
+} 
 
 export const handleLogout = (dispatch, navigate) => {
   localStorage.removeItem("token");
