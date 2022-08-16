@@ -3,14 +3,16 @@ import { toast } from "../../components/Toaster/Toaster";
 
 export const handleLogin = async (dispatch, values, navigate) => {
   try {
-    const { data } = await apiRefund.post("/usuario/login", values);
-
-    localStorage.setItem("token", data);
-    apiRefund.defaults.headers.common["Authorization"] = data;
+    const  {data}  = await apiRefund.post("/usuario/login", values);
+    console.log(data.token)
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", data.role);
+    apiRefund.defaults.headers.common["Authorization"] = data.token;
 
     const logged = {
       type: "SET_LOGIN",
-      token: data,
+      token: data.token,
+      role: data.role
     };
 
     dispatch(logged);
@@ -20,6 +22,12 @@ export const handleLogin = async (dispatch, values, navigate) => {
     });
     navigate("/principal");
   } catch (error) {
+    if (error.response.status === 400) {
+      toast.fire({
+        icon: "error",
+        title: "email ou senha inválido",
+      });
+    }
     console.log(error);
   }
 };
@@ -27,13 +35,15 @@ export const handleLogin = async (dispatch, values, navigate) => {
 export const handleSignUp = async (dispatch, values, navigate) => {
   try {
     const { data } = await apiRefund.post("/usuario/cadastro", values);
-    console.log(data);
+    console.log(data.token);
     const signUp = {
       type: "SET_SIGNUP",
-      token: data,
+      token: data.token,
+      role: data.role
     };
-    localStorage.setItem("token", data);
-    apiRefund.defaults.headers.common["Authorization"] = data;
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", data.role);
+    apiRefund.defaults.headers.common["Authorization"] = data.token;
 
     dispatch(signUp);
     navigate("/principal");
@@ -54,6 +64,7 @@ export const handleSignUp = async (dispatch, values, navigate) => {
 
 export const handleLogout = (dispatch, navigate) => {
   localStorage.removeItem("token");
+  localStorage.removeItem("role");
   apiRefund.defaults.headers.common["Authorization"] = "";
 
   navigate("/");

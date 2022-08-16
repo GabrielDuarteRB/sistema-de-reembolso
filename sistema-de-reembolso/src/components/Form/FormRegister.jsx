@@ -36,7 +36,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
           email: "",
           senha: "",
           confirmarSenha: "",
-          foto: "",
+          file: "",
         }}
         validationSchema={validationRegister}
         onSubmit={(values) => {
@@ -96,8 +96,11 @@ const FormRegister = ({ typePassword, dispatch }) => {
             </FormItem>
 
             <FormItem>
-              <label htmlFor="foto">Escolha uma foto</label>
-              <Field type="file" id="foto" name="foto" />
+              <label htmlFor="file">Escolha uma foto</label>
+              <Field accept=".png, .jpeg, .jpg" type="file" id="foto" name="file" />
+              {errors.file && touched.file ? (
+                <TextError>{errors.file}</TextError>
+              ) : null}
             </FormItem>
 
             <Button

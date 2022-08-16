@@ -81,6 +81,7 @@ export const Password = styled.div`
 
   & input {
     width: 100%;
+    padding-right: 40px
   }
 
   & button {

@@ -13,7 +13,7 @@ import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Container } from "../Container/Container";
 import CurrencyInput from "react-currency-input";
-import { validationRefund } from "../../utils/validationsForm";
+import { photo, validationRefund } from "../../utils/validationsForm";
 import { formatNumber } from "../../utils/regex";
 import { FaRegArrowAltCircleLeft } from "react-icons/fa";
 
@@ -31,14 +31,13 @@ const FormRefund = ({ typePassword, dispatch }) => {
           initialValues={{
             titulo: "",
             valor: "",
-            foto: "",
+            file: "",
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
             const newValues = {
               titulo: values.titulo,
               valor: formatNumber(values.valor),
-              foto: values.foto,
             };
             console.log(newValues);
           }}
@@ -49,7 +48,6 @@ const FormRefund = ({ typePassword, dispatch }) => {
             handleSubmit,
             values,
             setFieldValue,
-            handleChange,
           }) => (
             <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
               <FormItem>
@@ -79,8 +77,11 @@ const FormRefund = ({ typePassword, dispatch }) => {
               </FormItem>
 
               <FormItem>
-                <label htmlFor="foto">Escolha uma foto</label>
-                <Field accept=".pdf, .jpeg, .jpg" type="file" name="foto" />
+                <label htmlFor="file">Escolha uma foto</label>
+                <Field accept=".pdf, .jpeg, .jpg, png" type="file" name="file" />
+                  {errors.file && touched.file ? (
+                  <TextError>{errors.file}</TextError>
+                  ) : null}
               </FormItem>
 
               <Button

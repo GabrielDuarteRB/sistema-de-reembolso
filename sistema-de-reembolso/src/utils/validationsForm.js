@@ -6,7 +6,6 @@ const validationEmail = (email) => {
   if (email.length !== 2 || email[1] !== "dbccompany.com.br") {
     return false;
   }
-
   return true;
 };
 
@@ -16,6 +15,12 @@ const validationCurrency = (number) => {
     return false
   }
   return true
+}
+
+const validationPhoto = (url, types) => {
+  url = url.split('.')
+
+  return types.includes(url.at(-1))
 }
 
 export const validationLogin = Yup.object().shape({
@@ -53,6 +58,10 @@ export const validationRegister = Yup.object().shape({
   confirmarSenha: Yup.string()
     .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
     .required("Confirme a senha!"),
+  file: Yup.string()
+    .test("photoValidation", "Formato inválido!", (value) =>
+      value !== undefined ? validationPhoto(value, ['png', 'jpg', 'jpeg']) : true,
+    )
 });
 
 export const validationRefund = Yup.object().shape({
@@ -62,4 +71,8 @@ export const validationRefund = Yup.object().shape({
     .test('maiorZero', 'Valor tem que ser maior que zero', (number) => number && validationCurrency(number))
     .min(1, 'Numero minimo')
     .required("Valor obrigatória!"),
+  file: Yup.string()
+    .test("photoValidation", "Formato inválido!", (value) =>
+      value !== undefined ? validationPhoto(value, ['png', 'jpg', 'jpeg', 'pdf']) : true,
+    )
 });
