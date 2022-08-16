@@ -1,6 +1,12 @@
-import { BiLogOut } from "react-icons/bi";
+import {
+  FaBars,
+  FaExchangeAlt,
+  FaMoneyBill,
+  FaSignOutAlt,
+  FaUserTie,
+} from "react-icons/fa";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { handleLogout } from "../../store/actions/authActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
@@ -8,6 +14,8 @@ import { HeaderContainer } from "./Header.styled";
 import {Image} from '../Image/Image'
 import LogoBranca from '../../img/logoBranca.png'
 import noUser from '../../img/noUser.jpeg'
+
+import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
 
 const Header = ({ nome, foto, handleLogout, dispatch }) => {
   const navigate = useNavigate();
@@ -19,7 +27,32 @@ const Header = ({ nome, foto, handleLogout, dispatch }) => {
         src={LogoBranca}
         alt="Logo DBC"
       />
+
       <div>
+        <Dropdown>
+          <Button
+            background={primaryColor}
+            color={secondaryColor}
+            colorHover={secondaryColor}
+            borderColor={primaryColor}
+            padding={"8px"}
+          >
+            <FaBars />
+          </Button>
+          <DropdownContent>
+            <span>Páginas</span>
+            <Link to="/principal">
+              Reembolsos <FaExchangeAlt />
+            </Link>
+            <Link to="/gestor">
+              Gestor <FaUserTie />
+            </Link>
+            <Link to="/financeiro">
+              Financeiro <FaMoneyBill />
+            </Link>
+          </DropdownContent>
+        </Dropdown>
+
         <span>{nome}</span>
         <Image 
           borderRadius='100%'
@@ -38,7 +71,7 @@ const Header = ({ nome, foto, handleLogout, dispatch }) => {
           onClick={() => handleLogout(dispatch, navigate)}
         >
           Sair
-          <BiLogOut fontSize={"20px"} />
+          <FaSignOutAlt />
         </Button>
       </div>
     </HeaderContainer>

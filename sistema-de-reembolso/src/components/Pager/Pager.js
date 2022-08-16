@@ -1,5 +1,5 @@
 import { PaginationContainer } from "./Pager.styled";
-import { GrPrevious, GrNext } from "react-icons/gr";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
 const Pager = () => {
   return (
@@ -16,10 +16,10 @@ const Pager = () => {
       <div>
         <span>1-5 de 10</span>
         <button>
-          <GrPrevious />
+          <FaArrowLeft />
         </button>
         <button>
-          <GrNext />
+          <FaArrowRight />
         </button>
       </div>
     </PaginationContainer>

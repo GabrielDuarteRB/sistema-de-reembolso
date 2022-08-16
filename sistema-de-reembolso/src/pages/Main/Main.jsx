@@ -1,8 +1,7 @@
 import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
-import { RiRefund2Line } from "react-icons/ri";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { FaTrash, FaEdit, FaExchangeAlt } from "react-icons/fa";
 import {
   List,
   ListContainer,
@@ -22,7 +21,6 @@ const Main = ({ name, isLoading, dispatch }) => {
 
   useEffect(() => {
     getCollaborator(dispatch);
-    console.log("oi");
   }, []);
 
   if (isLoading) {
@@ -42,7 +40,7 @@ const Main = ({ name, isLoading, dispatch }) => {
           borderColor={primaryColor}
           onClick={() => navigate("/solicitar-reembolso")}
         >
-          Solicitar reembolso <RiRefund2Line fontSize={"24px"} />
+          Solicitar reembolso <FaExchangeAlt />
         </Button>
 
         <ListContainer>
@@ -74,7 +72,7 @@ const Main = ({ name, isLoading, dispatch }) => {
                   borderColor={primaryColor}
                   padding={"8px"}
                 >
-                  <MdEdit fontSize={"20px"} />
+                  <FaEdit />
                 </Button>
                 <Button
                   background={primaryColor}
@@ -84,35 +82,7 @@ const Main = ({ name, isLoading, dispatch }) => {
                   borderColor={primaryColor}
                   padding={"8px"}
                 >
-                  <MdDelete fontSize={"20px"} />
-                </Button>
-              </div>
-            </li>
-            <li>
-              <span>Reembolso</span>
-              <span>13/08/2022</span>
-              <span>R$ 20,00</span>
-              <span>reprovado financeiro</span>
-              <div>
-                <Button
-                  background={primaryColor}
-                  backgroundHover={secondaryColor}
-                  color={secondaryColor}
-                  colorHover={primaryColor}
-                  borderColor={primaryColor}
-                  padding={"8px"}
-                >
-                  <MdEdit fontSize={"20px"} />
-                </Button>
-                <Button
-                  background={primaryColor}
-                  backgroundHover={secondaryColor}
-                  color={secondaryColor}
-                  colorHover={primaryColor}
-                  borderColor={primaryColor}
-                  padding={"8px"}
-                >
-                  <MdDelete fontSize={"20px"} />
+                  <FaTrash />
                 </Button>
               </div>
             </li>
@@ -130,7 +100,7 @@ const Main = ({ name, isLoading, dispatch }) => {
                   borderColor={primaryColor}
                   padding={"8px"}
                 >
-                  <MdEdit fontSize={"20px"} />
+                  <FaEdit />
                 </Button>
                 <Button
                   background={primaryColor}
@@ -140,7 +110,35 @@ const Main = ({ name, isLoading, dispatch }) => {
                   borderColor={primaryColor}
                   padding={"8px"}
                 >
-                  <MdDelete fontSize={"20px"} />
+                  <FaTrash />
+                </Button>
+              </div>
+            </li>
+            <li>
+              <span>Reembolso</span>
+              <span>13/08/2022</span>
+              <span>R$ 20,00</span>
+              <span>reprovado financeiro</span>
+              <div>
+                <Button
+                  background={primaryColor}
+                  backgroundHover={secondaryColor}
+                  color={secondaryColor}
+                  colorHover={primaryColor}
+                  borderColor={primaryColor}
+                  padding={"8px"}
+                >
+                  <FaEdit />
+                </Button>
+                <Button
+                  background={primaryColor}
+                  backgroundHover={secondaryColor}
+                  color={secondaryColor}
+                  colorHover={primaryColor}
+                  borderColor={primaryColor}
+                  padding={"8px"}
+                >
+                  <FaTrash />
                 </Button>
               </div>
             </li>
