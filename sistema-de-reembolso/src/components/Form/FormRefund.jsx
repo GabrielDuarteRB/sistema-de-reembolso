@@ -80,7 +80,7 @@ const FormRefund = ({ typePassword, dispatch }) => {
 
               <FormItem>
                 <label htmlFor="foto">Escolha uma foto</label>
-                <Field accept=".img, .jpeg, .jpg" type="file" name="foto" />
+                <Field accept=".pdf, .jpeg, .jpg" type="file" name="foto" />
               </FormItem>
 
               <Button
@@ -97,8 +97,8 @@ const FormRefund = ({ typePassword, dispatch }) => {
             </FieldForm>
           )}
         </Formik>
-        <Link to='/principal'>
-          <FaRegArrowAltCircleLeft/>
+        <Link to="/principal">
+          <FaRegArrowAltCircleLeft />
           Voltar para a tela principal
         </Link>
       </CardForm>

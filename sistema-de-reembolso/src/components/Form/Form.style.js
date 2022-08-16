@@ -12,9 +12,9 @@ export const CardForm = styled.div`
   gap: 32px;
 
   & a {
-    align-items: center ;
-    display: flex ;
-    gap: 8px ;
+    align-items: center;
+    display: flex;
+    gap: 8px;
     text-decoration: none;
     color: ${primaryColor};
 
@@ -75,15 +75,22 @@ export const FormItem = styled.div`
 `;
 
 export const Password = styled.div`
-  align-items: center;
   display: flex;
+  align-items: center;
+  position: relative;
+
   & input {
     width: 100%;
   }
-  & > svg {
+
+  & button {
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    background: #fcfdfe;
+    border: none;
+    padding: 4px;
     cursor: pointer;
-    font-size: 14px;
-    margin-left: -30px;
   }
 `;
 

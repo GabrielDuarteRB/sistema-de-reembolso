@@ -54,9 +54,13 @@ const FormLogin = ({ typePassword, dispatch }) => {
               <label htmlFor="senha">senha*</label>
               <Password>
                 <Field type={typePassword} name="senha" placeholder="Senha" />
-                <FaEye
+                <button
+                  type="button"
+                  background={"#000"}
                   onClick={() => handleTypePassword(dispatch, typePassword)}
-                />
+                >
+                  <FaEye />
+                </button>
               </Password>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
