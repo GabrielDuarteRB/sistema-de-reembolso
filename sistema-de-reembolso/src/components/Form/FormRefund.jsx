@@ -6,20 +6,19 @@ import {
   FieldForm,
   FormItem,
   HeaderForm,
+  InputContainer,
   TextError,
 } from "./Form.style";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Container } from "../Container/Container";
 import CurrencyInput from "react-currency-input";
-import { photo, validationRefund } from "../../utils/validationsForm";
+import { validationRefund } from "../../utils/validationsForm";
 import { formatNumber } from "../../utils/regex";
-import { FaRegArrowAltCircleLeft } from "react-icons/fa";
+import { FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
 
-const FormRefund = ({ typePassword, dispatch }) => {
-  const navigate = useNavigate();
-
+const FormRefund = () => {
   return (
     <Container>
       <CardForm>
@@ -42,17 +41,11 @@ const FormRefund = ({ typePassword, dispatch }) => {
             console.log(newValues);
           }}
         >
-          {({
-            errors,
-            touched,
-            handleSubmit,
-            values,
-            setFieldValue,
-          }) => (
+          {({ errors, touched, handleSubmit, values, setFieldValue }) => (
             <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
               <FormItem>
-                <label htmlFor="titulo">titulo*</label>
-                <Field type="text" name="titulo" placeholder="titulo" />
+                <label htmlFor="titulo">título*</label>
+                <Field type="text" name="titulo" placeholder="Título" />
                 {errors.titulo && touched.titulo ? (
                   <TextError>{errors.titulo}</TextError>
                 ) : null}
@@ -62,7 +55,7 @@ const FormRefund = ({ typePassword, dispatch }) => {
                 <label htmlFor="valor">valor*</label>
                 <CurrencyInput
                   type="text"
-                  prefix="R$"
+                  prefix="R$ "
                   name="valor"
                   decimalSeparator=","
                   thousandSeparator="."
@@ -77,11 +70,23 @@ const FormRefund = ({ typePassword, dispatch }) => {
               </FormItem>
 
               <FormItem>
-                <label htmlFor="file">Escolha uma foto</label>
-                <Field accept=".pdf, .jpeg, .jpg, png" type="file" name="file" />
-                  {errors.file && touched.file ? (
+                <label htmlFor="file">Enviar anexo</label>
+                <InputContainer>
+                  <Field
+                    accept=".pdf, .jpeg, .jpg, .png"
+                    type="file"
+                    name="file"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setFieldValue("file", "")}
+                  >
+                    <FaTrash />
+                  </button>
+                </InputContainer>
+                {errors.file && touched.file ? (
                   <TextError>{errors.file}</TextError>
-                  ) : null}
+                ) : null}
               </FormItem>
 
               <Button
@@ -93,7 +98,7 @@ const FormRefund = ({ typePassword, dispatch }) => {
                 borderColor={primaryColor}
                 type="submit"
               >
-                Criar reembolso
+                Solicitar reembolso
               </Button>
             </FieldForm>
           )}

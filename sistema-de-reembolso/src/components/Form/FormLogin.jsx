@@ -6,7 +6,7 @@ import {
   FieldForm,
   FormItem,
   HeaderForm,
-  Password,
+  InputContainer,
   TextError,
 } from "./Form.style";
 import {
@@ -52,7 +52,7 @@ const FormLogin = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="senha">senha*</label>
-              <Password>
+              <InputContainer>
                 <Field type={typePassword} name="senha" placeholder="Senha" />
                 <button
                   type="button"
@@ -61,7 +61,7 @@ const FormLogin = ({ typePassword, dispatch }) => {
                 >
                   <FaEye />
                 </button>
-              </Password>
+              </InputContainer>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
               ) : null}

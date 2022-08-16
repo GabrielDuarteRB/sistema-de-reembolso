@@ -3,8 +3,8 @@ import { toast } from "../../components/Toaster/Toaster";
 
 export const handleLogin = async (dispatch, values, navigate) => {
   try {
-    const  {data}  = await apiRefund.post("/usuario/login", values);
-    console.log(data.token)
+    const { data } = await apiRefund.post("/usuario/login", values);
+    console.log(data.token);
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
     apiRefund.defaults.headers.common["Authorization"] = data.token;
@@ -12,7 +12,7 @@ export const handleLogin = async (dispatch, values, navigate) => {
     const logged = {
       type: "SET_LOGIN",
       token: data.token,
-      role: data.role
+      role: data.role,
     };
 
     dispatch(logged);
@@ -25,7 +25,7 @@ export const handleLogin = async (dispatch, values, navigate) => {
     if (error.response.status === 400) {
       toast.fire({
         icon: "error",
-        title: "email ou senha inválido",
+        title: "Email ou Senha inválidos",
       });
     }
     console.log(error);
@@ -39,7 +39,7 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     const signUp = {
       type: "SET_SIGNUP",
       token: data.token,
-      role: data.role
+      role: data.role,
     };
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
@@ -49,11 +49,13 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     navigate("/principal");
   } catch (error) {
     if (error.response.status === 400) {
+      console.log(error);
       toast.fire({
         icon: "error",
         title: "Email já cadastrado",
       });
     }
+
     console.log(error);
     toast.fire({
       icon: "error",

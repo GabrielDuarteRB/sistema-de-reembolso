@@ -6,7 +6,7 @@ import {
   FieldForm,
   FormItem,
   HeaderForm,
-  Password,
+  InputContainer,
   TextError,
 } from "./Form.style";
 import {
@@ -16,7 +16,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
 import { Button } from "../Button/Button";
-import { FaEye, FaRegArrowAltCircleLeft } from "react-icons/fa";
+import { FaEye, FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const FormRegister = ({ typePassword, dispatch }) => {
@@ -48,7 +48,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
           handleSignUp(dispatch, newValues, navigate);
         }}
       >
-        {({ errors, touched, handleSubmit }) => (
+        {({ errors, touched, handleSubmit, setFieldValue }) => (
           <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
             <FormItem>
               <label htmlFor="nome">nome*</label>
@@ -68,7 +68,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="senha">senha*</label>
-              <Password>
+              <InputContainer>
                 <Field type={typePassword} name="senha" placeholder="Senha" />
                 <button
                   type="button"
@@ -77,7 +77,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
                 >
                   <FaEye />
                 </button>
-              </Password>
+              </InputContainer>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
               ) : null}
@@ -97,7 +97,13 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="file">Escolha uma foto</label>
-              <Field accept=".png, .jpeg, .jpg" type="file" id="foto" name="file" />
+              <InputContainer>
+                <Field accept=".png, .jpeg, .jpg" type="file" name="file" />
+
+                <button type="button" onClick={() => setFieldValue("file", "")}>
+                  <FaTrash />
+                </button>
+              </InputContainer>
               {errors.file && touched.file ? (
                 <TextError>{errors.file}</TextError>
               ) : null}

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { errorMessage, primaryColor } from "../../utils/colors";
+import { errorMessage, primaryColor, secondaryColor } from "../../utils/colors";
 
 export const CardForm = styled.div`
   display: grid;
@@ -74,14 +74,14 @@ export const FormItem = styled.div`
   }
 `;
 
-export const Password = styled.div`
+export const InputContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
 
   & input {
     width: 100%;
-    padding-right: 40px
+    padding-right: 40px;
   }
 
   & button {
@@ -92,6 +92,10 @@ export const Password = styled.div`
     border: none;
     padding: 4px;
     cursor: pointer;
+
+    :hover {
+      background-color: ${secondaryColor};
+    }
   }
 `;
 

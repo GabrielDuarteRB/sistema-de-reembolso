@@ -10,18 +10,18 @@ const validationEmail = (email) => {
 };
 
 const validationCurrency = (number) => {
-  number = onlyNumber(number)
-  if(number <= 0) {
-    return false
+  number = onlyNumber(number);
+  if (number <= 0) {
+    return false;
   }
-  return true
-}
+  return true;
+};
 
 const validationPhoto = (url, types) => {
-  url = url.split('.')
+  url = url.split(".");
 
-  return types.includes(url.at(-1))
-}
+  return types.includes(url.at(-1));
+};
 
 export const validationLogin = Yup.object().shape({
   email: Yup.string().email("Email inválido").required("Email obrigatório!"),
@@ -35,8 +35,10 @@ export const validationRegister = Yup.object().shape({
     .required("Nome obrigatorio!"),
 
   email: Yup.string()
-    .test("EmailValidation", "Email inválido!", (value) =>
-      value && validationEmail(value),
+    .test(
+      "EmailValidation",
+      "Email inválido!",
+      (value) => value && validationEmail(value),
     )
     .email("Email inválido!")
     .required("Email obrigatório!"),
@@ -58,21 +60,24 @@ export const validationRegister = Yup.object().shape({
   confirmarSenha: Yup.string()
     .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
     .required("Confirme a senha!"),
-  file: Yup.string()
-    .test("photoValidation", "Formato inválido!", (value) =>
-      value !== undefined ? validationPhoto(value, ['png', 'jpg', 'jpeg']) : true,
-    )
+  file: Yup.string().test("photoValidation", "Formato inválido!", (value) =>
+    value !== undefined ? validationPhoto(value, ["png", "jpg", "jpeg"]) : true,
+  ),
 });
 
 export const validationRefund = Yup.object().shape({
-  titulo: Yup.string()
-    .required("titulo obrigatorio!"),
+  titulo: Yup.string().required("Título obrigatorio!"),
   valor: Yup.string()
-    .test('maiorZero', 'Valor tem que ser maior que zero', (number) => number && validationCurrency(number))
-    .min(1, 'Numero minimo')
-    .required("Valor obrigatória!"),
-  file: Yup.string()
-    .test("photoValidation", "Formato inválido!", (value) =>
-      value !== undefined ? validationPhoto(value, ['png', 'jpg', 'jpeg', 'pdf']) : true,
+    .test(
+      "maiorZero",
+      "Valor inválido!",
+      (number) => number && validationCurrency(number),
     )
+    .min(1, "Numero minimo")
+    .required("Valor obrigatório!"),
+  file: Yup.string().test("photoValidation", "Formato inválido!", (value) =>
+    value !== undefined
+      ? validationPhoto(value, ["png", "jpg", "jpeg", "pdf"])
+      : true,
+  ),
 });
