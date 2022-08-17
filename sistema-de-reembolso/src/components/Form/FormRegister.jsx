@@ -1,4 +1,5 @@
 import { Field, Formik } from "formik";
+import { useState } from "react";
 import logoAzul from "../../img/logoAzul.png";
 import { connect } from "react-redux";
 import {
@@ -22,6 +23,10 @@ import { primaryColor, secondaryColor } from "../../utils/colors";
 const FormRegister = ({ typePassword, dispatch }) => {
   const navigate = useNavigate();
 
+  const handleFoto = (foto, setFieldValue) => {
+    setFieldValue("foto", foto);
+  };
+
   return (
     <CardForm>
       <HeaderForm>
@@ -36,23 +41,25 @@ const FormRegister = ({ typePassword, dispatch }) => {
           email: "",
           senha: "",
           confirmarSenha: "",
-          file: "",
+          foto: "",
         }}
         validationSchema={validationRegister}
-        onSubmit={(values) => {
+        onSubmit={(values, e) => {
           const newValues = {
             nome: values.nome,
             email: values.email,
             senha: values.senha,
-            file: values.file
+            foto: values.foto,
           };
           handleSignUp(dispatch, newValues, navigate);
-          // console.log(values.file.split('\\').at(-1))
-          // signUpImage(values.file.split('\\').at(-1))
         }}
       >
         {({ errors, touched, handleSubmit, setFieldValue }) => (
-          <FieldForm onSubmit={handleSubmit} method="POST" encType="multipart/form-data">
+          <FieldForm
+            onSubmit={handleSubmit}
+            method="POST"
+            encType="multipart/form-data"
+          >
             <FormItem>
               <label htmlFor="nome">nome*</label>
               <Field type="text" name="nome" placeholder="Nome" />
@@ -101,8 +108,14 @@ const FormRegister = ({ typePassword, dispatch }) => {
             <FormItem>
               <label htmlFor="file">Escolha uma foto</label>
               <InputContainer>
-                <Field accept=".png, .jpeg, .jpg" type="file" name="file" multiple path="file"/>
-                <button type="button" onClick={() => setFieldValue("file", "")}>
+                <Field
+                  accept=".png, .jpeg, .jpg"
+                  type="file"
+                  name="foto"
+                  value={""}
+                  onChange={(e) => handleFoto(e.target.files[0], setFieldValue)}
+                />
+                <button type="button" onClick={() => setFieldValue("foto", "")}>
                   <FaTrash />
                 </button>
               </InputContainer>
