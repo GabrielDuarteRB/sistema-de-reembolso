@@ -4,8 +4,6 @@ import { connect } from "react-redux";
 
 const Pager = ({dispatch, size, page, totalPages}) => {
 
-  console.log(totalPages)
-
   return (
     <PaginationContainer>
       <div>

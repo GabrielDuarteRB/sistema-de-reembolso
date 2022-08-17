@@ -1,5 +1,4 @@
 import { Field, Formik } from "formik";
-import { useState } from "react";
 import logoAzul from "../../img/logoAzul.png";
 import { connect } from "react-redux";
 import {
@@ -25,6 +24,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
   const handleFoto = (foto, setFieldValue) => {
     setFieldValue("foto", foto);
+    console.log(foto)
   };
 
   return (
@@ -54,7 +54,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
           handleSignUp(dispatch, newValues, navigate);
         }}
       >
-        {({ errors, touched, handleSubmit, setFieldValue }) => (
+        {({ errors, touched, handleSubmit, setFieldValue, isSubmitting }) => (
           <FieldForm
             onSubmit={handleSubmit}
             method="POST"
@@ -106,21 +106,21 @@ const FormRegister = ({ typePassword, dispatch }) => {
             </FormItem>
 
             <FormItem>
-              <label htmlFor="file">Escolha uma foto</label>
+              <label htmlFor="foto">Escolha uma foto</label>
               <InputContainer>
                 <Field
                   accept=".png, .jpeg, .jpg"
                   type="file"
-                  name="foto"
-                  value={""}
+                  name='foto'
+                  value={''}
                   onChange={(e) => handleFoto(e.target.files[0], setFieldValue)}
                 />
                 <button type="button" onClick={() => setFieldValue("foto", "")}>
                   <FaTrash />
                 </button>
               </InputContainer>
-              {errors.file && touched.file ? (
-                <TextError>{errors.file}</TextError>
+              {errors.foto && touched.foto ? (
+                <TextError>{errors.foto}</TextError>
               ) : null}
             </FormItem>
 
@@ -131,6 +131,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
               color={secondaryColor}
               colorHover={primaryColor}
               borderColor={primaryColor}
+              disabled={isSubmitting}
               type="submit"
             >
               Cadastrar

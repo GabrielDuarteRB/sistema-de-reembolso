@@ -11,6 +11,7 @@ const refundReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case 'UPLOAD_TRUE':
             return {
+                ...state,
                 isLoading: true
             }
         case 'GET_REFUND':
