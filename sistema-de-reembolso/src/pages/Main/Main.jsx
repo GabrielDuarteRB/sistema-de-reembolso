@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { getRefund } from "../../store/actions/refundActions";
 import Refund from "../../components/Refund/Refund";
 
-const Main = ({ page, size, isLoading, dispatch }) => {
+const Main = ({ page, size, isLoading, refund, dispatch }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,22 +48,28 @@ const Main = ({ page, size, isLoading, dispatch }) => {
           Solicitar reembolso <FaExchangeAlt />
         </Button>
 
-        <ListContainer>
-          <ListHeader>
-            <div>
-              <h2>Reembolsos</h2>
-              <Pager />
-            </div>
-            <ListTitles>
-              <span>Título</span>
-              <span>Data</span>
-              <span>Valor</span>
-              <span>Situação</span>
-              <span>Ações</span>
-            </ListTitles>
-          </ListHeader>
-          <Refund />
-        </ListContainer>
+        {refund.length === 0 ? (
+          <h2>Nenhum reembolso solicitado</h2>
+        ) : (
+          <>
+            <ListContainer>
+              <ListHeader>
+                <div>
+                  <h2>Reembolsos</h2>
+                  <Pager />
+                </div>
+                <ListTitles>
+                  <span>Título</span>
+                  <span>Data</span>
+                  <span>Valor</span>
+                  <span>Situação</span>
+                  <span>Ações</span>
+                </ListTitles>
+              </ListHeader>
+              <Refund />
+            </ListContainer>
+          </>
+        )}
       </Container>
     </>
   );
@@ -73,5 +79,6 @@ const mapStateToProps = (state) => ({
   isLoading: state.refundReducer.isLoading,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  refund: state.refundReducer.refund,
 });
 export default connect(mapStateToProps)(Main);

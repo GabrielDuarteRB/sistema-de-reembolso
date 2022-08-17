@@ -119,9 +119,6 @@ export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
       title: "Reembolso deletado",
     });
 
-    console.log(data);
-    console.log(data.page);
-    console.log(Math.ceil(data.totalElements / data.size));
     const getPages = {
       type: "GET_PAGES",
       totalPages: data.totalPages,
@@ -165,7 +162,6 @@ export const handleUpdateRefund = async (
 };
 
 export const gestorAprove = async (dispatch, idRefund, action, page, size) => {
-  console.log(idRefund);
   try {
     await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`);
     getAllRefund(dispatch, "ABERTO", page, size);

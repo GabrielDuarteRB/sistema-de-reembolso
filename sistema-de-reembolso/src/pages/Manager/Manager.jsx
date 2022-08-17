@@ -21,28 +21,32 @@ const Manager = ({ dispatch, refund, page, size }) => {
     getAllRefund(dispatch, "ABERTO", page, size);
   }, [page, size]);
 
-  console.log(refund);
-
   return (
     <>
       <Header />
       <Container>
-        <ListContainer>
-          <ListHeader>
-            <div>
-              <h2>Reembolsos</h2>
-              <Pager />
-            </div>
-            <ListTitles>
-              <span>Título</span>
-              <span>Data</span>
-              <span>Valor</span>
-              <span>Anexo</span>
-              <span>Ação</span>
-            </ListTitles>
-          </ListHeader>
-          <RefundPending />
-        </ListContainer>
+        {refund.length === 0 ? (
+          <h2>Nenhum reembolso solicitado</h2>
+        ) : (
+          <>
+            <ListContainer>
+              <ListHeader>
+                <div>
+                  <h2>Reembolsos</h2>
+                  <Pager />
+                </div>
+                <ListTitles>
+                  <span>Título</span>
+                  <span>Data</span>
+                  <span>Valor</span>
+                  <span>Situação</span>
+                  <span>Ações</span>
+                </ListTitles>
+              </ListHeader>
+              <RefundPending />
+            </ListContainer>
+          </>
+        )}
       </Container>
     </>
   );
