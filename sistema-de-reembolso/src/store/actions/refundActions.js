@@ -45,20 +45,19 @@ export const getRefund = async (
     const { data } = await apiRefund.get(
       `/reembolso/logged/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
     );
-    
+
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
-    }
-    dispatch(getPages)
+    };
+    dispatch(getPages);
 
     const get = {
       type: "GET_REFUND",
       refund: data.content,
     };
     dispatch(get);
-
   } catch (error) {
     console.log(error);
   }
@@ -74,20 +73,19 @@ export const getAllRefund = async (
     const { data } = await apiRefund.get(
       `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
     );
-    
+
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
-    }
-    dispatch(getPages)
+    };
+    dispatch(getPages);
 
     const get = {
       type: "GET_REFUND",
       refund: data.content,
     };
     dispatch(get);
-
   } catch (error) {
     console.log(error);
   }
@@ -113,21 +111,26 @@ export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
     };
     dispatch(loading);
 
-    const {data} = await apiRefund.delete(`/reembolso/logged/delete/${idRefund}?pagina=${page}&quantidadeDeRegistros=${size}`);
+    const { data } = await apiRefund.delete(
+      `/reembolso/logged/delete/${idRefund}?pagina=${page}&quantidadeDeRegistros=${size}`,
+    );
     toast.fire({
       icon: "success",
       title: "Reembolso deletado",
     });
 
-    console.log(data)
-    console.log(data.page)
-    console.log(Math.ceil(data.totalElements/data.size))
+    console.log(data);
+    console.log(data.page);
+    console.log(Math.ceil(data.totalElements / data.size));
     const getPages = {
       type: "GET_PAGES",
       totalPages: data.totalPages,
-      page: Math.ceil(data.totalElements/data.size) >= data.page + 1 ? data.page : data.page - 1
-    }
-    dispatch(getPages)
+      page:
+        Math.ceil(data.totalElements / data.size) >= data.page + 1
+          ? data.page
+          : data.page - 1,
+    };
+    dispatch(getPages);
 
     const get = {
       type: "GET_REFUND",
@@ -161,21 +164,17 @@ export const handleUpdateRefund = async (
   }
 };
 
-<<<<<<< HEAD
-export const navigateToUpdate = (dispatch, navigate, idRefund) => {
-=======
 export const gestorAprove = async (dispatch, idRefund, action, page, size) => {
-  console.log(idRefund)
+  console.log(idRefund);
   try {
-    await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`)
-    getAllRefund(dispatch, 'ABERTO', page, size)
+    await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`);
+    getAllRefund(dispatch, "ABERTO", page, size);
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-export const navigateToUpdate = (dispatch,navigate, idRefund) => {
->>>>>>> dfe36ee7ec42cc038bdf38ad2a7efe1868681d55
+export const navigateToUpdate = (dispatch, navigate, idRefund) => {
   navigate(`/solicitar-reembolso/${idRefund}`);
   const loading = {
     type: "LOADING_TRUE",
