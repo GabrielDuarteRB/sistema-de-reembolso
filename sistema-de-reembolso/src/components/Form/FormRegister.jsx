@@ -119,19 +119,19 @@ const FormRegister = ({ typePassword, dispatch }) => {
                   <FaTrash />
                 </button>
               </InputContainer>
-              {errors.file && touched.file ? (
-                <TextError>{errors.file}</TextError>
+              {errors.foto && touched.foto ? (
+                <TextError>{errors.foto}</TextError>
               ) : null}
             </FormItem>
 
             <Button
+              type="submit"
               background={primaryColor}
               backgroundHover={"#FCFDFE"}
               padding={"12px 16px"}
               color={secondaryColor}
               colorHover={primaryColor}
               borderColor={primaryColor}
-              type="submit"
             >
               Cadastrar
             </Button>
