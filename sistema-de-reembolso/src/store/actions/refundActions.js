@@ -42,6 +42,19 @@ export const getRefund = async (
   }
 };
 
+export const getRefundById = async (dispatch, idRefund) => {
+  try {
+    const { data } = await apiRefund.get(`/reembolso/${idRefund}`);
+    const get = {
+      type: "GET_REFUND_BY_ID",
+      refundId: data
+    };
+    dispatch(get);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export const handleDeleteRefund = async (idRefund, dispatch) => {
   try {
     await apiRefund.delete(`/reembolso/logged/delete/${idRefund}`);
@@ -76,6 +89,10 @@ export const handleUpdateRefund = async (
   }
 };
 
-export const navigateToUpdate = (navigate, idRefund) => {
+export const navigateToUpdate = (dispatch,navigate, idRefund) => {
   navigate(`/solicitar-reembolso/${idRefund}`);
+  const loading = {
+    type: "LOADING_TRUE"
+  }
+  dispatch(loading)
 };

@@ -30,7 +30,7 @@ const Refund = ({ dispatch, refund }) => {
               colorHover={primaryColor}
               borderColor={primaryColor}
               padding={"8px"}
-              onClick={() => navigateToUpdate(navigate, reembolso.idReembolso)}
+              onClick={() => navigateToUpdate(dispatch, navigate, reembolso.idReembolso)}
             >
               <FaEdit />
             </Button>

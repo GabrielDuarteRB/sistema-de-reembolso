@@ -18,11 +18,13 @@ import { validationRefund } from "../../utils/validationsForm";
 import { formatNumber } from "../../utils/regex";
 import { FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
 import {
+  getRefundById,
   handleCreateRefund,
   handleUpdateRefund,
 } from "../../store/actions/refundActions";
+import { useEffect } from "react";
 
-const FormRefund = ({ dispatch }) => {
+const FormRefund = ({ dispatch, refundId, isLoading }) => {
   const navigate = useNavigate();
 
   const { idRefund } = useParams();
@@ -31,6 +33,20 @@ const FormRefund = ({ dispatch }) => {
     // console.log(file);
     setFieldValue("file", file);
   };
+
+  useEffect(() => {
+    if(idRefund) {
+      getRefundById(dispatch, idRefund)
+    }
+  }, [])
+
+  if(isLoading){
+    return(
+      <isLoading/>
+    )
+  }
+
+  console.log(refundId)
 
   return (
     <Container>
@@ -41,8 +57,8 @@ const FormRefund = ({ dispatch }) => {
         </HeaderForm>
         <Formik
           initialValues={{
-            titulo: "",
-            valor: "",
+            titulo: refundId ? refundId.titulo : '',
+            valor: refundId ? refundId.valor : '',
             file: "",
           }}
           validationSchema={validationRefund}
@@ -134,8 +150,8 @@ const FormRefund = ({ dispatch }) => {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.authReducer.auth,
-  typePassword: state.authReducer.typePassword,
+  refundId: state.refundReducer.refundId,
+  isLoading: state.refundReducer.isLoading,
 });
 
 export default connect(mapStateToProps)(FormRefund);
