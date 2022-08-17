@@ -23,6 +23,7 @@ import {
   handleUpdateRefund,
 } from "../../store/actions/refundActions";
 import { useEffect } from "react";
+import Loading from "../Loading/Loading";
 
 const FormRefund = ({ dispatch, refundId, isLoading }) => {
   const navigate = useNavigate();
@@ -42,11 +43,9 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
 
   if(isLoading){
     return(
-      <isLoading/>
+      <Loading/>
     )
   }
-
-  console.log(refundId)
 
   return (
     <Container>
@@ -63,6 +62,7 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
+            console.log(values.valor)
             const newValues = {
               titulo: values.titulo,
               valor: formatNumber(values.valor),
@@ -92,9 +92,9 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
                   decimalSeparator=","
                   thousandSeparator="."
                   value={values.valor}
-                  // onChange={(value) => {
-                  //   setFieldValue("valor", value);
-                  // }}
+                  onChange={(value) => {
+                    setFieldValue("valor", value);
+                  }}
                 />
                 {errors.valor && touched.valor ? (
                   <TextError>{errors.valor}</TextError>

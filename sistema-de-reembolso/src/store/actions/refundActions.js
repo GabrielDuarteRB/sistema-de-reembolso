@@ -28,15 +28,20 @@ export const getRefund = async (
     const { data } = await apiRefund.get(
       `/reembolso/logged/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
     );
+    
+    const getPages = {
+      type: "GET_PAGES",
+      page: data.page,
+      totalPages: data.totalPages,
+    }
+    dispatch(getPages)
 
     const get = {
       type: "GET_REFUND",
       refund: data.content,
-      page: data.page,
-      totalPages: data.totalPages,
-      size: data.size,
     };
     dispatch(get);
+
   } catch (error) {
     console.log(error);
   }
@@ -55,13 +60,33 @@ export const getRefundById = async (dispatch, idRefund) => {
   }
 }
 
-export const handleDeleteRefund = async (idRefund, dispatch) => {
+export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
   try {
-    await apiRefund.delete(`/reembolso/logged/delete/${idRefund}`);
+    const loading = {
+      type: "LOADING_TRUE",
+    };
+    dispatch(loading);
+
+    const {data} = await apiRefund.delete(`/reembolso/logged/delete/${idRefund}?pagina=${page}&quantidadeDeRegistros=${size}`);
     toast.fire({
       icon: "success",
       title: "Reembolso deletado",
     });
+
+    console.log(data)
+    console.log(data.totalPage === (data.page + 1) ? data.page : data.page - 1)
+    const getPages = {
+      type: "GET_PAGES",
+      totalPages: data.totalPages,
+      page: data.totalPage === data.page + 1 ? data.page : data.page - 1
+    }
+    dispatch(getPages)
+
+    const get = {
+      type: "GET_REFUND",
+      refund: data.content,
+    };
+    dispatch(get);
   } catch (error) {
     console.log(error);
   }
