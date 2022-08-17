@@ -88,12 +88,11 @@ export const handleLogout = (dispatch, navigate) => {
   localStorage.removeItem("role");
   apiRefund.defaults.headers.common["Authorization"] = "";
 
-  navigate("/");
-
   const logout = {
     type: "SET_LOGOUT",
   };
   dispatch(logout);
+  navigate("/");
 };
 
 export const isAuth = (dispatch) => {

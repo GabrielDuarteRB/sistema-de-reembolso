@@ -15,9 +15,9 @@ import LogoBranca from "../../img/logoBranca.png";
 import noUser from "../../img/noUser.jpeg";
 
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
-import { Img } from "../Image/Image";
+import { Img } from "../Image/Img";
 
-const Header = ({ nome, foto, handleLogout, dispatch }) => {
+const Header = ({ name, foto, handleLogout, dispatch }) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
@@ -56,12 +56,10 @@ const Header = ({ nome, foto, handleLogout, dispatch }) => {
         ) : (
           <></>
         )}
-        <span>{nome}</span>
+
+        <span>{name}</span>
 
         <Img
-          width="40px"
-          height="40px"
-          border-radius="20px"
           src={foto ? `data:image/jpg;base64,` + foto : noUser}
           alt="Foto do usuário"
         />
@@ -83,12 +81,13 @@ const Header = ({ nome, foto, handleLogout, dispatch }) => {
   );
 };
 
-const mapDispatchToProps = () => ({
-  handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
+const mapStateToProps = (state) => ({
+  foto: state.usersReducer.foto,
+  name: state.usersReducer.name,
 });
 
-const mapStateToProps = (state) => ({
-  foto: state.collaboratorReducer.foto,
+const mapDispatchToProps = () => ({
+  handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
