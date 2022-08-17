@@ -6,7 +6,7 @@ import {
   FieldForm,
   FormItem,
   HeaderForm,
-  Password,
+  InputContainer,
   TextError,
 } from "./Form.style";
 import {
@@ -52,12 +52,16 @@ const FormLogin = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="senha">senha*</label>
-              <Password>
+              <InputContainer>
                 <Field type={typePassword} name="senha" placeholder="Senha" />
-                <FaEye
+                <button
+                  type="button"
+                  background={"#000"}
                   onClick={() => handleTypePassword(dispatch, typePassword)}
-                />
-              </Password>
+                >
+                  <FaEye />
+                </button>
+              </InputContainer>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
               ) : null}

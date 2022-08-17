@@ -1,10 +1,8 @@
 import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
-import { RiRefund2Line } from "react-icons/ri";
-import { MdDelete, MdEdit } from "react-icons/md";
+import { FaExchangeAlt } from "react-icons/fa";
 import {
-  List,
   ListContainer,
   ListHeader,
   ListTitles,
@@ -16,17 +14,22 @@ import { getCollaborator } from "../../store/actions/collaboratorActions";
 import { connect } from "react-redux";
 import Loading from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
+import { getRefund } from "../../store/actions/refundActions";
+import Refund from "../../components/Refund/Refund";
 
-const Main = ({ name, isLoading, dispatch }) => {
+const Main = ({ name, page, size , isLoading, dispatch }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
     getCollaborator(dispatch);
-    console.log("oi");
   }, []);
 
+  useEffect(() => {
+    getRefund(dispatch, 'ABERTO', page, size)
+  }, [page, size])
+
   if (isLoading) {
-    return <Loading />;
+    return (<Loading />);
   }
 
   return (
@@ -42,7 +45,7 @@ const Main = ({ name, isLoading, dispatch }) => {
           borderColor={primaryColor}
           onClick={() => navigate("/solicitar-reembolso")}
         >
-          Solicitar reembolso <RiRefund2Line fontSize={"24px"} />
+          Solicitar reembolso <FaExchangeAlt />
         </Button>
 
         <ListContainer>
@@ -59,92 +62,7 @@ const Main = ({ name, isLoading, dispatch }) => {
               <span>Ações</span>
             </ListTitles>
           </ListHeader>
-          <List>
-            <li>
-              <span>Reembolso referente a almoço</span>
-              <span>13/08/2022</span>
-              <span>R$ 20,00</span>
-              <span>reprovado financeiro</span>
-              <div>
-                <Button
-                  background={primaryColor}
-                  backgroundHover={secondaryColor}
-                  color={secondaryColor}
-                  colorHover={primaryColor}
-                  borderColor={primaryColor}
-                  padding={"8px"}
-                >
-                  <MdEdit fontSize={"20px"} />
-                </Button>
-                <Button
-                  background={primaryColor}
-                  backgroundHover={secondaryColor}
-                  color={secondaryColor}
-                  colorHover={primaryColor}
-                  borderColor={primaryColor}
-                  padding={"8px"}
-                >
-                  <MdDelete fontSize={"20px"} />
-                </Button>
-              </div>
-            </li>
-            <li>
-              <span>Reembolso</span>
-              <span>13/08/2022</span>
-              <span>R$ 20,00</span>
-              <span>reprovado financeiro</span>
-              <div>
-                <Button
-                  background={primaryColor}
-                  backgroundHover={secondaryColor}
-                  color={secondaryColor}
-                  colorHover={primaryColor}
-                  borderColor={primaryColor}
-                  padding={"8px"}
-                >
-                  <MdEdit fontSize={"20px"} />
-                </Button>
-                <Button
-                  background={primaryColor}
-                  backgroundHover={secondaryColor}
-                  color={secondaryColor}
-                  colorHover={primaryColor}
-                  borderColor={primaryColor}
-                  padding={"8px"}
-                >
-                  <MdDelete fontSize={"20px"} />
-                </Button>
-              </div>
-            </li>
-            <li>
-              <span>Reembolso</span>
-              <span>13/08/2022</span>
-              <span>R$ 20,00</span>
-              <span>reprovado financeiro</span>
-              <div>
-                <Button
-                  background={primaryColor}
-                  backgroundHover={secondaryColor}
-                  color={secondaryColor}
-                  colorHover={primaryColor}
-                  borderColor={primaryColor}
-                  padding={"8px"}
-                >
-                  <MdEdit fontSize={"20px"} />
-                </Button>
-                <Button
-                  background={primaryColor}
-                  backgroundHover={secondaryColor}
-                  color={secondaryColor}
-                  colorHover={primaryColor}
-                  borderColor={primaryColor}
-                  padding={"8px"}
-                >
-                  <MdDelete fontSize={"20px"} />
-                </Button>
-              </div>
-            </li>
-          </List>
+          <Refund/>
         </ListContainer>
       </Container>
     </>
@@ -152,7 +70,9 @@ const Main = ({ name, isLoading, dispatch }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isLoading: state.collaboratorReducer.isLoading,
   name: state.collaboratorReducer.name,
+  isLoading: state.refundReducer.isLoading,
+  page: state.pageReducer.page,
+  size: state.pageReducer.size,
 });
 export default connect(mapStateToProps)(Main);

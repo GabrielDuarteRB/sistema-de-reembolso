@@ -6,7 +6,7 @@ import {
   FieldForm,
   FormItem,
   HeaderForm,
-  Password,
+  InputContainer,
   TextError,
 } from "./Form.style";
 import {
@@ -16,11 +16,16 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
 import { Button } from "../Button/Button";
-import { FaEye, FaRegArrowAltCircleLeft } from "react-icons/fa";
+import { FaEye, FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const FormRegister = ({ typePassword, dispatch }) => {
   const navigate = useNavigate();
+
+  const handleFoto = (foto, setFieldValue) => {
+    setFieldValue("foto", foto);
+    console.log(foto)
+  };
 
   return (
     <CardForm>
@@ -39,17 +44,22 @@ const FormRegister = ({ typePassword, dispatch }) => {
           foto: "",
         }}
         validationSchema={validationRegister}
-        onSubmit={(values) => {
+        onSubmit={(values, e) => {
           const newValues = {
             nome: values.nome,
             email: values.email,
             senha: values.senha,
+            foto: values.foto,
           };
           handleSignUp(dispatch, newValues, navigate);
         }}
       >
-        {({ errors, touched, handleSubmit }) => (
-          <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
+        {({ errors, touched, handleSubmit, setFieldValue, isSubmitting }) => (
+          <FieldForm
+            onSubmit={handleSubmit}
+            method="POST"
+            encType="multipart/form-data"
+          >
             <FormItem>
               <label htmlFor="nome">nome*</label>
               <Field type="text" name="nome" placeholder="Nome" />
@@ -68,12 +78,16 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="senha">senha*</label>
-              <Password>
+              <InputContainer>
                 <Field type={typePassword} name="senha" placeholder="Senha" />
-                <FaEye
+                <button
+                  type="button"
+                  background={"#000"}
                   onClick={() => handleTypePassword(dispatch, typePassword)}
-                />
-              </Password>
+                >
+                  <FaEye />
+                </button>
+              </InputContainer>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
               ) : null}
@@ -93,17 +107,32 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="foto">Escolha uma foto</label>
-              <Field type="file" id="foto" name="foto" />
+              <InputContainer>
+                <Field
+                  accept=".png, .jpeg, .jpg"
+                  type="file"
+                  name='foto'
+                  value={''}
+                  onChange={(e) => handleFoto(e.target.files[0], setFieldValue)}
+                />
+                <button type="button" onClick={() => setFieldValue("foto", "")}>
+                  <FaTrash />
+                </button>
+              </InputContainer>
+              {errors.foto && touched.foto ? (
+                <TextError>{errors.foto}</TextError>
+              ) : null}
             </FormItem>
 
             <Button
+              type="submit"
               background={primaryColor}
               backgroundHover={"#FCFDFE"}
               padding={"12px 16px"}
               color={secondaryColor}
               colorHover={primaryColor}
               borderColor={primaryColor}
-              type="submit"
+              disabled={isSubmitting}
             >
               Cadastrar
             </Button>
@@ -111,7 +140,9 @@ const FormRegister = ({ typePassword, dispatch }) => {
         )}
       </Formik>
 
-      <Link to="/"><FaRegArrowAltCircleLeft/> Voltar para o login</Link>
+      <Link to="/">
+        <FaRegArrowAltCircleLeft /> Voltar para o login
+      </Link>
     </CardForm>
   );
 };

@@ -1,12 +1,14 @@
 import { PaginationContainer } from "./Pager.styled";
-import { GrPrevious, GrNext } from "react-icons/gr";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { connect } from "react-redux";
+import { modifyItensPerPage, modifyPage } from "../../store/actions/pageActions";
 
-const Pager = () => {
+const Pager = ({dispatch, size, page, totalPages}) => {
   return (
     <PaginationContainer>
       <div>
         <span>Itens por página</span>
-        <select name="itens" id="">
+        <select onChange={(e) => modifyItensPerPage(e, dispatch)} name="itens" defaultValue={size}>
           <option value="5">5</option>
           <option value="10">10</option>
           <option value="20">20</option>
@@ -14,15 +16,44 @@ const Pager = () => {
       </div>
 
       <div>
-        <span>1-5 de 10</span>
-        <button>
-          <GrPrevious />
-        </button>
-        <button>
-          <GrNext />
-        </button>
+        <span>
+          Página: {page + 1} de {totalPages}
+        </span>
+        {
+          page >= 1
+          ?
+          (
+            <button
+              onClick={() => modifyPage(dispatch, page, 'less')}
+            >
+              <FaArrowLeft />
+            </button>
+          )
+          :
+          null
+        }
+        {
+          page + 1 !== totalPages
+          ?
+          (
+            <button
+              onClick={() => modifyPage(dispatch, page, 'sum')}
+            >
+              <FaArrowRight />
+            </button>
+          )
+          :
+          null
+        }
+        
       </div>
     </PaginationContainer>
   );
 };
-export default Pager;
+
+const mapStateToProps = (state) => ({
+  page: state.pageReducer.page,
+  totalPages: state.pageReducer.totalPages,
+  size: state.pageReducer.size,
+});
+export default connect(mapStateToProps)(Pager);

@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
   token: "",
+  role: "",
   isLogged: false,
   isLoading: true,
   typePassword: "password",
@@ -11,6 +12,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         token: action.token,
+        role: action.role,
         isLogged: true,
         isLoading: false,
       };
@@ -19,6 +21,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         token: action.token,
+        role: action.role,
         isLogged: true,
         isLoading: false,
       };
@@ -27,6 +30,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         token: "",
+        role: "",
         isLogged: false,
       };
 

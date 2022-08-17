@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { errorMessage, primaryColor } from "../../utils/colors";
+import { errorMessage, primaryColor, secondaryColor } from "../../utils/colors";
 
 export const CardForm = styled.div`
   display: grid;
@@ -12,9 +12,9 @@ export const CardForm = styled.div`
   gap: 32px;
 
   & a {
-    align-items: center ;
-    display: flex ;
-    gap: 8px ;
+    align-items: center;
+    display: flex;
+    gap: 8px;
     text-decoration: none;
     color: ${primaryColor};
 
@@ -74,16 +74,28 @@ export const FormItem = styled.div`
   }
 `;
 
-export const Password = styled.div`
-  align-items: center;
+export const InputContainer = styled.div`
   display: flex;
+  align-items: center;
+  position: relative;
+
   & input {
     width: 100%;
+    padding-right: 40px;
   }
-  & > svg {
+
+  & button {
+    position: absolute;
+    right: 16px;
+    top: 12px;
+    background: #fcfdfe;
+    border: none;
+    padding: 4px;
     cursor: pointer;
-    font-size: 14px;
-    margin-left: -30px;
+
+    :hover {
+      background-color: ${secondaryColor};
+    }
   }
 `;
 

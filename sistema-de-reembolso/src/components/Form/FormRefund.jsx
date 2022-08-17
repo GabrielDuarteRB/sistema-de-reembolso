@@ -6,55 +6,78 @@ import {
   FieldForm,
   FormItem,
   HeaderForm,
+  InputContainer,
   TextError,
 } from "./Form.style";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Container } from "../Container/Container";
 import CurrencyInput from "react-currency-input";
 import { validationRefund } from "../../utils/validationsForm";
 import { formatNumber } from "../../utils/regex";
-import { FaRegArrowAltCircleLeft } from "react-icons/fa";
+import { FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
+import {
+  getRefundById,
+  handleCreateRefund,
+  handleUpdateRefund,
+} from "../../store/actions/refundActions";
+import { useEffect } from "react";
+import Loading from "../Loading/Loading";
 
-const FormRefund = ({ typePassword, dispatch }) => {
+const FormRefund = ({ dispatch, refundId, isLoading }) => {
   const navigate = useNavigate();
+
+  const { idRefund } = useParams();
+
+  const handleFile = (file, setFieldValue) => {
+    // console.log(file);
+    setFieldValue("file", file);
+  };
+
+  useEffect(() => {
+    if(idRefund) {
+      getRefundById(dispatch, idRefund)
+    }
+  }, [])
+
+  if(isLoading){
+    return(
+      <Loading/>
+    )
+  }
 
   return (
     <Container>
       <CardForm>
         <HeaderForm>
           <img src={logoAzul} alt="Logo DBC" />
-          <h1>Criar reembolso</h1>
+          <h1>{idRefund ? "Atualizar" : "Solicitar"} reembolso</h1>
         </HeaderForm>
         <Formik
           initialValues={{
-            titulo: "",
-            valor: "",
-            foto: "",
+            titulo: refundId ? refundId.titulo : '',
+            valor: refundId ? refundId.valor : '',
+            file: "",
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
+            console.log(values.valor)
             const newValues = {
               titulo: values.titulo,
               valor: formatNumber(values.valor),
-              foto: values.foto,
             };
-            console.log(newValues);
+
+            idRefund
+              ? handleUpdateRefund(dispatch, newValues, idRefund, navigate)
+              : handleCreateRefund(dispatch, newValues, navigate);
           }}
         >
-          {({
-            errors,
-            touched,
-            handleSubmit,
-            values,
-            setFieldValue,
-            handleChange,
-          }) => (
+          {({ errors, touched, handleSubmit, values, setFieldValue }) => (
             <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
               <FormItem>
-                <label htmlFor="titulo">titulo*</label>
-                <Field type="text" name="titulo" placeholder="titulo" />
+                <label htmlFor="titulo">título*</label>
+                <Field type="text" name="titulo" placeholder="Título" />
                 {errors.titulo && touched.titulo ? (
                   <TextError>{errors.titulo}</TextError>
                 ) : null}
@@ -64,7 +87,7 @@ const FormRefund = ({ typePassword, dispatch }) => {
                 <label htmlFor="valor">valor*</label>
                 <CurrencyInput
                   type="text"
-                  prefix="R$"
+                  prefix="R$ "
                   name="valor"
                   decimalSeparator=","
                   thousandSeparator="."
@@ -79,8 +102,28 @@ const FormRefund = ({ typePassword, dispatch }) => {
               </FormItem>
 
               <FormItem>
-                <label htmlFor="foto">Escolha uma foto</label>
-                <Field accept=".img, .jpeg, .jpg" type="file" name="foto" />
+                <label htmlFor="file">Enviar anexo</label>
+                <InputContainer>
+                  <Field
+                    accept=".pdf, .png, .jpeg, .jpg"
+                    type="file"
+                    name="file"
+                    value={values.file}
+                    onChange={(e) =>
+                      handleFile(e.target.files[0], setFieldValue)
+                    }
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setFieldValue("file", "")}
+                  >
+                    <FaTrash />
+                  </button>
+                </InputContainer>
+
+                {errors.file && touched.file ? (
+                  <TextError>{errors.file}</TextError>
+                ) : null}
               </FormItem>
 
               <Button
@@ -92,13 +135,13 @@ const FormRefund = ({ typePassword, dispatch }) => {
                 borderColor={primaryColor}
                 type="submit"
               >
-                Criar reembolso
+                {idRefund ? "Atualizar" : "Solicitar"} reembolso
               </Button>
             </FieldForm>
           )}
         </Formik>
-        <Link to='/principal'>
-          <FaRegArrowAltCircleLeft/>
+        <Link to="/principal">
+          <FaRegArrowAltCircleLeft />
           Voltar para a tela principal
         </Link>
       </CardForm>
@@ -107,8 +150,8 @@ const FormRefund = ({ typePassword, dispatch }) => {
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.authReducer.auth,
-  typePassword: state.authReducer.typePassword,
+  refundId: state.refundReducer.refundId,
+  isLoading: state.refundReducer.isLoading,
 });
 
 export default connect(mapStateToProps)(FormRefund);
