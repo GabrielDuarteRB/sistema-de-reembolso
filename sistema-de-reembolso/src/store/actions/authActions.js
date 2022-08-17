@@ -43,6 +43,7 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
     apiRefund.defaults.headers.common["Authorization"] = data.token;
+
     const signUp = {
       type: "SET_SIGNUP",
       token: data.token,
@@ -52,7 +53,9 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     if (token) {
       signUpImage({ file: values.foto });
     }
+
     dispatch(signUp);
+
     navigate("/principal");
   } catch (error) {
     if (error.response.status === 400) {

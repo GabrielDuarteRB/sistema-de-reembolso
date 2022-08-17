@@ -4,9 +4,10 @@ import { connect } from "react-redux";
 import {
   CardForm,
   FieldForm,
+  FileContainer,
   FormItem,
   HeaderForm,
-  InputContainer,
+  PasswordContainer,
   TextError,
 } from "./Form.style";
 import {
@@ -18,13 +19,15 @@ import { validationRegister } from "../../utils/validationsForm";
 import { Button } from "../Button/Button";
 import { FaEye, FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
 import { primaryColor, secondaryColor } from "../../utils/colors";
+import { useState } from "react";
 
 const FormRegister = ({ typePassword, dispatch }) => {
   const navigate = useNavigate();
+  const [selectedFoto, setSelectedFoto] = useState("");
 
   const handleFoto = (foto, setFieldValue) => {
     setFieldValue("foto", foto);
-    console.log(foto)
+    setSelectedFoto(foto.name);
   };
 
   return (
@@ -44,7 +47,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
           foto: "",
         }}
         validationSchema={validationRegister}
-        onSubmit={(values, e) => {
+        onSubmit={(values) => {
           const newValues = {
             nome: values.nome,
             email: values.email,
@@ -54,7 +57,14 @@ const FormRegister = ({ typePassword, dispatch }) => {
           handleSignUp(dispatch, newValues, navigate);
         }}
       >
-        {({ errors, touched, handleSubmit, setFieldValue, isSubmitting }) => (
+        {({
+          errors,
+          touched,
+          handleSubmit,
+          setFieldValue,
+          isSubmitting,
+          values,
+        }) => (
           <FieldForm
             onSubmit={handleSubmit}
             method="POST"
@@ -78,7 +88,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="senha">senha*</label>
-              <InputContainer>
+              <PasswordContainer>
                 <Field type={typePassword} name="senha" placeholder="Senha" />
                 <button
                   type="button"
@@ -87,7 +97,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
                 >
                   <FaEye />
                 </button>
-              </InputContainer>
+              </PasswordContainer>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
               ) : null}
@@ -107,18 +117,24 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="foto">Escolha uma foto</label>
-              <InputContainer>
+              <FileContainer>
                 <Field
                   accept=".png, .jpeg, .jpg"
                   type="file"
-                  name='foto'
-                  value={''}
+                  name="foto"
+                  value={""}
                   onChange={(e) => handleFoto(e.target.files[0], setFieldValue)}
                 />
-                <button type="button" onClick={() => setFieldValue("foto", "")}>
+
+                <small>{selectedFoto || "Nenhuma foto selecionada"}</small>
+
+                <button
+                  type="button"
+                  onClick={() => handleFoto("", setFieldValue)}
+                >
                   <FaTrash />
                 </button>
-              </InputContainer>
+              </FileContainer>
               {errors.foto && touched.foto ? (
                 <TextError>{errors.foto}</TextError>
               ) : null}

@@ -7,6 +7,7 @@ const INITIAL_STATE = {
 };
 
 const authReducer = (state = INITIAL_STATE, action) => {
+  console.log(action.role);
   switch (action.type) {
     case "SET_LOGIN":
       return {

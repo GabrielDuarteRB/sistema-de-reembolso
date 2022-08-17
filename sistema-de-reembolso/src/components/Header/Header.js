@@ -11,22 +11,20 @@ import { handleLogout } from "../../store/actions/authActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { HeaderContainer } from "./Header.styled";
-import {Image} from '../Image/Image'
-import LogoBranca from '../../img/logoBranca.png'
-import noUser from '../../img/noUser.jpeg'
+import LogoBranca from "../../img/logoBranca.png";
+import noUser from "../../img/noUser.jpeg";
 
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
+import { Image } from "../Image/Image";
 
-const Header = ({ name, foto, handleLogout, dispatch }) => {
+
+const Header = ({ name, foto, role, handleLogout, dispatch }) => {
+
   const navigate = useNavigate();
 
   return (
     <HeaderContainer>
-      <Image 
-        width='140px'
-        src={LogoBranca}
-        alt="Logo DBC"
-      />
+      <img width="120px" src={LogoBranca} alt="Logo DBC" />
 
       <div>
         <Dropdown>
@@ -39,6 +37,8 @@ const Header = ({ name, foto, handleLogout, dispatch }) => {
           >
             <FaBars />
           </Button>
+
+          {role === "ROLE_ADMIN" ? console.log(role) : console.log(role)}
           <DropdownContent>
             <span>Páginas</span>
             <Link to="/principal">
@@ -61,6 +61,7 @@ const Header = ({ name, foto, handleLogout, dispatch }) => {
           src={foto ? `data:image/jpg;base64,` + foto : noUser} 
           alt="foto do usuário" 
         />
+        
         <Button
           background={secondaryColor}
           backgroundHover={primaryColor}
@@ -78,10 +79,14 @@ const Header = ({ name, foto, handleLogout, dispatch }) => {
   );
 };
 
-const mapDispatchToProps = (state) => ({
+const mapDispatchToProps = () => ({
   handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
+
+});
+
+const mapStateToProps = (state) => ({
   name: state.usersReducer.name,
   foto: state.usersReducer.foto,
 });
 
-export default connect(mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

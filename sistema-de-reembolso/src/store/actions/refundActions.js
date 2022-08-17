@@ -3,15 +3,32 @@ import { toast } from "../../components/Toaster/Toaster";
 
 export const handleCreateRefund = async (dispatch, values, navigate) => {
   try {
-    await apiRefund.post("/reembolso/create", values);
+    const { data } = await apiRefund.post("/reembolso/create", {
+      titulo: values.titulo,
+      valor: values.valor,
+    });
     const create = {
       type: "UPLOAD_TRUE",
     };
+
     dispatch(create);
+
+    handleAnexo(data.idReembolso, { file: values.file });
+
     navigate("/principal");
     toast.fire({
       icon: "success",
       title: "Reembolso Solicitado!",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleAnexo = async (idReembolso, anexo) => {
+  try {
+    await apiRefund.post(`/upload/anexo?idReembolso=${idReembolso}`, anexo, {
+      headers: { "Content-Type": "multipart/form-data" },
     });
   } catch (error) {
     console.log(error);
@@ -81,13 +98,13 @@ export const getRefundById = async (dispatch, idRefund) => {
     const { data } = await apiRefund.get(`/reembolso/${idRefund}`);
     const get = {
       type: "GET_REFUND_BY_ID",
-      refundId: data
+      refundId: data,
     };
     dispatch(get);
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
   try {
@@ -144,10 +161,20 @@ export const handleUpdateRefund = async (
   }
 };
 
+export const gestorAprove = async (dispatch, idRefund, action, page, size) => {
+  console.log(idRefund)
+  try {
+    await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`)
+    getAllRefund(dispatch, 'ABERTO', page, size)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const navigateToUpdate = (dispatch,navigate, idRefund) => {
   navigate(`/solicitar-reembolso/${idRefund}`);
   const loading = {
-    type: "LOADING_TRUE"
-  }
-  dispatch(loading)
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
 };
