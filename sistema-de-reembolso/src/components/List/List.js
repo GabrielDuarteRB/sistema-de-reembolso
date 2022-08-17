@@ -7,7 +7,7 @@ export const ListContainer = styled.section`
   justify-content: center;
   background-color: #fff;
   border-radius: 4px;
-  padding: 16px 0;
+  padding-top: 16px;
 `;
 
 export const ListHeader = styled.div`
@@ -53,6 +53,7 @@ export const List = styled.ul`
   }
 
   :last-child {
+    border-radius: 0 0 8px 8px;
     border-bottom: 1px solid ${secondaryColor};
   }
 `;

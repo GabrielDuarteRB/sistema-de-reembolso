@@ -74,11 +74,12 @@ export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
     });
 
     console.log(data)
-    console.log(data.totalPage === (data.page + 1) ? data.page : data.page - 1)
+    console.log(data.page)
+    console.log(Math.ceil(data.totalElements/data.size))
     const getPages = {
       type: "GET_PAGES",
       totalPages: data.totalPages,
-      page: data.totalPage === data.page + 1 ? data.page : data.page - 1
+      page: Math.ceil(data.totalElements/data.size) >= data.page + 1 ? data.page : data.page - 1
     }
     dispatch(getPages)
 
