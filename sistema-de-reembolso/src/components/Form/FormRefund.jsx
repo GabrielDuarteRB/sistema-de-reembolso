@@ -23,7 +23,12 @@ import {
   handleCreateRefund,
   handleUpdateRefund,
 } from "../../store/actions/refundActions";
+<<<<<<< HEAD
 import { useEffect, useState } from "react";
+=======
+import { useEffect } from "react";
+import Loading from "../Loading/Loading";
+>>>>>>> dfe36ee7ec42cc038bdf38ad2a7efe1868681d55
 
 const FormRefund = ({ dispatch, refundId, isLoading }) => {
   const navigate = useNavigate();
@@ -42,8 +47,15 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
     }
   }, []);
 
+<<<<<<< HEAD
   if (isLoading) {
     return <Loading />;
+=======
+  if(isLoading){
+    return(
+      <Loading/>
+    )
+>>>>>>> dfe36ee7ec42cc038bdf38ad2a7efe1868681d55
   }
 
   return (
@@ -61,6 +73,7 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
+            console.log(values.valor)
             const newValues = {
               titulo: values.titulo,
               valor: formatNumber(values.valor),

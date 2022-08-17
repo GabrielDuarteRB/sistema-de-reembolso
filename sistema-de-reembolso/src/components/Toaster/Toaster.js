@@ -8,7 +8,7 @@ export const toast = Swal.mixin({
   timerProgressBar: true,
 });
 
-export const confirmModal = (title, id, handleDelete, dispatch) => {
+export const confirmModal = (title, id, handleDelete, dispatch, page, size) => {
   Swal.fire({
     title: title,
     confirmButtonText: "Confirmar",
@@ -16,7 +16,7 @@ export const confirmModal = (title, id, handleDelete, dispatch) => {
     denyButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-      handleDelete(id, dispatch);
+      handleDelete(dispatch, id, page, size);
     }
   });
 };

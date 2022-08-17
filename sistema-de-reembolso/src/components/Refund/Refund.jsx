@@ -11,9 +11,10 @@ import {
 import { useNavigate } from "react-router-dom";
 import { confirmModal } from "../Toaster/Toaster";
 
-const Refund = ({ dispatch, refund }) => {
+const Refund = ({ dispatch, refund, page, size }) => {
   const navigate = useNavigate();
 
+  
   return (
     <List>
       {refund.map((reembolso) => (
@@ -47,6 +48,8 @@ const Refund = ({ dispatch, refund }) => {
                   reembolso.idReembolso,
                   handleDeleteRefund,
                   dispatch,
+                  page,
+                  size
                 )
               }
             >
@@ -61,5 +64,7 @@ const Refund = ({ dispatch, refund }) => {
 
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
+  page: state.pageReducer.page,
+  size: state.pageReducer.size,
 });
 export default connect(mapStateToProps)(Refund);

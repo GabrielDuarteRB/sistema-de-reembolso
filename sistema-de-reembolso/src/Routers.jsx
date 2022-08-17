@@ -8,6 +8,7 @@ import { isAuth } from "./store/actions/authActions";
 import NotFound from "./pages/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
 import FormRefund from "./components/Form/FormRefund";
+import Manager from "./pages/Manager/Manager";
 
 const Routers = ({ isLogged, isLoading, dispatch }) => {
   useEffect(() => {
@@ -26,6 +27,7 @@ const Routers = ({ isLogged, isLoading, dispatch }) => {
             <Route path="/principal" element={<Main />} />
             <Route path="/solicitar-reembolso" element={<FormRefund />} />
             <Route path="/solicitar-reembolso/:idRefund" element={<FormRefund />} />
+            <Route path="/gestor" element={<Manager />} />
           </>
         ) : (
           <>

@@ -22,11 +22,14 @@ const Main = ({ name, page, size , isLoading, dispatch }) => {
 
   useEffect(() => {
     getCollaborator(dispatch);
-    getRefund(dispatch, 'ABERTO', page, size)
   }, []);
 
+  useEffect(() => {
+    getRefund(dispatch, 'ABERTO', page, size)
+  }, [page, size])
+
   if (isLoading) {
-    return <Loading />;
+    return (<Loading />);
   }
 
   return (
@@ -69,8 +72,7 @@ const Main = ({ name, page, size , isLoading, dispatch }) => {
 const mapStateToProps = (state) => ({
   name: state.collaboratorReducer.name,
   isLoading: state.refundReducer.isLoading,
-  page: state.refundReducer.page,
-  totalPage: state.refundReducer.totalPage,
-  size: state.refundReducer.size,
+  page: state.pageReducer.page,
+  size: state.pageReducer.size,
 });
 export default connect(mapStateToProps)(Main);
