@@ -9,7 +9,7 @@ import {
   InputContainer,
   TextError,
 } from "./Form.style";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Container } from "../Container/Container";
@@ -17,14 +17,25 @@ import CurrencyInput from "react-currency-input";
 import { validationRefund } from "../../utils/validationsForm";
 import { formatNumber } from "../../utils/regex";
 import { FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
+import { handleCreateRefund, handleUpdateRefund } from "../../store/actions/refundActions";
+import { useEffect } from "react";
 
-const FormRefund = () => {
+const FormRefund = ({dispatch}) => {
+
+  const navigate = useNavigate()
+
+  const {idRefund} = useParams()
+  
+  // useEffect(() => {
+
+  // }, [])
+
   return (
     <Container>
       <CardForm>
         <HeaderForm>
           <img src={logoAzul} alt="Logo DBC" />
-          <h1>Criar reembolso</h1>
+          <h1>{idRefund ? 'Atualizar' : 'Criar'} reembolso</h1>
         </HeaderForm>
         <Formik
           initialValues={{
@@ -38,7 +49,7 @@ const FormRefund = () => {
               titulo: values.titulo,
               valor: formatNumber(values.valor),
             };
-            console.log(newValues);
+            {idRefund ? handleUpdateRefund(dispatch, newValues, idRefund, navigate) : handleCreateRefund(dispatch, newValues, navigate)}
           }}
         >
           {({ errors, touched, handleSubmit, values, setFieldValue }) => (
@@ -98,7 +109,7 @@ const FormRefund = () => {
                 borderColor={primaryColor}
                 type="submit"
               >
-                Solicitar reembolso
+                {idRefund ? 'Atualizar' : 'Solicitar'} reembolso
               </Button>
             </FieldForm>
           )}
