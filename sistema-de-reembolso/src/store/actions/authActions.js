@@ -1,6 +1,5 @@
 import { apiRefund } from "../../api";
 import { toast } from "../../components/Toaster/Toaster";
-import axios from 'axios'
 
 export const handleLogin = async (dispatch, values, navigate) => {
   try {
@@ -34,26 +33,28 @@ export const handleLogin = async (dispatch, values, navigate) => {
 };
 
 export const handleSignUp = async (dispatch, values, navigate) => {
-  let token;
+  console.log({ file: values.foto });
   try {
     const { data } = await apiRefund.post("/usuario/cadastro", {
       nome: values.nome,
       email: values.email,
-      senha: values.senha
+      senha: values.senha,
     });
-    token = data.token
+    const token = data.token;
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
     apiRefund.defaults.headers.common["Authorization"] = data.token;
-
     const signUp = {
       type: "SET_SIGNUP",
       token: data.token,
       role: data.role,
     };
-    dispatch(signUp);
 
-    // navigate("/principal");
+    if (token) {
+      signUpImage(token, { file: values.foto });
+    }
+    dispatch(signUp);
+    navigate("/principal");
   } catch (error) {
     if (error.response.status === 400) {
       console.log(error);
@@ -68,30 +69,17 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     });
     console.log(error);
   }
-  
-  const data = new FormData()
-  data.append('file', values.file)
-  console.log(data)
-
-  signUpImage(token, data)
 };
 
-export const signUpImage = async (token, file) => {
+export const signUpImage = async (token, foto) => {
   try {
-    await apiRefund.post('/upload/foto', {
-      data: file
-    },
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        "Accept": '*/*',
-        "Authorization": token
-      }
-    })
+    await apiRefund.post("/upload/foto", foto, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-} 
+};
 
 export const handleLogout = (dispatch, navigate) => {
   localStorage.removeItem("token");

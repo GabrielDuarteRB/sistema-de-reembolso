@@ -32,6 +32,7 @@ const Routers = ({ isLogged, isLoading, dispatch }) => {
             <Route path="/cadastro" element={<Register />} />
           </>
         )}
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
