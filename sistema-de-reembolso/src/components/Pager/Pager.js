@@ -2,10 +2,7 @@ import { PaginationContainer } from "./Pager.styled";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { connect } from "react-redux";
 
-const Pager = ({dispatch, size, page, totalPages}) => {
-
-  console.log(totalPages)
-
+const Pager = ({ dispatch, size, page, totalPages }) => {
   return (
     <PaginationContainer>
       <div>
@@ -19,7 +16,9 @@ const Pager = ({dispatch, size, page, totalPages}) => {
       </div>
 
       <div>
-        <span>Página: {page+1} de {totalPages}</span>
+        <span>
+          Página: {page + 1} de {totalPages}
+        </span>
         <button>
           <FaArrowLeft />
         </button>
@@ -37,4 +36,3 @@ const mapStateToProps = (state) => ({
   size: state.refundReducer.size,
 });
 export default connect(mapStateToProps)(Pager);
-

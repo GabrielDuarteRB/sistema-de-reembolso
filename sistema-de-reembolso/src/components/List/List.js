@@ -3,6 +3,7 @@ import { secondaryColor } from "../../utils/colors";
 
 export const ListContainer = styled.section`
   display: grid;
+  grid-template-columns: 768px;
   justify-content: center;
   background-color: #fff;
   border-radius: 4px;
@@ -12,7 +13,7 @@ export const ListContainer = styled.section`
 export const ListHeader = styled.div`
   display: grid;
   padding: 0 32px;
-  gap: 24px;
+  gap: 40px;
 
   & div:first-child {
     display: flex;

@@ -62,7 +62,7 @@ export const validationRegister = Yup.object().shape({
     .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
     .required("Confirme a senha!"),
 
-  foto: Yup.mixed().test("fileValidation", "Formato inválido", (value) =>
+  foto: Yup.mixed().test("fileValidation", "Formato inválido!", (value) =>
     value !== undefined
       ? validationFile(value.name, ["png", "jpg", "jpeg"])
       : true,
