@@ -1,12 +1,12 @@
 import { combineReducers } from "redux";
 import authReducer from "./AuthReducers";
-import collaboratorReducer from "./CollaboratorReducers";
+import usersReducer from "./UsersReducers";
 import refundReducer from './RefundReducers'
 import pageReducer from './PageReducers'
 
 export default combineReducers ({
     authReducer,
-    collaboratorReducer,
+    usersReducer,
     refundReducer,
     pageReducer
 })

@@ -4,7 +4,7 @@ import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { List } from "../List/List"
 import { FaCheckCircle, FaTrash, FaFileDownload } from "react-icons/fa";
-import { gestorAprove } from "../../store/actions/refundActions";
+import { gestorAprove } from "../../store/actions/managerActions";
 
 const RefundPending = ({dispatch, page, size, refund}) => {
 

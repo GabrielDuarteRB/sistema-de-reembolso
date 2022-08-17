@@ -1,11 +1,11 @@
 import { apiRefund } from "../../api";
 
-export const getCollaborator = async (dispatch) => {
+export const getUser = async (dispatch) => {
   try {
     const { data } = await apiRefund.get("/usuario/logged");
 
     const get = {
-      type: "GET_COLLABORATOR",
+      type: "GET_USER",
       name: data.nome,
       email: data.email,
       foto: data.fotoDTO && data.fotoDTO.data,

@@ -5,9 +5,9 @@ const INITIAL_STATE = {
     isLoading: true
 };
 
-const collaboratorReducer = (state = INITIAL_STATE, action) => {
+const usersReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
-        case 'GET_COLLABORATOR': 
+        case 'GET_USER': 
             return {
                 name: action.name,
                 email: action.email,
@@ -20,4 +20,4 @@ const collaboratorReducer = (state = INITIAL_STATE, action) => {
     
 }
 
-export default collaboratorReducer
+export default usersReducer

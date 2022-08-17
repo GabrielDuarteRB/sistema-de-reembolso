@@ -144,16 +144,6 @@ export const handleUpdateRefund = async (
   }
 };
 
-export const gestorAprove = async (dispatch, idRefund, action, page, size) => {
-  console.log(idRefund)
-  try {
-    await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`)
-    getAllRefund(dispatch, 'ABERTO', page, size)
-  } catch (error) {
-    console.log(error)
-  }
-}
-
 export const navigateToUpdate = (dispatch,navigate, idRefund) => {
   navigate(`/solicitar-reembolso/${idRefund}`);
   const loading = {

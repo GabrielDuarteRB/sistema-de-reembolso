@@ -17,7 +17,7 @@ import noUser from '../../img/noUser.jpeg'
 
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
 
-const Header = ({ nome, foto, handleLogout, dispatch }) => {
+const Header = ({ name, foto, handleLogout, dispatch }) => {
   const navigate = useNavigate();
 
   return (
@@ -53,7 +53,7 @@ const Header = ({ nome, foto, handleLogout, dispatch }) => {
           </DropdownContent>
         </Dropdown>
 
-        <span>{nome}</span>
+        <span>{name}</span>
         <Image 
           borderRadius='100%'
           height='60px'
@@ -80,7 +80,8 @@ const Header = ({ nome, foto, handleLogout, dispatch }) => {
 
 const mapDispatchToProps = (state) => ({
   handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
-  foto: state.collaboratorReducer.foto,
+  name: state.usersReducer.name,
+  foto: state.usersReducer.foto,
 });
 
 export default connect(mapDispatchToProps)(Header);

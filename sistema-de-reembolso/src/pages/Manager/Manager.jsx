@@ -6,8 +6,13 @@ import { ListContainer, ListHeader, ListTitles } from "../../components/List/Lis
 import Pager from "../../components/Pager/Pager"
 import RefundPending from "../../components/Refund/RefundPending"
 import { getAllRefund } from "../../store/actions/refundActions"
+import { getUser } from "../../store/actions/usersActions"
 
 const Manager = ({dispatch, refund, page, size}) => {
+
+  useEffect(() => {
+    getUser(dispatch);
+  }, [])
 
   useEffect(() => {
     getAllRefund(dispatch, 'ABERTO', page, size)
@@ -17,7 +22,7 @@ const Manager = ({dispatch, refund, page, size}) => {
 
   return (
     <>
-      <Header nome={'gabriel'} />
+      <Header />
       <Container>
         <ListContainer>
             <ListHeader>
