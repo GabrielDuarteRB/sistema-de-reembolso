@@ -1,8 +1,30 @@
 const INITIAL_STATE = {
-    token: "",
-    role: "",
-    isLogged: false,
-    isLoading: true,
-    typePassword: "password",
+    refund: [],
+    isLoading: false,
+    page: '0',
+    totalPages: '',
+    size: '5'
 };
-  
+
+
+const refundReducer = (state = INITIAL_STATE, action) => {
+    switch(action.type) {
+        case 'UPLOAD_TRUE':
+            return {
+                isLoading: true
+            }
+        case 'GET_REFUND':
+            return {
+                refund: action.refund,
+                isLoading: false,
+                page: action.page,
+                totalPages: action.totalPages,
+                size: action.size
+            }
+            
+        default:
+            return state
+    }
+}
+
+export default refundReducer

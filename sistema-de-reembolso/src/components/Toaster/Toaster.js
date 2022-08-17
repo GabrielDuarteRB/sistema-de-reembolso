@@ -7,3 +7,11 @@ export const toast = Swal.mixin({
     timer: 2000,
     timerProgressBar: true,
 })
+
+export const modal = Swal.mixin({
+    modal: true,
+    position: "top",
+    showConfirmButton: false,
+    timer: 2000,
+    timerProgressBar: true,
+})
