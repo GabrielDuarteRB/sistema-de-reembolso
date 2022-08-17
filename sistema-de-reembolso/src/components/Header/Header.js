@@ -16,8 +16,9 @@ import noUser from "../../img/noUser.jpeg";
 
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
 import { Img } from "../Image/Img";
+import { LoadingElement } from "../Loading/Loading.styled";
 
-const Header = ({ name, foto, handleLogout, dispatch }) => {
+const Header = ({ name, foto, dispatch }) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
@@ -57,7 +58,9 @@ const Header = ({ name, foto, handleLogout, dispatch }) => {
           <></>
         )}
 
-        <span>{name}</span>
+        <span>
+          {name ? name : <LoadingElement width={"120px"} height={"24px"} />}
+        </span>
 
         <Img
           src={foto ? `data:image/jpg;base64,` + foto : noUser}
@@ -86,8 +89,4 @@ const mapStateToProps = (state) => ({
   name: state.usersReducer.name,
 });
 
-const mapDispatchToProps = () => ({
-  handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps)(Header);

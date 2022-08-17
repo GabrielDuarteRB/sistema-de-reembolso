@@ -9,17 +9,18 @@ import {
   PasswordContainer,
   TextError,
 } from "./Form.style";
-import {
-  handleLogin,
-  handleTypePassword,
-} from "../../store/actions/authActions";
+import { handleLogin } from "../../store/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { validationLogin } from "../../utils/validationsForm";
 import { FaEye } from "react-icons/fa";
 import { primaryColor, secondaryColor } from "../../utils/colors";
+import {
+  handleForm,
+  handleTypePassword,
+} from "../../store/actions/formActions";
 
-const FormLogin = ({ typePassword, dispatch }) => {
+const FormLogin = ({ typePassword, disabled, dispatch }) => {
   const navigate = useNavigate();
 
   return (
@@ -37,6 +38,7 @@ const FormLogin = ({ typePassword, dispatch }) => {
         }}
         validationSchema={validationLogin}
         onSubmit={(values) => {
+          handleForm(dispatch, "disable");
           handleLogin(dispatch, values, navigate);
         }}
       >
@@ -44,7 +46,12 @@ const FormLogin = ({ typePassword, dispatch }) => {
           <FieldForm onSubmit={handleSubmit}>
             <FormItem>
               <label htmlFor="email">email*</label>
-              <Field type="text" name="email" placeholder="Email" />
+              <Field
+                type="text"
+                name="email"
+                placeholder="Email"
+                disabled={disabled}
+              />
               {errors.email && touched.email ? (
                 <TextError>{errors.email}</TextError>
               ) : null}
@@ -53,7 +60,12 @@ const FormLogin = ({ typePassword, dispatch }) => {
             <FormItem>
               <label htmlFor="senha">senha*</label>
               <PasswordContainer>
-                <Field type={typePassword} name="senha" placeholder="Senha" />
+                <Field
+                  type={typePassword}
+                  name="senha"
+                  placeholder="Senha"
+                  disabled={disabled}
+                />
                 <button
                   type="button"
                   background={"#000"}
@@ -68,13 +80,14 @@ const FormLogin = ({ typePassword, dispatch }) => {
             </FormItem>
 
             <Button
+              type="submit"
               background={primaryColor}
               backgroundHover={"#FCFDFE"}
               padding={"12px 16px"}
               color={secondaryColor}
               colorHover={primaryColor}
               borderColor={primaryColor}
-              type="submit"
+              disabled={disabled}
             >
               Entrar
             </Button>
@@ -88,7 +101,8 @@ const FormLogin = ({ typePassword, dispatch }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.authReducer.auth,
-  typePassword: state.authReducer.typePassword,
+  disabled: state.formReducer.disabled,
+  typePassword: state.formReducer.typePassword,
 });
 
 export default connect(mapStateToProps)(FormLogin);

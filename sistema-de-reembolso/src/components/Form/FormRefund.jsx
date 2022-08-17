@@ -24,8 +24,9 @@ import {
   handleUpdateRefund,
 } from "../../store/actions/refundActions";
 import { useEffect, useState } from "react";
+import { handleForm } from "../../store/actions/formActions";
 
-const FormRefund = ({ dispatch, refundId, isLoading }) => {
+const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
   const navigate = useNavigate();
   const { idRefund } = useParams();
   const [selectedFile, setSelectedFile] = useState("");
@@ -61,7 +62,8 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
-            console.log(values.valor);
+            handleForm(dispatch, "disable");
+
             const newValues = {
               titulo: values.titulo,
               valor: formatNumber(values.valor),
@@ -77,7 +79,12 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
             <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
               <FormItem>
                 <label htmlFor="titulo">título*</label>
-                <Field type="text" name="titulo" placeholder="Título" />
+                <Field
+                  type="text"
+                  name="titulo"
+                  placeholder="Título"
+                  disabled={disabled}
+                />
                 {errors.titulo && touched.titulo ? (
                   <TextError>{errors.titulo}</TextError>
                 ) : null}
@@ -92,6 +99,7 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
                   decimalSeparator=","
                   thousandSeparator="."
                   value={values.valor}
+                  disabled={disabled}
                   onChange={(value) => {
                     setFieldValue("valor", value);
                   }}
@@ -109,6 +117,7 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
                     type="file"
                     name="file"
                     value={""}
+                    disabled={disabled}
                     onChange={(e) =>
                       handleFile(e.target.files[0], setFieldValue)
                     }
@@ -130,13 +139,14 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
               </FormItem>
 
               <Button
+                type="submit"
                 background={primaryColor}
                 backgroundHover={secondaryColor}
                 padding={"12px 16px"}
                 color={secondaryColor}
                 colorHover={primaryColor}
                 borderColor={primaryColor}
-                type="submit"
+                disabled={disabled}
               >
                 {idRefund ? "Atualizar" : "Solicitar"} reembolso
               </Button>
@@ -155,6 +165,7 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
 const mapStateToProps = (state) => ({
   refundId: state.refundReducer.refundId,
   isLoading: state.refundReducer.isLoading,
+  disabled: state.formReducer.disabled,
 });
 
 export default connect(mapStateToProps)(FormRefund);

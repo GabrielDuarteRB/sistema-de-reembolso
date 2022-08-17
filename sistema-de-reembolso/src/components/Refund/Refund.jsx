@@ -14,7 +14,10 @@ import { confirmModal } from "../Toaster/Toaster";
 const Refund = ({ dispatch, refund, page, size }) => {
   const navigate = useNavigate();
 
-  
+  if (!refund) {
+    return;
+  }
+
   return (
     <List>
       {refund.map((reembolso) => (
@@ -31,7 +34,9 @@ const Refund = ({ dispatch, refund, page, size }) => {
               colorHover={primaryColor}
               borderColor={primaryColor}
               padding={"8px"}
-              onClick={() => navigateToUpdate(dispatch, navigate, reembolso.idReembolso)}
+              onClick={() =>
+                navigateToUpdate(dispatch, navigate, reembolso.idReembolso)
+              }
             >
               <FaEdit />
             </Button>
@@ -49,7 +54,7 @@ const Refund = ({ dispatch, refund, page, size }) => {
                   handleDeleteRefund,
                   dispatch,
                   page,
-                  size
+                  size,
                 )
               }
             >
@@ -67,4 +72,5 @@ const mapStateToProps = (state) => ({
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });
+
 export default connect(mapStateToProps)(Refund);

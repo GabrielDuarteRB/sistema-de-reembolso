@@ -1,11 +1,12 @@
 import styled from "styled-components";
-import { secondaryColor } from "../../utils/colors";
+import { primaryColor, secondaryColor } from "../../utils/colors";
 
 export const ListContainer = styled.section`
   display: grid;
   grid-template-columns: 768px;
   justify-content: center;
   background-color: #fff;
+  border: 1px solid ${primaryColor};
   border-radius: 4px;
   padding-top: 16px;
 `;

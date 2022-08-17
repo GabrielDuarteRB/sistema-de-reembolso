@@ -40,3 +40,21 @@ export const LoadingDot = styled.span`
     }
   }
 `;
+
+export const LoadingElement = styled.div`
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  border-radius: 8px;
+  background-image: linear-gradient(270deg, #fff, #9fa2b4, #9fa2b4, #fff);
+  background-size: 400% 100%;
+  animation: loading 6s ease-in-out infinite;
+
+  @keyframes loading {
+    from {
+      background-position: 200% 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
+  }
+`;

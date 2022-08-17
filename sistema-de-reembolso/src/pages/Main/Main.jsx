@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { getRefund } from "../../store/actions/refundActions";
 import Refund from "../../components/Refund/Refund";
 
-const Main = ({ page, size , isLoading, dispatch }) => {
+const Main = ({ page, size, isLoading, dispatch }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,11 +25,11 @@ const Main = ({ page, size , isLoading, dispatch }) => {
   }, []);
 
   useEffect(() => {
-    getRefund(dispatch, 'ABERTO', page, size)
-  }, [page, size])
+    getRefund(dispatch, "ABERTO", page, size);
+  }, [page, size]);
 
   if (isLoading) {
-    return (<Loading />);
+    return <Loading />;
   }
 
   return (
@@ -62,7 +62,7 @@ const Main = ({ page, size , isLoading, dispatch }) => {
               <span>Ações</span>
             </ListTitles>
           </ListHeader>
-          <Refund/>
+          <Refund />
         </ListContainer>
       </Container>
     </>

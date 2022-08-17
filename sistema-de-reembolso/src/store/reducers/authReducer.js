@@ -40,11 +40,6 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isLoading: action.isLoading,
       };
 
-    case "SET_TYPE_PASSWORD":
-      return {
-        ...state,
-        typePassword: action.typePassword,
-      };
     default:
       return state;
   }

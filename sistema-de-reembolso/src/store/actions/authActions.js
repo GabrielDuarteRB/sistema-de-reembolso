@@ -1,5 +1,6 @@
 import { apiRefund } from "../../api";
 import { toast } from "../../components/Toaster/Toaster";
+import { handleForm } from "./formActions";
 
 export const handleLogin = async (dispatch, values, navigate) => {
   try {
@@ -20,8 +21,11 @@ export const handleLogin = async (dispatch, values, navigate) => {
       icon: "success",
       title: "Bem vindo!",
     });
+
+    handleForm(dispatch, "enable");
     navigate("/principal");
   } catch (error) {
+    handleForm(dispatch, "enable");
     if (error.response.status === 400) {
       toast.fire({
         icon: "error",
@@ -39,6 +43,7 @@ export const handleSignUp = async (dispatch, values, navigate) => {
       email: values.email,
       senha: values.senha,
     });
+
     const token = data.token;
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
@@ -55,9 +60,10 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     }
 
     dispatch(signUp);
-
+    handleForm(dispatch, "enable");
     navigate("/principal");
   } catch (error) {
+    handleForm(dispatch, "enable");
     if (error.response.status === 400) {
       console.log(error);
       toast.fire({
@@ -87,7 +93,6 @@ export const handleLogout = (dispatch, navigate) => {
   localStorage.removeItem("token");
   localStorage.removeItem("role");
   apiRefund.defaults.headers.common["Authorization"] = "";
-
   const logout = {
     type: "SET_LOGOUT",
   };
@@ -114,21 +119,4 @@ export const isAuth = (dispatch) => {
     };
     dispatch(logged);
   }
-};
-
-export const handleTypePassword = (dispatch, type) => {
-  if (type === "password") {
-    const password = {
-      type: "SET_TYPE_PASSWORD",
-      typePassword: "text",
-    };
-    dispatch(password);
-    return;
-  }
-
-  const password = {
-    type: "SET_TYPE_PASSWORD",
-    typePassword: "password",
-  };
-  dispatch(password);
 };
