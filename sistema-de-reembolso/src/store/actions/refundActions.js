@@ -47,6 +47,35 @@ export const getRefund = async (
   }
 };
 
+export const getAllRefund = async (
+  dispatch,
+  statusRefund,
+  page,
+  quantityPerPage,
+) => {
+  try {
+    const { data } = await apiRefund.get(
+      `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
+    );
+    
+    const getPages = {
+      type: "GET_PAGES",
+      page: data.page,
+      totalPages: data.totalPages,
+    }
+    dispatch(getPages)
+
+    const get = {
+      type: "GET_REFUND",
+      refund: data.content,
+    };
+    dispatch(get);
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getRefundById = async (dispatch, idRefund) => {
   try {
     const { data } = await apiRefund.get(`/reembolso/${idRefund}`);
@@ -114,6 +143,16 @@ export const handleUpdateRefund = async (
     });
   }
 };
+
+export const gestorAprove = async (dispatch, idRefund, action, page, size) => {
+  console.log(idRefund)
+  try {
+    await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`)
+    getAllRefund(dispatch, 'ABERTO', page, size)
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const navigateToUpdate = (dispatch,navigate, idRefund) => {
   navigate(`/solicitar-reembolso/${idRefund}`);

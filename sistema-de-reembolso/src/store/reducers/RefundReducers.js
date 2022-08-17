@@ -30,7 +30,6 @@ const refundReducer = (state = INITIAL_STATE, action) => {
                 refundId: action.refundId,
                 isLoading: false
             }
-            
         default:
             return state
     }
