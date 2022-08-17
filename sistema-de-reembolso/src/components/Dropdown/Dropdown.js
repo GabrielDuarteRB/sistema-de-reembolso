@@ -4,7 +4,7 @@ import { primaryColor, secondaryColor } from "../../utils/colors";
 export const DropdownContent = styled.div`
   display: none !important;
   position: absolute;
-  background-color: ${secondaryColor};
+  background-color: #fff;
   border: 2px solid ${primaryColor};
   border-radius: 8px;
 
@@ -12,6 +12,7 @@ export const DropdownContent = styled.div`
     color: ${primaryColor};
     display: block;
     padding: 12px 16px;
+    border-radius: 8px 8px 0 0;
   }
 
   & a {

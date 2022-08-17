@@ -17,25 +17,27 @@ import CurrencyInput from "react-currency-input";
 import { validationRefund } from "../../utils/validationsForm";
 import { formatNumber } from "../../utils/regex";
 import { FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
-import { handleCreateRefund, handleUpdateRefund } from "../../store/actions/refundActions";
-import { useEffect } from "react";
+import {
+  handleCreateRefund,
+  handleUpdateRefund,
+} from "../../store/actions/refundActions";
 
-const FormRefund = ({dispatch}) => {
+const FormRefund = ({ dispatch }) => {
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
+  const { idRefund } = useParams();
 
-  const {idRefund} = useParams()
-  
-  // useEffect(() => {
-
-  // }, [])
+  const handleFile = (file, setFieldValue) => {
+    // console.log(file);
+    setFieldValue("file", file);
+  };
 
   return (
     <Container>
       <CardForm>
         <HeaderForm>
           <img src={logoAzul} alt="Logo DBC" />
-          <h1>{idRefund ? 'Atualizar' : 'Criar'} reembolso</h1>
+          <h1>{idRefund ? "Atualizar" : "Solicitar"} reembolso</h1>
         </HeaderForm>
         <Formik
           initialValues={{
@@ -49,7 +51,10 @@ const FormRefund = ({dispatch}) => {
               titulo: values.titulo,
               valor: formatNumber(values.valor),
             };
-            {idRefund ? handleUpdateRefund(dispatch, newValues, idRefund, navigate) : handleCreateRefund(dispatch, newValues, navigate)}
+
+            idRefund
+              ? handleUpdateRefund(dispatch, newValues, idRefund, navigate)
+              : handleCreateRefund(dispatch, newValues, navigate);
           }}
         >
           {({ errors, touched, handleSubmit, values, setFieldValue }) => (
@@ -71,9 +76,9 @@ const FormRefund = ({dispatch}) => {
                   decimalSeparator=","
                   thousandSeparator="."
                   value={values.valor}
-                  onChange={(value) => {
-                    setFieldValue("valor", value);
-                  }}
+                  // onChange={(value) => {
+                  //   setFieldValue("valor", value);
+                  // }}
                 />
                 {errors.valor && touched.valor ? (
                   <TextError>{errors.valor}</TextError>
@@ -84,9 +89,13 @@ const FormRefund = ({dispatch}) => {
                 <label htmlFor="file">Enviar anexo</label>
                 <InputContainer>
                   <Field
-                    accept=".pdf, .jpeg, .jpg, .png"
+                    accept=".pdf, .png, .jpeg, .jpg"
                     type="file"
                     name="file"
+                    value={values.file}
+                    onChange={(e) =>
+                      handleFile(e.target.files[0], setFieldValue)
+                    }
                   />
                   <button
                     type="button"
@@ -95,6 +104,7 @@ const FormRefund = ({dispatch}) => {
                     <FaTrash />
                   </button>
                 </InputContainer>
+
                 {errors.file && touched.file ? (
                   <TextError>{errors.file}</TextError>
                 ) : null}
@@ -109,7 +119,7 @@ const FormRefund = ({dispatch}) => {
                 borderColor={primaryColor}
                 type="submit"
               >
-                {idRefund ? 'Atualizar' : 'Solicitar'} reembolso
+                {idRefund ? "Atualizar" : "Solicitar"} reembolso
               </Button>
             </FieldForm>
           )}

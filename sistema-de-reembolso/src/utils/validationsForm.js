@@ -17,8 +17,7 @@ const validationCurrency = (number) => {
   return true;
 };
 
-const validationPhoto = (url, types) => {
-  console.log(url)
+const validationFile = (url, types) => {
   url = url.split(".");
 
   return types.includes(url.at(-1));
@@ -58,13 +57,15 @@ export const validationRegister = Yup.object().shape({
       },
     )
     .required("Senha obrigatória!"),
+
   confirmarSenha: Yup.string()
     .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
     .required("Confirme a senha!"),
-  foto: Yup.object().shape({
-    name: Yup.string()
-      .test("photoValidation", "Formato inválido!", (value) => value !== undefined ? validationPhoto(value, ["png", "jpg", "jpeg"]) : true).nullable()
-})
+  foto: Yup.mixed().test("fileValidation", "Formato inválido!", (value) =>
+    value !== undefined
+      ? validationFile(value.name, ["png", "jpg", "jpeg"])
+      : true,
+  ),
 });
 
 export const validationRefund = Yup.object().shape({
@@ -77,9 +78,10 @@ export const validationRefund = Yup.object().shape({
     )
     .min(1, "Numero minimo")
     .required("Valor obrigatório!"),
-  file: Yup.string().test("photoValidation", "Formato inválido!", (value) =>
+
+  file: Yup.mixed().test("fileValidation", "Formato inválido!", (value) =>
     value !== undefined
-      ? validationPhoto(value, ["png", "jpg", "jpeg", "pdf"])
+      ? validationFile(value.name, ["png", "jpg", "jpeg", "pdf"])
       : true,
   ),
 });

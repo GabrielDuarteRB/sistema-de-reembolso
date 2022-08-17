@@ -125,6 +125,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
             </FormItem>
 
             <Button
+              type="submit"
               background={primaryColor}
               backgroundHover={"#FCFDFE"}
               padding={"12px 16px"}
@@ -132,7 +133,6 @@ const FormRegister = ({ typePassword, dispatch }) => {
               colorHover={primaryColor}
               borderColor={primaryColor}
               disabled={isSubmitting}
-              type="submit"
             >
               Cadastrar
             </Button>

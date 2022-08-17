@@ -4,7 +4,7 @@ import { toast } from "../../components/Toaster/Toaster";
 export const handleLogin = async (dispatch, values, navigate) => {
   try {
     const { data } = await apiRefund.post("/usuario/login", values);
-    console.log(data.token);
+
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
     apiRefund.defaults.headers.common["Authorization"] = data.token;
@@ -33,7 +33,6 @@ export const handleLogin = async (dispatch, values, navigate) => {
 };
 
 export const handleSignUp = async (dispatch, values, navigate) => {
-  console.log({ file: values.foto });
   try {
     const { data } = await apiRefund.post("/usuario/cadastro", {
       nome: values.nome,
@@ -51,7 +50,7 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     };
 
     if (token) {
-      signUpImage(token, { file: values.foto });
+      signUpImage({ file: values.foto });
     }
     dispatch(signUp);
     navigate("/principal");
@@ -71,7 +70,7 @@ export const handleSignUp = async (dispatch, values, navigate) => {
   }
 };
 
-export const signUpImage = async (token, foto) => {
+export const signUpImage = async (foto) => {
   try {
     await apiRefund.post("/upload/foto", foto, {
       headers: { "Content-Type": "multipart/form-data" },
