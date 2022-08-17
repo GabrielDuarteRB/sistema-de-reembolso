@@ -39,19 +39,6 @@ export const FormItem = styled.div`
   align-content: start;
   gap: 8px;
 
-  & input[type="file"] {
-    cursor: pointer;
-
-    ::file-selector-button {
-      display: none;
-    }
-
-    ::before {
-      content: "📂";
-      margin-right: 8px;
-    }
-  }
-
   & input {
     padding: 12px 16px;
     background: #fcfdfe;
@@ -72,9 +59,22 @@ export const FormItem = styled.div`
     font-weight: 700;
     text-transform: uppercase;
   }
+
+  & button {
+    font-size: 1rem;
+    background: #fcfdfe;
+    border: none;
+    border-radius: 4px;
+    padding: 4px;
+    cursor: pointer;
+
+    :hover {
+      background-color: ${secondaryColor};
+    }
+  }
 `;
 
-export const InputContainer = styled.div`
+export const PasswordContainer = styled.div`
   display: flex;
   align-items: center;
   position: relative;
@@ -87,15 +87,40 @@ export const InputContainer = styled.div`
   & button {
     position: absolute;
     right: 16px;
-    top: 12px;
-    background: #fcfdfe;
-    border: none;
-    padding: 4px;
+    top: 10px;
+  }
+`;
+
+export const FileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  & input[type="file"] {
     cursor: pointer;
+    color: transparent;
+    width: 40%;
+
+    ::file-selector-button {
+      display: none;
+    }
+
+    ::before {
+      content: "📁 Buscar";
+      color: #000;
+    }
 
     :hover {
-      background-color: ${secondaryColor};
+      border: 2px solid ${primaryColor};
     }
+  }
+
+  & input {
+    width: 100%;
+  }
+
+  & button {
   }
 `;
 

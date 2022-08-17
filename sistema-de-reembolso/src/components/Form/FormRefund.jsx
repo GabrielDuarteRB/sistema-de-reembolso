@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import {
   CardForm,
   FieldForm,
+  FileContainer,
   FormItem,
   HeaderForm,
-  InputContainer,
   TextError,
 } from "./Form.style";
+import Loading from "../../components/Loading/Loading";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
@@ -22,31 +23,28 @@ import {
   handleCreateRefund,
   handleUpdateRefund,
 } from "../../store/actions/refundActions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const FormRefund = ({ dispatch, refundId, isLoading }) => {
   const navigate = useNavigate();
-
   const { idRefund } = useParams();
+  const [selectedFile, setSelectedFile] = useState("");
 
   const handleFile = (file, setFieldValue) => {
-    // console.log(file);
     setFieldValue("file", file);
+    setSelectedFile(file.name);
   };
 
   useEffect(() => {
-    if(idRefund) {
-      getRefundById(dispatch, idRefund)
+    if (idRefund) {
+      getRefundById(dispatch, idRefund);
+      setSelectedFile(refundId.anexoDTO.nome);
     }
-  }, [])
+  }, []);
 
-  if(isLoading){
-    return(
-      <isLoading/>
-    )
+  if (isLoading) {
+    return <Loading />;
   }
-
-  console.log(refundId)
 
   return (
     <Container>
@@ -57,8 +55,8 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
         </HeaderForm>
         <Formik
           initialValues={{
-            titulo: refundId ? refundId.titulo : '',
-            valor: refundId ? refundId.valor : '',
+            titulo: refundId.titulo || "",
+            valor: refundId.valor || "",
             file: "",
           }}
           validationSchema={validationRefund}
@@ -66,6 +64,7 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
             const newValues = {
               titulo: values.titulo,
               valor: formatNumber(values.valor),
+              file: values.file,
             };
 
             idRefund
@@ -92,9 +91,9 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
                   decimalSeparator=","
                   thousandSeparator="."
                   value={values.valor}
-                  // onChange={(value) => {
-                  //   setFieldValue("valor", value);
-                  // }}
+                  onChange={(value) => {
+                    setFieldValue("valor", value);
+                  }}
                 />
                 {errors.valor && touched.valor ? (
                   <TextError>{errors.valor}</TextError>
@@ -103,23 +102,26 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
 
               <FormItem>
                 <label htmlFor="file">Enviar anexo</label>
-                <InputContainer>
+                <FileContainer>
                   <Field
                     accept=".pdf, .png, .jpeg, .jpg"
                     type="file"
                     name="file"
-                    value={values.file}
+                    value={""}
                     onChange={(e) =>
                       handleFile(e.target.files[0], setFieldValue)
                     }
                   />
+
+                  <small>{selectedFile || "Nenhum anexo selecionado"}</small>
+
                   <button
                     type="button"
-                    onClick={() => setFieldValue("file", "")}
+                    onClick={() => handleFile("", setFieldValue)}
                   >
                     <FaTrash />
                   </button>
-                </InputContainer>
+                </FileContainer>
 
                 {errors.file && touched.file ? (
                   <TextError>{errors.file}</TextError>
