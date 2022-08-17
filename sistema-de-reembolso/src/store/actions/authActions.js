@@ -1,5 +1,6 @@
 import { apiRefund } from "../../api";
 import { toast } from "../../components/Toaster/Toaster";
+import axios from 'axios'
 
 export const handleLogin = async (dispatch, values, navigate) => {
   try {
@@ -67,26 +68,26 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     });
     console.log(error);
   }
+  
+  const data = new FormData()
+  data.append('file', values.file)
+  console.log(data)
 
-  signUpImage(token, values.file)
+  signUpImage(token, data)
 };
 
 export const signUpImage = async (token, file) => {
-
-  console.log(file)
   try {
-    await apiRefund.post('/upload/foto', 
-    {body: {
-      file: file.split('\\').at(-1)
-    }},
+    await apiRefund.post('/upload/foto', {
+      data: file
+    },
     {
       headers: {
         "Content-Type": "multipart/form-data",
         "Accept": '*/*',
         "Authorization": token
-      }      
-    }
-    )
+      }
+    })
   } catch (error) {
     console.log(error)
   }

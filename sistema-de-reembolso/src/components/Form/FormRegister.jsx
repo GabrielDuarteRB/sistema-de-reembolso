@@ -101,8 +101,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
             <FormItem>
               <label htmlFor="file">Escolha uma foto</label>
               <InputContainer>
-                <Field accept=".png, .jpeg, .jpg" type="file" name="file" multiple/>
-
+                <Field accept=".png, .jpeg, .jpg" type="file" name="file" multiple path="file"/>
                 <button type="button" onClick={() => setFieldValue("file", "")}>
                   <FaTrash />
                 </button>
