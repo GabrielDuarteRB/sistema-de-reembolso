@@ -88,5 +88,5 @@ export const validationRefund = Yup.object().shape({
           ? validationFile(value.name, ["png", "jpg", "jpeg", "pdf"])
           : true,
     )
-    .required("<Anexo></Anexo> obrigatório!"),
+    .required("Anexo obrigatório!"),
 });

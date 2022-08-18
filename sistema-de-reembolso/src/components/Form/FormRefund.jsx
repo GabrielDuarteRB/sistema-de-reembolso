@@ -144,7 +144,6 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
                 color={secondaryColor}
                 colorHover={primaryColor}
                 borderColor={primaryColor}
-                // disabled={disabled}
               >
                 {idRefund ? "Atualizar" : "Solicitar"} reembolso
               </Button>
