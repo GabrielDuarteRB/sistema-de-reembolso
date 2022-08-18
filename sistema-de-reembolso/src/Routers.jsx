@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Main from "./pages/Main/Main";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import { useEffect } from "react";
@@ -10,7 +9,8 @@ import Loading from "./components/Loading/Loading";
 import FormRefund from "./components/Form/FormRefund";
 import Manager from "./pages/Manager/Manager";
 import Financier from "./pages/Financier/Financier";
-import Admin from "./pages/Admin/Admin";
+import Reembolsos from "./pages/Reembolsos/Reembolsos";
+import Usuarios from "./pages/Usuarios/Usuarios";
 
 const Routers = ({ isLogged, role, isLoading, dispatch }) => {
   useEffect(() => {
@@ -28,7 +28,7 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
           <>
             {["ROLE_COLABORADOR", "ROLE_ADMIN"].find((r) => r === role) && (
               <>
-                <Route path="/reembolsos" element={<Main />} />
+                <Route path="/reembolsos" element={<Reembolsos />} />
                 <Route path="/solicitar-reembolso" element={<FormRefund />} />
                 <Route
                   path="/editar-reembolso/:idRefund"
@@ -47,7 +47,7 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
 
             {role === "ROLE_ADMIN" && (
               <>
-                <Route path="/usuarios" element={<Admin />} />
+                <Route path="/usuarios" element={<Usuarios />} />
                 <Route path="/cadastro/:byAdmin" element={<Register />} />
               </>
             )}

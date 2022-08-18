@@ -14,32 +14,42 @@ import { getUser } from "../../store/actions/usersActions";
 import { connect } from "react-redux";
 import Loading from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import { getAllRefund, getRefundByName } from "../../store/actions/refundActions";
+import {
+  getAllRefund,
+  getRefundByName,
+} from "../../store/actions/refundActions";
 import Refund from "../../components/Refund/Refund";
 import Search from "../../components/Search/Search";
 
-const Main = ({ page, role, size, isLoadingRefund, refund, dispatch }) => {
+const Reembolsos = ({
+  page,
+  role,
+  size,
+  isLoadingRefund,
+  refund,
+  dispatch,
+}) => {
   const navigate = useNavigate();
-  const [nameSearch, setNameSearch] = useState('')
+  const [nameSearch, setNameSearch] = useState("");
 
   useEffect(() => {
     getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    if(nameSearch === ''){
+    if (nameSearch === "") {
       getAllRefund(dispatch, "TODOS", page, size);
-      return
+      return;
     }
-    console.log('teste2')
-    getRefundByName(dispatch, nameSearch, "TODOS", page, size)
+    console.log("teste2");
+    getRefundByName(dispatch, nameSearch, "TODOS", page, size);
   }, [page, size, nameSearch]);
 
   if (isLoadingRefund) {
     return <Loading />;
   }
 
-  console.log(role)
+  console.log(role);
 
   return (
     <>
@@ -67,8 +77,10 @@ const Main = ({ page, role, size, isLoadingRefund, refund, dispatch }) => {
                   <h2>Reembolsos</h2>
                   <Pager />
                 </div>
-                { role === 'ROLE_ADMIN' ? <Search setNameSearch={setNameSearch}/> : null }
-                
+                {role === "ROLE_ADMIN" ? (
+                  <Search setNameSearch={setNameSearch} />
+                ) : null}
+
                 <ListTitles columns="5">
                   <span>Título</span>
                   <span>Data</span>
@@ -93,4 +105,4 @@ const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
   role: state.authReducer.role,
 });
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps)(Reembolsos);

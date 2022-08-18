@@ -13,9 +13,8 @@ const Users = ({ users, isLoading }) => {
   return (
     <List>
       {users.map((user) => (
-        <ListItem columns="5" key={user.idUsuario}>
+        <ListItem columns="4" key={user.idUsuario}>
           <span>{user.email}</span>
-          <span>{user.idUsuario}</span>
           <span>{user.nome}</span>
           <span>{user.rolesDTO.nome.split("ROLE_")}</span>
           <Button

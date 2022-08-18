@@ -17,7 +17,7 @@ import { getAllUsers, getUser } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
 
-const Admin = ({ dispatch, users, isLoading, page, size }) => {
+const Usuarios = ({ dispatch, users, isLoading, page, size }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const Admin = ({ dispatch, users, isLoading, page, size }) => {
 
   return (
     <>
-      <Header />
+      <Header title={"Usuários"} />
       <Container>
         <Button
           background={primaryColor}
@@ -59,9 +59,8 @@ const Admin = ({ dispatch, users, isLoading, page, size }) => {
                   <Pager />
                 </div>
                 <Search />
-                <ListTitles columns="5">
+                <ListTitles columns="4">
                   <span>Email</span>
-                  <span>Id</span>
                   <span>Nome</span>
                   <span>Tipo</span>
                   <span>Editar</span>
@@ -83,4 +82,4 @@ const mapStateToProps = (state) => ({
   size: state.pageReducer.size,
 });
 
-export default connect(mapStateToProps)(Admin);
+export default connect(mapStateToProps)(Usuarios);
