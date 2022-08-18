@@ -8,6 +8,22 @@ import { managerAprove } from "../../store/actions/refundActions";
 
 const RefundManager = ({dispatch, page, size, refund}) => {
 
+  const readUrl = (anexo) => {
+    console.log(anexo)
+    const byteString = atob(anexo.anexoDTO.data)
+    const ab = new ArrayBuffer(byteString.length)
+    const ia = new Uint8Array(ab)
+
+    for (let i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+    }
+
+    const blob = new Blob([ia], { type: anexo.anexoDTO.tipo });
+    const url= window.URL.createObjectURL(blob);
+    window.open(url);
+
+  }
+
   return (
     <List>
         {
@@ -16,22 +32,19 @@ const RefundManager = ({dispatch, page, size, refund}) => {
                     <span>{r.titulo}</span>
                     <span>{moment(r.data).format("DD/MM/YYYY")}</span>
                     <span>R$ {parseFloat(r.valor).toFixed(2)}</span>
-                    <Button
-                        background={primaryColor}
-                        backgroundHover={secondaryColor}
-                        color={secondaryColor}
-                        colorHover={primaryColor}
-                        borderColor={primaryColor}
-                        padding={"8px"}
-                        onClick={ () => {
-                            const blob = new Blob([r.anexoDTO.data], { type: r.anexoDTO.tipo });
-                            const url= window.URL.createObjectURL(blob);
-                            window.open(url);
-                        }}
-                    >
-                        <FaFileDownload />
-                    </Button>
-
+                        <Button
+                            background={primaryColor}
+                            backgroundHover={secondaryColor}
+                            color={secondaryColor}
+                            colorHover={primaryColor}
+                            borderColor={primaryColor}
+                            padding={"8px"}
+                            onClick={ () => {
+                                readUrl(r)
+                            }}
+                        >
+                            <FaFileDownload />
+                        </Button>
                     <div>
                     <Button
                         background={primaryColor}

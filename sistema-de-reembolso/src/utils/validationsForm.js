@@ -18,7 +18,6 @@ const validationCurrency = (number) => {
 };
 
 const validationFile = (url, types) => {
-  console.log(url)
   url = url.split(".");
 
   return types.includes(url.at(-1));

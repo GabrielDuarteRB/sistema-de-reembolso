@@ -155,6 +155,8 @@ export const handleUpdateRefund = async (
       type: "LOADING_TRUE",
     };
 
+    handleAnexo(idRefund, { file: values.file });
+
     dispatch(upload);
     handleForm(dispatch, "enable");
     navigate("/principal");
