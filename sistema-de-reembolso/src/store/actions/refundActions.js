@@ -77,12 +77,12 @@ export const getAllRefund = async (
       `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
     );
 
-    const getPages = {
-      type: "GET_PAGES",
-      page: data.page,
-      totalPages: data.totalPages,
-    };
-    dispatch(getPages);
+      const getPages = {
+        type: "GET_PAGES",
+        page: data.page,
+        totalPages: data.totalPages,
+      };
+      dispatch(getPages);
 
     const get = {
       type: "GET_REFUND",
@@ -106,6 +106,27 @@ export const getRefundById = async (dispatch, idRefund) => {
     console.log(error);
   }
 };
+
+export const getRefundByName = async (dispatch, name, statusRefund, page, size) => {
+  try {
+    const {data} = await apiRefund.get(`/usuario/listar/nome?nome=${name}&pagina=${page}&quantidadeDeRegistros=${size}`)
+    
+    const getPages = {
+      type: "GET_PAGES",
+      page: data.page,
+      totalPages: data.totalPages,
+    };
+    dispatch(getPages);
+
+    const get = {
+      type: "GET_REFUND",
+      refund: data.content,
+    };
+    dispatch(get);
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
   try {
@@ -224,3 +245,4 @@ export const readUrl = (anexo) => {
   const url = window.URL.createObjectURL(blob);
   window.open(url);
 };
+
