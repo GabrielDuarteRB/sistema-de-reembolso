@@ -3,8 +3,9 @@ import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { List } from "../List/List";
-import { FaCheckCircle, FaTrash, FaFileDownload } from "react-icons/fa";
-import { managerAprove } from "../../store/actions/refundActions";
+import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
+import { MdCancel } from "react-icons/md";
+import { managerAprove, readUrl } from "../../store/actions/refundActions";
 
 const RefundManager = ({ dispatch, page, size, refund }) => {
   return (
@@ -12,9 +13,9 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
       {refund.map((reembolso) => (
         <li key={reembolso.idReembolso}>
           <span>{reembolso.titulo}</span>
-          <span>{reembolso.usuario.nome}</span>
           <span>{moment(reembolso.data).format("DD/MM/YYYY")}</span>
           <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
+          <span>{reembolso.statusDoReembolso}</span>
 
           <div>
             <Button
@@ -25,16 +26,11 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() => {
-                const blob = new Blob([reembolso.anexoDTO.data], {
-                  type: reembolso.anexoDTO.tipo,
-                });
-                const url = window.URL.createObjectURL(blob);
-                window.open(url);
+                readUrl(reembolso);
               }}
             >
-              <FaFileDownload />
+              <FaFileAlt />
             </Button>
-
             <Button
               background={primaryColor}
               backgroundHover={secondaryColor}
@@ -72,7 +68,7 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
                 )
               }
             >
-              <FaTrash />
+              <MdCancel fontSize={"16px"} />
             </Button>
           </div>
         </li>

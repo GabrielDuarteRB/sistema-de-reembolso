@@ -1,4 +1,4 @@
-import { Field, Formik } from "formik";
+import { Field, Formik, validateYupSchema } from "formik";
 import logoAzul from "../../img/logoAzul.png";
 import { connect } from "react-redux";
 import {
@@ -52,6 +52,8 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
     return <Loading />;
   }
 
+  console.log(refundById)
+
   return (
     <Container>
       <CardForm>
@@ -63,16 +65,16 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
           initialValues={{
             titulo: refundById ? refundById.titulo : "",
             valor: refundById.valor || "",
-            file: refundById.anexoDTO ? refundById.anexoDTO.file : "",
+            file: refundById.anexoDTO ? new File([refundById.anexoDTO.file], refundById.anexoDTO.nome, {type: 'file'}) : "",
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
-            handleForm(dispatch, "disable");
-
+            handleForm(dispatch, "disable")
             const newValues = {
               titulo: values.titulo,
               valor: formatNumber(values.valor.toString()),
-              file: values.file,
+              file: values.file
+              // file: new File([file], values.file.name, {type: 'file'}),
             };
 
             idRefund

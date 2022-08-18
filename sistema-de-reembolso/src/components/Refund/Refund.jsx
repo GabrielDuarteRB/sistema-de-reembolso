@@ -24,7 +24,7 @@ const Refund = ({ dispatch, refund, page, size, isLoading }) => {
       {refund.map((reembolso) => (
         <li key={reembolso.idReembolso}>
           <span>{reembolso.titulo}</span>
-          <span>{moment(reembolso.data).format("DD/MM/YYYY")}</span>
+          <span>{moment(reembolso.dataEntrada).format("DD/MM/YYYY")}</span>
           <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
           <span>{reembolso.statusDoReembolso}</span>
           <div>

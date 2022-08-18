@@ -155,6 +155,8 @@ export const handleUpdateRefund = async (
       type: "LOADING_TRUE",
     };
 
+    handleAnexo(idRefund, { file: values.file });
+
     dispatch(upload);
     handleForm(dispatch, "enable");
     navigate("/reembolsos");
@@ -206,4 +208,19 @@ export const navigateToUpdate = (dispatch, navigate, idRefund) => {
     type: "LOADING_TRUE",
   };
   dispatch(loading);
+};
+
+export const readUrl = (anexo) => {
+  console.log(anexo);
+  const byteString = atob(anexo.anexoDTO.data);
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+
+  for (let i = 0; i < byteString.length; i++) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+
+  const blob = new Blob([ia], { type: anexo.anexoDTO.tipo });
+  const url = window.URL.createObjectURL(blob);
+  window.open(url);
 };
