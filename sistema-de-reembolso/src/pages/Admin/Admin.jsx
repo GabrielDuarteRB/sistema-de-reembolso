@@ -17,7 +17,7 @@ import { getAllUsers, getUser } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
 
-const Admin = ({ dispatch, users, isLoading, page, size }) => {
+const Admin = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,9 +48,7 @@ const Admin = ({ dispatch, users, isLoading, page, size }) => {
           Cadastrar usuário <FaUserPlus />
         </Button>
 
-        {!users ? (
-          <h2>Nenhum usuário cadastrado</h2>
-        ) : (
+        
           <>
             <ListContainer>
               <ListHeader>
@@ -67,10 +65,13 @@ const Admin = ({ dispatch, users, isLoading, page, size }) => {
                   <span>Editar</span>
                 </ListTitles>
               </ListHeader>
-              <Users />
+              {!users 
+              ? 
+                (<h2>Nenhum usuário cadastrado</h2>) 
+              : 
+                (<Users />)}
             </ListContainer>
           </>
-        )}
       </Container>
     </>
   );
@@ -81,6 +82,7 @@ const mapStateToProps = (state) => ({
   isLoading: state.usersReducer.isLoading,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  nameSearch: state.refundReducer.nameSearch,
 });
 
 export default connect(mapStateToProps)(Admin);

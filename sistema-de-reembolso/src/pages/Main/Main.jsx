@@ -17,10 +17,11 @@ import { useNavigate } from "react-router-dom";
 import { getAllRefund, getRefundByName } from "../../store/actions/refundActions";
 import Refund from "../../components/Refund/Refund";
 import Search from "../../components/Search/Search";
+import Status from "../../components/Status/Status";
+import { NotRegister } from "../../components/NotRegister/NotRegister";
 
-const Main = ({ page, role, size, isLoadingRefund, refund, dispatch }) => {
+const Main = ({ page, role, statusRefund, nameSearch, size, isLoadingRefund, refund, dispatch }) => {
   const navigate = useNavigate();
-  const [nameSearch, setNameSearch] = useState('')
 
   useEffect(() => {
     getUser(dispatch);
@@ -28,18 +29,15 @@ const Main = ({ page, role, size, isLoadingRefund, refund, dispatch }) => {
 
   useEffect(() => {
     if(nameSearch === ''){
-      getAllRefund(dispatch, "TODOS", page, size);
+      getAllRefund(dispatch, statusRefund, page, size);
       return
     }
-    console.log('teste2')
-    getRefundByName(dispatch, nameSearch, "TODOS", page, size)
-  }, [page, size, nameSearch]);
+    getRefundByName(dispatch, nameSearch, statusRefund, page, size)
+  }, [page, size, nameSearch, statusRefund]);
 
   if (isLoadingRefund) {
     return <Loading />;
   }
-
-  console.log(role)
 
   return (
     <>
@@ -56,18 +54,14 @@ const Main = ({ page, role, size, isLoadingRefund, refund, dispatch }) => {
         >
           Solicitar reembolso <FaExchangeAlt />
         </Button>
-
-        {refund.length === 0 ? (
-          <h2>Nenhum reembolso solicitado</h2>
-        ) : (
-          <>
             <ListContainer>
               <ListHeader>
                 <div>
                   <h2>Reembolsos</h2>
                   <Pager />
                 </div>
-                { role === 'ROLE_ADMIN' ? <Search setNameSearch={setNameSearch}/> : null }
+                <Status />
+                { role === 'ROLE_ADMIN' ? <Search/> : null }
                 
                 <ListTitles columns="5">
                   <span>Título</span>
@@ -77,10 +71,13 @@ const Main = ({ page, role, size, isLoadingRefund, refund, dispatch }) => {
                   <span>Ações</span>
                 </ListTitles>
               </ListHeader>
-              <Refund />
+              {refund.length === 0 
+              ? 
+              (<NotRegister>Nenhum reembolso solicitado</NotRegister>) 
+              : 
+              (<Refund />)
+              }
             </ListContainer>
-          </>
-        )}
       </Container>
     </>
   );
@@ -88,9 +85,11 @@ const Main = ({ page, role, size, isLoadingRefund, refund, dispatch }) => {
 
 const mapStateToProps = (state) => ({
   isLoadingRefund: state.refundReducer.isLoading,
+  refund: state.refundReducer.refund,
+  statusRefund: state.refundReducer.statusRefund,
+  nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
-  refund: state.refundReducer.refund,
   role: state.authReducer.role,
 });
 export default connect(mapStateToProps)(Main);
