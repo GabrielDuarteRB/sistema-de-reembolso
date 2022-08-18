@@ -28,7 +28,6 @@ const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
 
   useEffect(() => {
     if(nameSearch === ''){
-      console.log('teste1')
       getRefund(dispatch, "TODOS", page, size);
       return
     }
