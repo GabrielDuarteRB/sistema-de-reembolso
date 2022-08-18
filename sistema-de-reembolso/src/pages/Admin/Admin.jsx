@@ -10,38 +10,33 @@ import {
   ListTitles,
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
-import Pager from "../../components/Pager/Pager";
-import RefundFinancier from "../../components/Refund/RefundFinancier";
-import { getAllRefund } from "../../store/actions/refundActions";
-import { getUser } from "../../store/actions/usersActions";
+import Users from "../../components/Users/Users";
+import { getAllUsers } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 
-const Financier = ({ dispatch, isLoading, refund, page, size }) => {
+const Admin = ({ dispatch, users, isLoading }) => {
   useEffect(() => {
-    getUser(dispatch);
+    getAllUsers(dispatch);
   }, []);
-
-  useEffect(() => {
-    getAllRefund(dispatch, "APROVADO_GESTOR", page, size);
-  }, [page, size]);
 
   if (isLoading) {
     return <Loading />;
   }
+  console.log(users);
 
   return (
     <>
       <Header />
       <Container>
-        {refund.length === 0 ? (
-          <h2>Nenhum reembolso solicitado</h2>
+        {users.length === 0 ? (
+          <h2>Nenhum usuário cadastrado</h2>
         ) : (
           <>
             <ListContainer>
               <ListHeader>
                 <div>
-                  <h2>Reembolsos em aberto</h2>
-                  <Pager />
+                  <h2>Usuários</h2>
+                  {/* <Pager /> */}
                 </div>
                 <form>
                   <input type="text" placeholder="Filtar por nome" />
@@ -57,14 +52,14 @@ const Financier = ({ dispatch, isLoading, refund, page, size }) => {
                   </Button>
                 </form>
                 <ListTitles>
-                  <span>Título</span>
+                  <span>Email</span>
+                  <span>Id</span>
                   <span>Nome</span>
-                  <span>Data</span>
-                  <span>Valor</span>
-                  <span>Ações</span>
+                  <span>Tipo</span>
+                  <span>Editar</span>
                 </ListTitles>
               </ListHeader>
-              <RefundFinancier />
+              <Users />
             </ListContainer>
           </>
         )}
@@ -74,10 +69,8 @@ const Financier = ({ dispatch, isLoading, refund, page, size }) => {
 };
 
 const mapStateToProps = (state) => ({
-  isLoading: state.refundReducer.isLoading,
-  refund: state.refundReducer.refund,
-  page: state.pageReducer.page,
-  size: state.pageReducer.size,
+  users: state.usersReducer.users,
+  isLoading: state.usersReducer.isLoading,
 });
 
-export default connect(mapStateToProps)(Financier);
+export default connect(mapStateToProps)(Admin);

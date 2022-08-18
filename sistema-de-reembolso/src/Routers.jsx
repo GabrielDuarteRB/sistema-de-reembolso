@@ -10,6 +10,7 @@ import Loading from "./components/Loading/Loading";
 import FormRefund from "./components/Form/FormRefund";
 import Manager from "./pages/Manager/Manager";
 import Financier from "./pages/Financier/Financier";
+import Admin from "./pages/Admin/Admin";
 
 const Routers = ({ isLogged, role, isLoading, dispatch }) => {
   useEffect(() => {
@@ -25,27 +26,31 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
       <Routes>
         {isLogged ? (
           <>
-            {
-              role === 'ROLE_COLABORADOR' && (
-                <> 
-                  <Route path="/principal" element={<Main />} />
+            {role === "ROLE_COLABORADOR" ||
+              (role === "ROLE_ADMIN" && (
+                <>
+                  <Route path="/reembolsos" element={<Main />} />
                   <Route path="/solicitar-reembolso" element={<FormRefund />} />
-                  <Route path="/solicitar-reembolso/:idRefund" element={<FormRefund />} />
+                  <Route
+                    path="/solicitar-reembolso/:idRefund"
+                    element={<FormRefund />}
+                  />
                 </>
-              )
-            }
+              ))}
 
-            {
-              role === 'ROLE_FINANCEIRO' && (
+            {role === "ROLE_FINANCEIRO" ||
+              (role === "ROLE_ADMIN" && (
                 <Route path="/financeiro" element={<Financier />} />
-              )
-            }
+              ))}
 
-            {
-              role === 'ROLE_GESTOR' && (
+            {role === "ROLE_GESTOR" ||
+              (role === "ROLE_ADMIN" && (
                 <Route path="/gestor" element={<Manager />} />
-              )
-            }
+              ))}
+
+            {role === "ROLE_ADMIN" && (
+              <Route path="/usuarios" element={<Admin />} />
+            )}
           </>
         ) : (
           <>

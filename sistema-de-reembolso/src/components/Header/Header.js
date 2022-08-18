@@ -3,6 +3,7 @@ import {
   FaExchangeAlt,
   FaMoneyBill,
   FaSignOutAlt,
+  FaUsers,
   FaUserTie,
 } from "react-icons/fa";
 import { connect } from "react-redux";
@@ -42,7 +43,10 @@ const Header = ({ name, foto, dispatch }) => {
 
               <DropdownContent>
                 <span>Páginas</span>
-                <Link to="/principal">
+                <Link to="/usuarios">
+                  Usuários <FaUsers />
+                </Link>
+                <Link to="/reembolsos">
                   Reembolsos <FaExchangeAlt />
                 </Link>
                 <Link to="/gestor">

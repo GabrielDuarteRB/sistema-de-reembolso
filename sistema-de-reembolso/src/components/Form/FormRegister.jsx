@@ -129,24 +129,27 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
             <FormItem>
               <label htmlFor="foto">Escolha uma foto</label>
               <FileContainer>
-                <Field
-                  accept=".png, .jpeg, .jpg"
-                  type="file"
-                  name="foto"
-                  value={""}
-                  disabled={disabled}
-                  onChange={(e) => handleFoto(e.target.files[0], setFieldValue)}
-                />
-
                 <small>{selectedFoto || "Nenhuma foto selecionada"}</small>
+                <div>
+                  <Field
+                    accept=".png, .jpeg, .jpg"
+                    type="file"
+                    name="foto"
+                    value={""}
+                    disabled={disabled}
+                    onChange={(e) =>
+                      handleFoto(e.target.files[0], setFieldValue)
+                    }
+                  />
 
-                <button
-                  type="button"
-                  disabled={disabled}
-                  onClick={() => handleFoto("", setFieldValue)}
-                >
-                  <FaTrash />
-                </button>
+                  <button
+                    type="button"
+                    disabled={disabled}
+                    onClick={() => handleFoto("", setFieldValue)}
+                  >
+                    <FaTrash />
+                  </button>
+                </div>
               </FileContainer>
               {errors.foto && touched.foto ? (
                 <TextError>{errors.foto}</TextError>

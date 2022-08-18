@@ -1,4 +1,5 @@
 const INITIAL_STATE = {
+  users: [],
   name: "",
   email: "",
   foto: "",
@@ -14,6 +15,7 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         foto: action.foto,
         isLoading: false,
       };
+
     case "SET_LOGOUT":
       return {
         name: "",
@@ -21,6 +23,14 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         foto: "",
         isLoading: true,
       };
+
+    case "GET_ALL_USERS":
+      return {
+        ...state,
+        users: action.users,
+        isLoading: false,
+      };
+
     default:
       return state;
   }

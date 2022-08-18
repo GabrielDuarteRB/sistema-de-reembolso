@@ -17,7 +17,7 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
     handleAnexo(data.idReembolso, { file: values.file });
 
     handleForm(dispatch, "enable");
-    navigate("/principal");
+    navigate("/reembolsos");
     toast.fire({
       icon: "success",
       title: "Reembolso Solicitado!",
@@ -157,7 +157,7 @@ export const handleUpdateRefund = async (
 
     dispatch(upload);
     handleForm(dispatch, "enable");
-    navigate("/principal");
+    navigate("/reembolsos");
   } catch (error) {
     handleForm(dispatch, "enable");
     console.log(error);
@@ -173,7 +173,7 @@ export const managerAprove = async (dispatch, idRefund, action, page, size) => {
     await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`);
     getAllRefund(dispatch, "ABERTO", page, size);
     toast.fire({
-      icon: "sucess",
+      icon: "success",
       title: `Reembolso ${action === "true" ? "Aprovado" : "Negado"}!`,
     });
   } catch (error) {

@@ -3,7 +3,6 @@ import { primaryColor, secondaryColor } from "../../utils/colors";
 
 export const ListContainer = styled.section`
   display: grid;
-  grid-template-columns: 768px;
   justify-content: center;
   background-color: #fff;
   border: 1px solid ${primaryColor};
@@ -14,12 +13,25 @@ export const ListContainer = styled.section`
 export const ListHeader = styled.div`
   display: grid;
   padding: 0 32px;
-  gap: 40px;
+  gap: 32px;
 
   & div:first-child {
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  & form {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-self: flex-end;
+
+    & input {
+      padding: 4px;
+      border: 2px solid ${primaryColor};
+      border-radius: 4px;
+    }
   }
 `;
 
@@ -42,6 +54,13 @@ export const List = styled.ul`
     grid-template-columns: repeat(5, 1fr);
     padding: 16px 32px;
     border-top: 1px solid ${secondaryColor};
+
+    & span {
+      :first-child {
+        max-width: 10rem;
+        word-wrap: break-word;
+      }
+    }
 
     & div {
       display: flex;

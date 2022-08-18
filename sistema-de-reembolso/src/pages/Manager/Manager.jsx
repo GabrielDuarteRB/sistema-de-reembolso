@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import { FaSearch } from "react-icons/fa";
 import { connect } from "react-redux";
+import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
 import {
@@ -12,21 +14,19 @@ import Pager from "../../components/Pager/Pager";
 import RefundManager from "../../components/Refund/RefundManager";
 import { getAllRefund } from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
+import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const Manager = ({ dispatch, isLoading, refund, page, size }) => {
-
   useEffect(() => {
     getUser(dispatch);
   }, []);
-  
+
   useEffect(() => {
-    getAllRefund(dispatch, 'ABERTO', page, size);
+    getAllRefund(dispatch, "ABERTO", page, size);
   }, [page, size]);
 
-  if(isLoading) {
-    return (
-        <Loading/>
-    )
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -40,9 +40,23 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
             <ListContainer>
               <ListHeader>
                 <div>
-                  <h2>Reembolsos</h2>
+                  <h2>Reembolsos em aberto</h2>
                   <Pager />
                 </div>
+                <form>
+                  <input type="text" placeholder="Filtar por nome" />
+                  <Button
+                    background={primaryColor}
+                    backgroundHover={secondaryColor}
+                    color={secondaryColor}
+                    colorHover={primaryColor}
+                    borderColor={primaryColor}
+                    padding={"4px"}
+                  >
+                    <FaSearch />
+                  </Button>
+                </form>
+
                 <ListTitles>
                   <span>Título</span>
                   <span>Data</span>

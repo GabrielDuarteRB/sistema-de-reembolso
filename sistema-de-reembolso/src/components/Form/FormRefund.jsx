@@ -32,7 +32,6 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
   const [selectedFile, setSelectedFile] = useState("Nenhum anexo selecionado");
 
   const handleFile = (file, setFieldValue) => {
-    console.log(file);
     setFieldValue("file", file);
     setSelectedFile(file.name);
   };
@@ -157,9 +156,9 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
             </FieldForm>
           )}
         </Formik>
-        <Link to="/principal">
+        <Link to="/reembolsos">
           <FaRegArrowAltCircleLeft />
-          Voltar para a tela principal
+          Voltar para a tela de reembolsos
         </Link>
       </CardForm>
     </Container>

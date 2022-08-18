@@ -54,7 +54,7 @@ export const handleSignUp = async (dispatch, values, navigate) => {
       role: data.role,
     };
 
-    if (token) {
+    if (token && values.foto) {
       await signUpImage({ file: values.foto });
     }
 
@@ -109,7 +109,7 @@ export const isAuth = (dispatch) => {
     const logged = {
       type: "SET_LOGIN",
       token: token,
-      role: role
+      role: role,
     };
 
     dispatch(logged);
