@@ -25,7 +25,7 @@ const Main = ({ page, size, foto, isLoadingRefund, isLoadingUser, refund, dispat
   }, []);
 
   useEffect(() => {
-    getRefund(dispatch, "ABERTO", page, size);
+    getRefund(dispatch, "TODOS", page, size);
   }, [page, size]);
 
   console.log(isLoadingRefund)

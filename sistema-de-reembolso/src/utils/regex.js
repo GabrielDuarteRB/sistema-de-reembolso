@@ -3,9 +3,9 @@ export const validationPassword = new RegExp(
 );
 
 export const onlyNumber = (number) => {
-  return number.replace(/[^0-9]/g,'')
-}
+  return number.replace(/[^0-9]/g, "");
+};
 
 export const formatNumber = (number) => {
-  return number.replace('R$', '').replace('.', '').replace(',', '.')
-}
+  return number.replace("R$", "").replace(".", "").replace(",", ".");
+};

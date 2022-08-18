@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   refund: [],
-  refundId: [],
+  refundById: {},
   isLoading: true,
 };
 
@@ -12,28 +12,25 @@ const refundReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: true,
       };
-    case "LOADING_FALSE":
-      return {
-        ...state,
-        isLoading: false,
-      };
+
     case "GET_REFUND":
       return {
         ...state,
         refund: action.refund,
-        refundId: [],
+        refundById: [],
         isLoading: false,
       };
+
     case "GET_REFUND_BY_ID":
       return {
         ...state,
-        refundId: action.refundId,
+        refundById: action.refundById,
         isLoading: false,
       };
     case "SET_LOGOUT":
       return {
         refund: [],
-        refundId: [],
+        refundById: [],
         isLoading: true,
       };
     default:

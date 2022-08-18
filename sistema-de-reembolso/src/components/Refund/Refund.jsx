@@ -10,12 +10,13 @@ import {
 } from "../../store/actions/refundActions";
 import { useNavigate } from "react-router-dom";
 import { confirmModal } from "../Toaster/Toaster";
+import Loading from "../Loading/Loading";
 
-const Refund = ({ dispatch, refund, page, size }) => {
+const Refund = ({ dispatch, refund, page, size, isLoading }) => {
   const navigate = useNavigate();
 
-  if (!refund) {
-    return;
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -69,6 +70,7 @@ const Refund = ({ dispatch, refund, page, size }) => {
 
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
+  isLoading: state.refundReducer.isLoading,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });

@@ -46,7 +46,6 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
                 <Route path="/gestor" element={<Manager />} />
               )
             }
-            
           </>
         ) : (
           <>
@@ -54,7 +53,6 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
             <Route path="/cadastro" element={<Register />} />
           </>
         )}
-
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
