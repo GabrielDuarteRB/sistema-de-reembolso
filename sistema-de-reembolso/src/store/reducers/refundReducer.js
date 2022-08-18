@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   refund: [],
-  refundId: [],
+  refundById: {},
   isLoading: false,
 };
 
@@ -20,13 +20,13 @@ const refundReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         refund: action.refund,
-        refundId: [],
+        refundById: [],
         isLoading: false,
       };
     case "GET_REFUND_BY_ID":
       return {
         ...state,
-        refundId: action.refundId,
+        refundById: action.refundById,
         isLoading: false,
       };
     default:

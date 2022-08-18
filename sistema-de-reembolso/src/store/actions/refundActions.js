@@ -1,5 +1,6 @@
 import { apiRefund } from "../../api";
 import { toast } from "../../components/Toaster/Toaster";
+import { handleForm } from "./formActions";
 
 export const handleCreateRefund = async (dispatch, values, navigate) => {
   try {
@@ -13,14 +14,18 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
 
     dispatch(create);
 
-    handleAnexo(data.idReembolso, { file: values.file });
+    if (values.file) {
+      handleAnexo(data.idReembolso, { file: values.file });
+    }
 
+    handleForm(dispatch, "enable");
     navigate("/principal");
     toast.fire({
       icon: "success",
       title: "Reembolso Solicitado!",
     });
   } catch (error) {
+    handleForm(dispatch, "enable");
     console.log(error);
   }
 };
@@ -96,7 +101,7 @@ export const getRefundById = async (dispatch, idRefund) => {
     const { data } = await apiRefund.get(`/reembolso/${idRefund}`);
     const get = {
       type: "GET_REFUND_BY_ID",
-      refundId: data,
+      refundById: data,
     };
     dispatch(get);
   } catch (error) {
@@ -114,6 +119,7 @@ export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
     const { data } = await apiRefund.delete(
       `/reembolso/logged/delete/${idRefund}?pagina=${page}&quantidadeDeRegistros=${size}`,
     );
+
     toast.fire({
       icon: "success",
       title: "Reembolso deletado",
@@ -150,9 +156,12 @@ export const handleUpdateRefund = async (
     const upload = {
       type: "LOADING_TRUE",
     };
+
     dispatch(upload);
+    handleForm(dispatch, "enable");
     navigate("/principal");
   } catch (error) {
+    handleForm(dispatch, "enable");
     console.log(error);
     toast.fire({
       icon: "error",

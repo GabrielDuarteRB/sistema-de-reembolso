@@ -26,7 +26,7 @@ import {
 import { useEffect, useState } from "react";
 import { handleForm } from "../../store/actions/formActions";
 
-const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
+const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
   const navigate = useNavigate();
   const { idRefund } = useParams();
   const [selectedFile, setSelectedFile] = useState("");
@@ -39,7 +39,6 @@ const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
   useEffect(() => {
     if (idRefund) {
       getRefundById(dispatch, idRefund);
-      setSelectedFile(refundId.anexoDTO.nome);
     }
   }, []);
 
@@ -56,8 +55,8 @@ const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
         </HeaderForm>
         <Formik
           initialValues={{
-            titulo: refundId.titulo || "",
-            valor: refundId.valor || "",
+            titulo: refundById.titulo || "",
+            valor: refundById.valor.toString() || "",
             file: "",
           }}
           validationSchema={validationRefund}
@@ -77,6 +76,8 @@ const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
         >
           {({ errors, touched, handleSubmit, values, setFieldValue }) => (
             <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
+              {setSelectedFile(refundById.anexoDTO && refundById.anexoDTO.nome)}
+
               <FormItem>
                 <label htmlFor="titulo">título*</label>
                 <Field
@@ -89,7 +90,6 @@ const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
                   <TextError>{errors.titulo}</TextError>
                 ) : null}
               </FormItem>
-
               <FormItem>
                 <label htmlFor="valor">valor*</label>
                 <CurrencyInput
@@ -108,7 +108,6 @@ const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
                   <TextError>{errors.valor}</TextError>
                 ) : null}
               </FormItem>
-
               <FormItem>
                 <label htmlFor="file">Enviar anexo</label>
                 <FileContainer>
@@ -137,7 +136,6 @@ const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
                   <TextError>{errors.file}</TextError>
                 ) : null}
               </FormItem>
-
               <Button
                 type="submit"
                 background={primaryColor}
@@ -146,7 +144,7 @@ const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
                 color={secondaryColor}
                 colorHover={primaryColor}
                 borderColor={primaryColor}
-                disabled={disabled}
+                // disabled={disabled}
               >
                 {idRefund ? "Atualizar" : "Solicitar"} reembolso
               </Button>
@@ -163,7 +161,7 @@ const FormRefund = ({ dispatch, disabled, refundId, isLoading }) => {
 };
 
 const mapStateToProps = (state) => ({
-  refundId: state.refundReducer.refundId,
+  refundById: state.refundReducer.refundById,
   isLoading: state.refundReducer.isLoading,
   disabled: state.formReducer.disabled,
 });

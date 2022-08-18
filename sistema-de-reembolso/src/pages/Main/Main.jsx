@@ -25,7 +25,7 @@ const Main = ({ page, size, isLoading, refund, dispatch }) => {
   }, []);
 
   useEffect(() => {
-    getRefund(dispatch, "ABERTO", page, size);
+    getRefund(dispatch, "TODOS", page, size);
   }, [page, size]);
 
   if (isLoading) {
