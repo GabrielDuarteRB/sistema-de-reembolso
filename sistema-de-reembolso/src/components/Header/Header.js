@@ -19,14 +19,16 @@ import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
 import { Img } from "../Image/Img";
 import { LoadingElement } from "../Loading/Loading.styled";
 
-const Header = ({ name, foto, dispatch }) => {
+const Header = ({ name, foto, dispatch, title }) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
   return (
     <HeaderContainer>
-      <img width="120px" src={LogoBranca} alt="Logo DBC" />
-
+      <div>
+        <img width="120px" src={LogoBranca} alt="Logo DBC" />
+        <h2>{title}</h2>
+      </div>
       <div>
         {role === "ROLE_ADMIN" ? (
           <>

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
-import { FaSearch } from "react-icons/fa";
+import { FaSearch, FaUserPlus } from "react-icons/fa";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
@@ -10,25 +11,43 @@ import {
   ListTitles,
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
+import Pager from "../../components/Pager/Pager";
 import Users from "../../components/Users/Users";
-import { getAllUsers } from "../../store/actions/usersActions";
+import { getAllUsers, getUser } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 
-const Admin = ({ dispatch, users, isLoading }) => {
+const Admin = ({ dispatch, users, isLoading, page, size }) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
-    getAllUsers(dispatch);
+    getUser(dispatch);
   }, []);
+
+  useEffect(() => {
+    getAllUsers(dispatch, page, size);
+  }, [page, size]);
 
   if (isLoading) {
     return <Loading />;
   }
-  console.log(users);
 
   return (
     <>
       <Header />
       <Container>
-        {users.length === 0 ? (
+        <Button
+          background={primaryColor}
+          backgroundHover={secondaryColor}
+          padding={"12px 16px"}
+          color={secondaryColor}
+          colorHover={primaryColor}
+          borderColor={primaryColor}
+          onClick={() => navigate("/cadastro")}
+        >
+          Cadastrar usuário <FaUserPlus />
+        </Button>
+
+        {!users ? (
           <h2>Nenhum usuário cadastrado</h2>
         ) : (
           <>
@@ -36,7 +55,7 @@ const Admin = ({ dispatch, users, isLoading }) => {
               <ListHeader>
                 <div>
                   <h2>Usuários</h2>
-                  {/* <Pager /> */}
+                  <Pager />
                 </div>
                 <form>
                   <input type="text" placeholder="Filtar por nome" />
@@ -51,7 +70,7 @@ const Admin = ({ dispatch, users, isLoading }) => {
                     <FaSearch />
                   </Button>
                 </form>
-                <ListTitles>
+                <ListTitles columns="5">
                   <span>Email</span>
                   <span>Id</span>
                   <span>Nome</span>
@@ -71,6 +90,8 @@ const Admin = ({ dispatch, users, isLoading }) => {
 const mapStateToProps = (state) => ({
   users: state.usersReducer.users,
   isLoading: state.usersReducer.isLoading,
+  page: state.pageReducer.page,
+  size: state.pageReducer.size,
 });
 
 export default connect(mapStateToProps)(Admin);

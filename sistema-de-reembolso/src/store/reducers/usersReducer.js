@@ -10,6 +10,7 @@ const usersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "GET_USER":
       return {
+        ...state,
         name: action.name,
         email: action.email,
         foto: action.foto,
@@ -22,6 +23,7 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         email: "",
         foto: "",
         isLoading: true,
+        users: [],
       };
 
     case "GET_ALL_USERS":

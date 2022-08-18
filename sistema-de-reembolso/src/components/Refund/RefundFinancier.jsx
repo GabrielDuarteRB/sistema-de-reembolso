@@ -2,20 +2,21 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
-import { List } from "../List/List";
-import { FaCheckCircle, FaTrash, FaFileDownload } from "react-icons/fa";
+import { List, ListItem } from "../List/List";
+import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
 import { financierAprove } from "../../store/actions/refundActions";
+import { MdCancel } from "react-icons/md";
 
 const RefundManager = ({ dispatch, page, size, refund }) => {
   return (
     <List>
-      {refund.map((rembolso) => (
-        <li key={rembolso.idReembolso}>
-          <span>{rembolso.titulo}</span>
-          <span>{rembolso.usuario.nome}</span>
-          <span>{moment(rembolso.data).format("DD/MM/YYYY")}</span>
-          <span>R$ {parseFloat(rembolso.valor).toFixed(2)}</span>
-
+      {refund.map((reembolso) => (
+        <ListItem columns="6" key={reembolso.idReembolso}>
+          <span>{reembolso.titulo}</span>
+          <span>{reembolso.usuario.nome}</span>
+          <span>{moment(reembolso.data).format("DD/MM/YYYY")}</span>
+          <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
+          <span>{reembolso.statusDoReembolso}</span>
           <div>
             <Button
               background={primaryColor}
@@ -25,14 +26,14 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() => {
-                const blob = new Blob([rembolso.anexoDTO.data], {
-                  type: rembolso.anexoDTO.tipo,
+                const blob = new Blob([reembolso.anexoDTO.data], {
+                  type: reembolso.anexoDTO.tipo,
                 });
                 const url = window.URL.createObjectURL(blob);
                 window.open(url);
               }}
             >
-              Anexo <FaFileDownload />
+              <FaFileAlt />
             </Button>
 
             <Button
@@ -45,7 +46,7 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
               onClick={() =>
                 financierAprove(
                   dispatch,
-                  rembolso.idReembolso,
+                  reembolso.idReembolso,
                   "true",
                   page,
                   size,
@@ -65,17 +66,17 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
               onClick={() =>
                 financierAprove(
                   dispatch,
-                  rembolso.idReembolso,
+                  reembolso.idReembolso,
                   "false",
                   page,
                   size,
                 )
               }
             >
-              <FaTrash />
+              <MdCancel fontSize={"18px"} />
             </Button>
           </div>
-        </li>
+        </ListItem>
       ))}
     </List>
   );

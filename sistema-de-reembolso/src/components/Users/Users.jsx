@@ -2,7 +2,7 @@ import { FaEdit } from "react-icons/fa";
 import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
-import { List } from "../List/List";
+import { List, ListItem } from "../List/List";
 import Loading from "../Loading/Loading";
 
 const Users = ({ users, isLoading }) => {
@@ -13,7 +13,7 @@ const Users = ({ users, isLoading }) => {
   return (
     <List>
       {users.map((user) => (
-        <li key={user.idUsuario}>
+        <ListItem columns="5" key={user.idUsuario}>
           <span>{user.email}</span>
           <span>{user.idUsuario}</span>
           <span>{user.nome}</span>
@@ -31,7 +31,7 @@ const Users = ({ users, isLoading }) => {
           >
             <FaEdit />
           </Button>
-        </li>
+        </ListItem>
       ))}
     </List>
   );

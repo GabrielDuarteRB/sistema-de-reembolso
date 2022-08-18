@@ -31,7 +31,7 @@ const Financier = ({ dispatch, isLoading, refund, page, size }) => {
 
   return (
     <>
-      <Header />
+      <Header title={"Financeiro"} />
       <Container>
         {refund.length === 0 ? (
           <h2>Nenhum reembolso solicitado</h2>
@@ -56,11 +56,12 @@ const Financier = ({ dispatch, isLoading, refund, page, size }) => {
                     <FaSearch />
                   </Button>
                 </form>
-                <ListTitles>
+                <ListTitles columns="6">
                   <span>Título</span>
                   <span>Nome</span>
                   <span>Data</span>
                   <span>Valor</span>
+                  <span>Status</span>
                   <span>Ações</span>
                 </ListTitles>
               </ListHeader>

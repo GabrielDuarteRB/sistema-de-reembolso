@@ -203,7 +203,7 @@ export const financierAprove = async (
 };
 
 export const navigateToUpdate = (dispatch, navigate, idRefund) => {
-  navigate(`/solicitar-reembolso/${idRefund}`);
+  navigate(`/editar-reembolso/${idRefund}`);
   const loading = {
     type: "LOADING_TRUE",
   };
