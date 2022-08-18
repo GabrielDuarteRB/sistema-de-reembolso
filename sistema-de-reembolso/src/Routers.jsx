@@ -26,27 +26,24 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
       <Routes>
         {isLogged ? (
           <>
-            {role === "ROLE_COLABORADOR" ||
-              (role === "ROLE_ADMIN" && (
-                <>
-                  <Route path="/reembolsos" element={<Main />} />
-                  <Route path="/solicitar-reembolso" element={<FormRefund />} />
-                  <Route
-                    path="/solicitar-reembolso/:idRefund"
-                    element={<FormRefund />}
-                  />
-                </>
-              ))}
+            {role.includes("ROLE_COLABORADOR" || "ROLE_ADMIN") && (
+              <>
+                <Route path="/reembolsos" element={<Main />} />
+                <Route path="/solicitar-reembolso" element={<FormRefund />} />
+                <Route
+                  path="/solicitar-reembolso/:idRefund"
+                  element={<FormRefund />}
+                />
+              </>
+            )}
 
-            {role === "ROLE_FINANCEIRO" ||
-              (role === "ROLE_ADMIN" && (
-                <Route path="/financeiro" element={<Financier />} />
-              ))}
+            {role.includes("ROLE_FINANCEIRO" || "ROLE_ADMIN") && (
+              <Route path="/financeiro" element={<Financier />} />
+            )}
 
-            {role === "ROLE_GESTOR" ||
-              (role === "ROLE_ADMIN" && (
-                <Route path="/gestor" element={<Manager />} />
-              ))}
+            {role.includes("ROLE_GESTOR" || "ROLE_ADMIN") && (
+              <Route path="/gestor" element={<Manager />} />
+            )}
 
             {role === "ROLE_ADMIN" && (
               <Route path="/usuarios" element={<Admin />} />
