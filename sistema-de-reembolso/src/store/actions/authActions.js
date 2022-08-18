@@ -55,7 +55,7 @@ export const handleSignUp = async (dispatch, values, navigate) => {
     };
 
     if (token) {
-      signUpImage({ file: values.foto });
+      await signUpImage({ file: values.foto });
     }
 
     dispatch(signUp);

@@ -8,7 +8,7 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       valor: values.valor,
     });
     const create = {
-      type: "UPLOAD_TRUE",
+      type: "LOADING_TRUE",
     };
 
     dispatch(create);

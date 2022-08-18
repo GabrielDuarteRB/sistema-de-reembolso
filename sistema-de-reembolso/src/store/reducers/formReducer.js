@@ -22,6 +22,11 @@ const formReducer = (state = INITIAL_STATE, action) => {
         ...state,
         typePassword: action.typePassword,
       };
+    case "SET_LOGOUT":
+      return {
+        disabled: false,
+        typePassword: "password",
+      };
 
     default:
       return state;

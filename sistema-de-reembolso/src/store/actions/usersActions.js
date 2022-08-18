@@ -3,6 +3,7 @@ import { apiRefund } from "../../api";
 export const getUser = async (dispatch) => {
   try {
     const { data } = await apiRefund.get("/usuario/logged");
+    console.log(data)
     const get = {
       type: "GET_USER",
       name: data.nome,

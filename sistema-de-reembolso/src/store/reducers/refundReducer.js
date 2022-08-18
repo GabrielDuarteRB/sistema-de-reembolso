@@ -7,6 +7,7 @@ const INITIAL_STATE = {
 const refundReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "LOADING_TRUE":
+      console.log(`oi`)
       return {
         ...state,
         isLoading: true,
@@ -28,6 +29,12 @@ const refundReducer = (state = INITIAL_STATE, action) => {
         ...state,
         refundId: action.refundId,
         isLoading: false,
+      };
+    case "SET_LOGOUT":
+      return {
+        refund: [],
+        refundId: [],
+        isLoading: true,
       };
     default:
       return state;

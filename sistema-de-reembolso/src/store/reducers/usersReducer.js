@@ -14,6 +14,13 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         foto: action.foto,
         isLoading: false,
       };
+    case "SET_LOGOUT":
+      return {
+        name: "",
+        email: "",
+        foto: "",
+        isLoading: true,
+      };
     default:
       return state;
   }

@@ -22,6 +22,12 @@ const pageReducer = (state = INITIAL_STATE, action) => {
         ...state,
         size: action.size,
       };
+    case "SET_LOGOUT":
+      return {
+        page: "0",
+        totalPages: "",
+        size: "5",
+      };
     default:
       return state;
   }
