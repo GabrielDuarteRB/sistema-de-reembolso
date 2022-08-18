@@ -40,7 +40,7 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
 
   return (
     <>
-      <Header />
+      <Header title={"Gestor"} />
       <Container>
         {refund.length === 0 ? (
           <h2>Nenhum reembolso solicitado</h2>
@@ -53,11 +53,12 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
                   <Pager />
                 </div>
                 <Search setNameSearch={setNameSearch}/>
-                <ListTitles>
+                <ListTitles columns="6">
                   <span>Título</span>
+                  <span>Nome</span>
                   <span>Data</span>
                   <span>Valor</span>
-                  <span>Situação</span>
+                  <span>Status</span>
                   <span>Ações</span>
                 </ListTitles>
               </ListHeader>

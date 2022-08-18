@@ -3,6 +3,7 @@ import { primaryColor, secondaryColor } from "../../utils/colors";
 
 export const ListContainer = styled.section`
   display: grid;
+  grid-template-columns: minmax(800px, auto);
   justify-content: center;
   background-color: #fff;
   border: 1px solid ${primaryColor};
@@ -39,7 +40,7 @@ export const ListTitles = styled.div`
   display: grid;
   gap: 24px;
 
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(${(props) => props.columns}, 1fr);
   margin-bottom: 8px;
   color: #9fa2b4;
 `;
@@ -47,33 +48,33 @@ export const ListTitles = styled.div`
 export const List = styled.ul`
   display: grid;
 
-  & li {
-    display: grid;
-    gap: 24px;
-    align-items: center;
-    grid-template-columns: repeat(5, 1fr);
-    padding: 16px 32px;
-    border-top: 1px solid ${secondaryColor};
-
-    & span {
-      :first-child {
-        max-width: 10rem;
-        word-wrap: break-word;
-      }
-    }
-
-    & div {
-      display: flex;
-      gap: 16px;
-    }
-
-    :hover {
-      background-color: ${secondaryColor};
-    }
-  }
-
   :last-child {
     border-radius: 0 0 8px 8px;
     border-bottom: 1px solid ${secondaryColor};
+  }
+`;
+
+export const ListItem = styled.li`
+  display: grid;
+  gap: 24px;
+  align-items: center;
+  grid-template-columns: repeat(${(props) => props.columns}, 1fr);
+  padding: 16px 32px;
+  border-top: 1px solid ${secondaryColor};
+
+  & span {
+    :first-child {
+      max-width: 10rem;
+      word-wrap: break-word;
+    }
+  }
+
+  & div {
+    display: flex;
+    gap: 16px;
+  }
+
+  :hover {
+    background-color: ${secondaryColor};
   }
 `;

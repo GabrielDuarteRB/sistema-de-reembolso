@@ -26,25 +26,29 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
       <Routes>
         {isLogged ? (
           <>
-          {console.log()}
-            {["ROLE_COLABORADOR", "ROLE_ADMIN"].find(r => r === role) && (
+            {["ROLE_COLABORADOR", "ROLE_ADMIN"].find((r) => r === role) && (
               <>
                 <Route path="/reembolsos" element={<Main />} />
                 <Route path="/solicitar-reembolso" element={<FormRefund />} />
-                <Route path="/solicitar-reembolso/:idRefund" element={<FormRefund />}/>
+                <Route
+                  path="/editar-reembolso/:idRefund"
+                  element={<FormRefund />}
+                />
               </>
             )}
 
-            {["ROLE_FINANCEIRO", "ROLE_ADMIN"].find(r => r === role) && (
+            {["ROLE_FINANCEIRO", "ROLE_ADMIN"].find((r) => r === role) && (
               <Route path="/financeiro" element={<Financier />} />
             )}
 
-            {["ROLE_GESTOR", "ROLE_ADMIN"].find(r => r === role) && (
+            {["ROLE_GESTOR", "ROLE_ADMIN"].find((r) => r === role) && (
               <Route path="/gestor" element={<Manager />} />
             )}
 
             {role === "ROLE_ADMIN" && (
-              <Route path="/usuarios" element={<Admin />} />
+              <>
+                <Route path="/usuarios" element={<Admin />} />
+              </>
             )}
           </>
         ) : (

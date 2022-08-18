@@ -2,7 +2,7 @@ import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { Button } from "../Button/Button";
-import { List } from "../List/List";
+import { List, ListItem } from "../List/List";
 import moment from "moment";
 import {
   handleDeleteRefund,
@@ -22,7 +22,7 @@ const Refund = ({ dispatch, refund, page, size, isLoading }) => {
   return (
     <List>
       {refund.map((reembolso) => (
-        <li key={reembolso.idReembolso}>
+        <ListItem columns="5" key={reembolso.idReembolso}>
           <span>{reembolso.titulo}</span>
           <span>{moment(reembolso.dataEntrada).format("DD/MM/YYYY")}</span>
           <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
@@ -62,7 +62,7 @@ const Refund = ({ dispatch, refund, page, size, isLoading }) => {
               <FaTrash />
             </Button>
           </div>
-        </li>
+        </ListItem>
       ))}
     </List>
   );

@@ -42,7 +42,7 @@ const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
 
   return (
     <>
-      <Header />
+      <Header title={"Reembolsos"} />
       <Container>
         <Button
           background={primaryColor}
@@ -67,11 +67,11 @@ const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
                   <Pager />
                 </div>
                 <Search setNameSearch={setNameSearch}/>
-                <ListTitles>
+                <ListTitles columns="6">
                   <span>Título</span>
                   <span>Data</span>
                   <span>Valor</span>
-                  <span>Situação</span>
+                  <span>Status</span>
                   <span>Ações</span>
                 </ListTitles>
               </ListHeader>

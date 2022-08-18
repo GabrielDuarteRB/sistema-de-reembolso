@@ -2,7 +2,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
-import { List } from "../List/List";
+import { List, ListItem } from "../List/List";
 import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { managerAprove, readUrl } from "../../store/actions/refundActions";
@@ -11,8 +11,9 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
   return (
     <List>
       {refund.map((reembolso) => (
-        <li key={reembolso.idReembolso}>
+        <ListItem columns="6" key={reembolso.idReembolso}>
           <span>{reembolso.titulo}</span>
+          <span>{reembolso.usuario.nome}</span>
           <span>{moment(reembolso.data).format("DD/MM/YYYY")}</span>
           <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
           <span>{reembolso.statusDoReembolso}</span>
@@ -68,10 +69,10 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
                 )
               }
             >
-              <MdCancel fontSize={"16px"} />
+              <MdCancel fontSize={"18px"} />
             </Button>
           </div>
-        </li>
+        </ListItem>
       ))}
     </List>
   );
