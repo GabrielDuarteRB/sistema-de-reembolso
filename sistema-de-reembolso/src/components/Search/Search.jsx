@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 
 const Search = ({setNameSearch}) => {
   return (
-    <div>
+    <section>
         <input onBlur={e => setNameSearch(e.target.value)} type="text" placeholder="Filtar por nome" />
         <Button
           background={primaryColor}
@@ -17,7 +17,7 @@ const Search = ({setNameSearch}) => {
         >
           <FaSearch />
         </Button>
-    </div>
+    </section>
   )
 }
 export default Search

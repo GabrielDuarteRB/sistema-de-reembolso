@@ -11,7 +11,7 @@ import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
 import RefundManager from "../../components/Refund/RefundManager";
 import Search from "../../components/Search/Search";
-import { getAllRefund, getRefund, getRefundByName } from "../../store/actions/refundActions";
+import { getAllRefund, getRefundByName } from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
 
 const Manager = ({ dispatch, isLoading, refund, page, size }) => {
@@ -25,11 +25,11 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
   useEffect(() => {
     if(nameSearch === ''){
       console.log('teste1')
-      getRefund(dispatch, "TODOS", page, size);
+      getAllRefund(dispatch, "TODOS", page, size);
       return
     }
     console.log('teste2')
-    getRefundByName(dispatch, nameSearch, "TODOS", page, size)
+    getRefundByName(dispatch, nameSearch, "ABERTO", page, size)
   }, [page, size, nameSearch]);
 
   console.log(refund)

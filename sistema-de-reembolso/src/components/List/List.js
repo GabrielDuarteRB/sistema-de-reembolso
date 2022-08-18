@@ -22,7 +22,7 @@ export const ListHeader = styled.div`
     align-items: center;
   }
 
-  & > div:nth-child(2) {
+  & > section {
     display: flex;
     align-items: center;
     gap: 8px;

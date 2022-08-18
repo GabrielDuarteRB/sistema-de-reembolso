@@ -109,8 +109,8 @@ export const getRefundById = async (dispatch, idRefund) => {
 
 export const getRefundByName = async (dispatch, name, statusRefund, page, size) => {
   try {
-    const {data} = await apiRefund.get(`/usuario/listar/nome?nome=${name}&pagina=${page}&quantidadeDeRegistros=${size}`)
-    
+    const {data} = await apiRefund.get(`/reembolso/list/nome/status?nome=${name}&statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${size}`)
+   
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
