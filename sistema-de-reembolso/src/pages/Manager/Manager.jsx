@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
@@ -11,17 +11,28 @@ import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
 import RefundManager from "../../components/Refund/RefundManager";
 import Search from "../../components/Search/Search";
-import { getAllRefund } from "../../store/actions/refundActions";
+import { getAllRefund, getRefundByName } from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
 
 const Manager = ({ dispatch, isLoading, refund, page, size }) => {
+
+  const [nameSearch, setNameSearch] = useState('')
+
   useEffect(() => {
     getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    getAllRefund(dispatch, "ABERTO", page, size);
-  }, [page, size]);
+    if(nameSearch === ''){
+      console.log('teste1')
+      getAllRefund(dispatch, "TODOS", page, size);
+      return
+    }
+    console.log('teste2')
+    getRefundByName(dispatch, nameSearch, "ABERTO", page, size)
+  }, [page, size, nameSearch]);
+
+  console.log(refund)
 
   if (isLoading) {
     return <Loading />;
@@ -41,7 +52,7 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
                   <h2>Reembolsos em aberto</h2>
                   <Pager />
                 </div>
-                <Search />
+                <Search setNameSearch={setNameSearch}/>
                 <ListTitles columns="6">
                   <span>Título</span>
                   <span>Nome</span>

@@ -18,6 +18,7 @@ import noUser from "../../img/noUser.jpeg";
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
 import { Img } from "../Image/Img";
 import { LoadingElement } from "../Loading/Loading.styled";
+import { navigateToPages } from "../../store/actions/refundActions";
 
 const Header = ({ name, foto, dispatch, title }) => {
   const navigate = useNavigate();
@@ -45,18 +46,18 @@ const Header = ({ name, foto, dispatch, title }) => {
 
               <DropdownContent>
                 <span>Páginas</span>
-                <Link to="/usuarios">
+                <button onClick={() => navigateToPages(dispatch, navigate, '/usarios')}>
                   Usuários <FaUsers />
-                </Link>
-                <Link to="/reembolsos">
+                </button>
+                <button onClick={() => navigateToPages(dispatch, navigate, '/reembolsos')}>
                   Reembolsos <FaExchangeAlt />
-                </Link>
-                <Link to="/gestor">
+                </button>
+                <button onClick={() => navigateToPages(dispatch, navigate, '/gestor')}>
                   Gestor <FaUserTie />
-                </Link>
-                <Link to="/financeiro">
+                </button>
+                <button onClick={() => navigateToPages(dispatch, navigate, '/financeiro')}>
                   Financeiro <FaMoneyBill />
-                </Link>
+                </button>
               </DropdownContent>
             </Dropdown>
           </>

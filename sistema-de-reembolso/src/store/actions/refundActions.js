@@ -77,12 +77,12 @@ export const getAllRefund = async (
       `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
     );
 
-    const getPages = {
-      type: "GET_PAGES",
-      page: data.page,
-      totalPages: data.totalPages,
-    };
-    dispatch(getPages);
+      const getPages = {
+        type: "GET_PAGES",
+        page: data.page,
+        totalPages: data.totalPages,
+      };
+      dispatch(getPages);
 
     const get = {
       type: "GET_REFUND",
@@ -106,6 +106,27 @@ export const getRefundById = async (dispatch, idRefund) => {
     console.log(error);
   }
 };
+
+export const getRefundByName = async (dispatch, name, statusRefund, page, size) => {
+  try {
+    const {data} = await apiRefund.get(`/reembolso/list/nome/status?nome=${name}&statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${size}`)
+   
+    const getPages = {
+      type: "GET_PAGES",
+      page: data.page,
+      totalPages: data.totalPages,
+    };
+    dispatch(getPages);
+
+    const get = {
+      type: "GET_REFUND",
+      refund: data.content,
+    };
+    dispatch(get);
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
   try {
@@ -202,14 +223,6 @@ export const financierAprove = async (
   }
 };
 
-export const navigateToUpdate = (dispatch, navigate, idRefund) => {
-  navigate(`/editar-reembolso/${idRefund}`);
-  const loading = {
-    type: "LOADING_TRUE",
-  };
-  dispatch(loading);
-};
-
 export const readUrl = (anexo) => {
   console.log(anexo);
   const byteString = atob(anexo.anexoDTO.data);
@@ -224,3 +237,20 @@ export const readUrl = (anexo) => {
   const url = window.URL.createObjectURL(blob);
   window.open(url);
 };
+
+export const navigateToUpdate = (dispatch, navigate, idRefund) => {
+  navigate(`/editar-reembolso/${idRefund}`);
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
+};
+
+export const navigateToPages = (dispatch, navigate, page) => {
+  navigate(page)
+  const clear = {
+    type: 'SET_CLEAR'
+  }
+  dispatch(clear)
+}
+

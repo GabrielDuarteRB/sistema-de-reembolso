@@ -9,29 +9,37 @@ import {
 } from "../../components/List/List";
 import Pager from "../../components/Pager/Pager";
 import { primaryColor, secondaryColor } from "../../utils/colors";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUser } from "../../store/actions/usersActions";
 import { connect } from "react-redux";
 import Loading from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import { getRefund } from "../../store/actions/refundActions";
+import { getAllRefund, getRefundByName } from "../../store/actions/refundActions";
 import Refund from "../../components/Refund/Refund";
 import Search from "../../components/Search/Search";
 
-const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
+const Main = ({ page, role, size, isLoadingRefund, refund, dispatch }) => {
   const navigate = useNavigate();
+  const [nameSearch, setNameSearch] = useState('')
 
   useEffect(() => {
     getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    getRefund(dispatch, "TODOS", page, size);
-  }, [page, size]);
+    if(nameSearch === ''){
+      getAllRefund(dispatch, "TODOS", page, size);
+      return
+    }
+    console.log('teste2')
+    getRefundByName(dispatch, nameSearch, "TODOS", page, size)
+  }, [page, size, nameSearch]);
 
   if (isLoadingRefund) {
     return <Loading />;
   }
+
+  console.log(role)
 
   return (
     <>
@@ -59,8 +67,9 @@ const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
                   <h2>Reembolsos</h2>
                   <Pager />
                 </div>
-                <Search />
-                <ListTitles columns="6">
+                { role === 'ROLE_ADMIN' ? <Search setNameSearch={setNameSearch}/> : null }
+                
+                <ListTitles columns="5">
                   <span>Título</span>
                   <span>Data</span>
                   <span>Valor</span>
@@ -79,10 +88,9 @@ const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
 
 const mapStateToProps = (state) => ({
   isLoadingRefund: state.refundReducer.isLoading,
-  isLoadingUser: state.usersReducer.isLoading,
-  foto: state.usersReducer.foto,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
   refund: state.refundReducer.refund,
+  role: state.authReducer.role,
 });
 export default connect(mapStateToProps)(Main);

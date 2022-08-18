@@ -11,11 +11,16 @@ const refundReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: true,
       };
-
     case "LOADING_FALSE":
       return {
         ...state,
         isLoading: false,
+      };
+    case "SET_CLEAR":
+      return {
+        refund: [],
+        refundById: {},
+        isLoading: true,
       };
 
     case "GET_REFUND":
