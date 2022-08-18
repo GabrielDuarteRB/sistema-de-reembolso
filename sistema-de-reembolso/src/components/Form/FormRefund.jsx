@@ -42,6 +42,8 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
     }
   }, []);
 
+  !idRefund ? dispatch({ type: "LOADING_FALSE" }) : <></>;
+
   if (isLoading) {
     return <Loading />;
   }
@@ -111,25 +113,27 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
               <FormItem>
                 <label htmlFor="file">Enviar anexo</label>
                 <FileContainer>
-                  <Field
-                    accept=".pdf, .png, .jpeg, .jpg"
-                    type="file"
-                    name="file"
-                    value={""}
-                    disabled={disabled}
-                    onChange={(e) =>
-                      handleFile(e.target.files[0], setFieldValue)
-                    }
-                  />
-
                   <small>{selectedFile || "Nenhum anexo selecionado"}</small>
 
-                  <button
-                    type="button"
-                    onClick={() => handleFile("", setFieldValue)}
-                  >
-                    <FaTrash />
-                  </button>
+                  <div>
+                    <Field
+                      accept=".pdf, .png, .jpeg, .jpg"
+                      type="file"
+                      name="file"
+                      value={""}
+                      disabled={disabled}
+                      onChange={(e) =>
+                        handleFile(e.target.files[0], setFieldValue)
+                      }
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => handleFile("", setFieldValue)}
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
                 </FileContainer>
 
                 {errors.file && touched.file ? (

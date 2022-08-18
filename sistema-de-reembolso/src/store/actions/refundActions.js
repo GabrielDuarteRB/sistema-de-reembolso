@@ -168,31 +168,37 @@ export const handleUpdateRefund = async (
   }
 };
 
-export const managerAprove = async (dispatch, idRefund, action, page, size) => { 
+export const managerAprove = async (dispatch, idRefund, action, page, size) => {
   try {
-    await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`)
-    getAllRefund(dispatch, 'ABERTO', page, size)
+    await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`);
+    getAllRefund(dispatch, "ABERTO", page, size);
     toast.fire({
       icon: "sucess",
-      title: `Reembolso ${action === 'true' ? 'Aprovado' : 'Negado'}!`,
+      title: `Reembolso ${action === "true" ? "Aprovado" : "Negado"}!`,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
-export const financierAprove = async (dispatch, idRefund, action, page, size) => {
+export const financierAprove = async (
+  dispatch,
+  idRefund,
+  action,
+  page,
+  size,
+) => {
   try {
-    await apiRefund.put(`/financeiro/pagar/${idRefund}?pagar=${action}`)
-    getAllRefund(dispatch, 'APROVADO_GESTOR', page, size)
+    await apiRefund.put(`/financeiro/pagar/${idRefund}?pagar=${action}`);
+    getAllRefund(dispatch, "APROVADO_GESTOR", page, size);
     toast.fire({
       icon: "success",
-      title: `Reembolso ${action === 'true' ? 'Pago' : 'Negado'}!`,
+      title: `Reembolso ${action === "true" ? "Pago" : "Negado"}!`,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
+};
 
 export const navigateToUpdate = (dispatch, navigate, idRefund) => {
   navigate(`/solicitar-reembolso/${idRefund}`);

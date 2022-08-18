@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { getRefund } from "../../store/actions/refundActions";
 import Refund from "../../components/Refund/Refund";
 
-const Main = ({ page, size, foto, isLoadingRefund, isLoadingUser, refund, dispatch }) => {
+const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,8 +27,6 @@ const Main = ({ page, size, foto, isLoadingRefund, isLoadingUser, refund, dispat
   useEffect(() => {
     getRefund(dispatch, "TODOS", page, size);
   }, [page, size]);
-
-  console.log(isLoadingRefund)
 
   if (isLoadingRefund) {
     return <Loading />;

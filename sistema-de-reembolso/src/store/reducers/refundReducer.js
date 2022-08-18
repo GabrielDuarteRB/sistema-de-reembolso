@@ -7,10 +7,15 @@ const INITIAL_STATE = {
 const refundReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "LOADING_TRUE":
-      console.log(`oi`)
       return {
         ...state,
         isLoading: true,
+      };
+
+    case "LOADING_FALSE":
+      return {
+        ...state,
+        isLoading: false,
       };
 
     case "GET_REFUND":

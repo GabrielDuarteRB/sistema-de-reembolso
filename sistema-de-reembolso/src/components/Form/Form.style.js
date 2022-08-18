@@ -92,15 +92,20 @@ export const PasswordContainer = styled.div`
 `;
 
 export const FileContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+
   gap: 16px;
+
+  & div {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
 
   & input[type="file"] {
     cursor: pointer;
     color: transparent;
-    width: 40%;
+    width: 6.5rem;
 
     ::file-selector-button {
       display: none;
@@ -112,7 +117,7 @@ export const FileContainer = styled.div`
     }
 
     :hover {
-      border: 2px solid ${primaryColor};
+      background-color: ${secondaryColor};
     }
   }
 
@@ -121,6 +126,10 @@ export const FileContainer = styled.div`
   }
 
   & button {
+    padding: 12px 16px;
+    border: 2px solid #f0f1f7;
+    border-radius: 8px;
+    background: #fcfdfe;
   }
 `;
 
