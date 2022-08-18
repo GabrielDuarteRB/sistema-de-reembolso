@@ -8,7 +8,14 @@ export const toast = Swal.mixin({
   timerProgressBar: true,
 });
 
-export const confirmModal = (title, id, handleDelete, dispatch, page, size) => {
+export const confirmDeleteModal = (
+  title,
+  id,
+  handleDelete,
+  dispatch,
+  page,
+  size,
+) => {
   Swal.fire({
     title: title,
     confirmButtonText: "Confirmar",
@@ -17,6 +24,20 @@ export const confirmModal = (title, id, handleDelete, dispatch, page, size) => {
   }).then((result) => {
     if (result.isConfirmed) {
       handleDelete(dispatch, id, page, size);
+    }
+  });
+};
+
+export const confirmUpdateModal = (title, id, handleUpdate, role, navigate) => {
+  Swal.fire({
+    title: title,
+    confirmButtonText: "Confirmar",
+    showDenyButton: true,
+    denyButtonText: "Cancelar",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      handleUpdate(id, role);
+      navigate(0);
     }
   });
 };

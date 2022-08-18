@@ -18,10 +18,10 @@ import {
   getAllRefund,
   getRefundByName,
 } from "../../store/actions/refundActions";
-import Refund from "../../components/Refund/Refund";
 import Search from "../../components/Search/Search";
 import Status from "../../components/Status/Status";
 import { NotRegister } from "../../components/NotRegister/NotRegister";
+import RefundList from "../../components/RefundLists/RefundList";
 
 const Reembolsos = ({
   page,
@@ -53,7 +53,7 @@ const Reembolsos = ({
 
   return (
     <>
-      <Header title={"Reembolsos"} />
+      <Header />
       <Container>
         <Button
           background={primaryColor}
@@ -86,7 +86,7 @@ const Reembolsos = ({
           {refund.length === 0 ? (
             <NotRegister>Nenhum reembolso solicitado</NotRegister>
           ) : (
-            <Refund />
+            <RefundList />
           )}
         </ListContainer>
       </Container>

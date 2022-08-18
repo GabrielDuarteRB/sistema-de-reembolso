@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { FaSearch, FaUserPlus } from "react-icons/fa";
+import { FaUserPlus } from "react-icons/fa";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
@@ -12,10 +12,10 @@ import {
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
-import Users from "../../components/Users/Users";
 import { getAllUsers, getUser } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
+import UsersList from "../../components/UsersList/UsersList";
 
 const Usuarios = ({ dispatch, users, isLoading, page, size }) => {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const Usuarios = ({ dispatch, users, isLoading, page, size }) => {
                 <span>Editar</span>
               </ListTitles>
             </ListHeader>
-            {!users ? <h2>Nenhum usuário cadastrado</h2> : <Users />}
+            {!users ? <h2>Nenhum usuário cadastrado</h2> : <UsersList />}
           </ListContainer>
         </>
       </Container>

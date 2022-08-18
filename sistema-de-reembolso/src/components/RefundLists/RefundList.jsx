@@ -9,10 +9,10 @@ import {
   navigateToUpdate,
 } from "../../store/actions/refundActions";
 import { useNavigate } from "react-router-dom";
-import { confirmModal } from "../Toaster/Toaster";
+import { confirmDeleteModal } from "../Toaster/Toaster";
 import Loading from "../Loading/Loading";
 
-const Refund = ({ dispatch, refund, page, size, isLoading }) => {
+const RefundList = ({ dispatch, refund, page, size, isLoading }) => {
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -49,7 +49,7 @@ const Refund = ({ dispatch, refund, page, size, isLoading }) => {
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() =>
-                confirmModal(
+                confirmDeleteModal(
                   "Tem certeza que deseja excluir?",
                   reembolso.idReembolso,
                   handleDeleteRefund,
@@ -75,4 +75,4 @@ const mapStateToProps = (state) => ({
   size: state.pageReducer.size,
 });
 
-export default connect(mapStateToProps)(Refund);
+export default connect(mapStateToProps)(RefundList);
