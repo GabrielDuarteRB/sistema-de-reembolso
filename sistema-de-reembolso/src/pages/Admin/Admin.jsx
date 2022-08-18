@@ -15,6 +15,7 @@ import Pager from "../../components/Pager/Pager";
 import Users from "../../components/Users/Users";
 import { getAllUsers, getUser } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
+import Search from "../../components/Search/Search";
 
 const Admin = ({ dispatch, users, isLoading, page, size }) => {
   const navigate = useNavigate();
@@ -57,19 +58,7 @@ const Admin = ({ dispatch, users, isLoading, page, size }) => {
                   <h2>Usuários</h2>
                   <Pager />
                 </div>
-                <form>
-                  <input type="text" placeholder="Filtar por nome" />
-                  <Button
-                    background={primaryColor}
-                    backgroundHover={secondaryColor}
-                    color={secondaryColor}
-                    colorHover={primaryColor}
-                    borderColor={primaryColor}
-                    padding={"4px"}
-                  >
-                    <FaSearch />
-                  </Button>
-                </form>
+                <Search />
                 <ListTitles columns="5">
                   <span>Email</span>
                   <span>Id</span>
