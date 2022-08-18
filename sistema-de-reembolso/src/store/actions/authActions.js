@@ -22,7 +22,7 @@ export const handleLogin = async (dispatch, values, navigate) => {
     });
 
     handleForm(dispatch, "enable");
-    navigate("/principal");
+    navigate("/reembolsos");
   } catch (error) {
     handleForm(dispatch, "enable");
     if (error.response.status === 400) {
@@ -35,32 +35,37 @@ export const handleLogin = async (dispatch, values, navigate) => {
   }
 };
 
-export const handleSignUp = async (dispatch, values, navigate) => {
+export const handleSignUp = async (dispatch, values, navigate, byAdmin) => {
   try {
     const { data } = await apiRefund.post("/usuario/cadastro", {
       nome: values.nome,
       email: values.email,
       senha: values.senha,
     });
-
     const token = data.token;
-    localStorage.setItem("token", data.token);
-    localStorage.setItem("role", data.role);
-    apiRefund.defaults.headers.common["Authorization"] = data.token;
 
-    const signUp = {
-      type: "SET_SIGNUP",
-      token: data.token,
-      role: data.role,
-    };
+    if (byAdmin) {
+      await handleRole(data.idUsuario, values.tipoUser);
+      navigate("/usuarios");
+    } else {
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("role", data.role);
+      apiRefund.defaults.headers.common["Authorization"] = data.token;
 
-    if (token && values.foto) {
-      await signUpImage({ file: values.foto });
+      if (token && values.foto) {
+        await signUpImage({ file: values.foto });
+      }
+
+      const signUp = {
+        type: "SET_LOGIN",
+        token: data.token,
+        role: data.role,
+      };
+      dispatch(signUp);
+      navigate("/reembolsos");
     }
 
-    dispatch(signUp);
     handleForm(dispatch, "enable");
-    navigate("/principal");
   } catch (error) {
     handleForm(dispatch, "enable");
     if (error.response.status === 400) {
@@ -83,6 +88,17 @@ export const signUpImage = async (foto) => {
     await apiRefund.post("/upload/foto", foto, {
       headers: { "Content-Type": "multipart/form-data" },
     });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const handleRole = async (idUser, role) => {
+  try {
+    await apiRefund.post(
+      `/admin/atribuir/role?idUsuario=${idUser}&role=${role}`,
+      role,
+    );
   } catch (error) {
     console.log(error);
   }
