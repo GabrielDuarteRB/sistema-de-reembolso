@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
@@ -8,31 +8,27 @@ import {
   ListTitles,
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
+import { NotRegister } from "../../components/NotRegister/NotRegister";
 import Pager from "../../components/Pager/Pager";
 import RefundManager from "../../components/Refund/RefundManager";
 import Search from "../../components/Search/Search";
+import Status from "../../components/Status/Status";
 import { getAllRefund, getRefundByName } from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
 
-const Manager = ({ dispatch, isLoading, refund, page, size }) => {
-
-  const [nameSearch, setNameSearch] = useState('')
+const Manager = ({ dispatch, statusRefund, nameSearch, isLoading, refund, page, size }) => {
 
   useEffect(() => {
     getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    if(nameSearch === ''){
-      console.log('teste1')
+    if(nameSearch === '' && statusRefund === 'TODOS'){
       getAllRefund(dispatch, "TODOS", page, size);
       return
     }
-    console.log('teste2')
-    getRefundByName(dispatch, nameSearch, "ABERTO", page, size)
-  }, [page, size, nameSearch]);
-
-  console.log(refund)
+    getRefundByName(dispatch, nameSearch, statusRefund, page, size)
+  }, [page, size, nameSearch, statusRefund]);
 
   if (isLoading) {
     return <Loading />;
@@ -42,17 +38,14 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
     <>
       <Header title={"Gestor"} />
       <Container>
-        {refund.length === 0 ? (
-          <h2>Nenhum reembolso solicitado</h2>
-        ) : (
-          <>
             <ListContainer>
               <ListHeader>
                 <div>
                   <h2>Reembolsos em aberto</h2>
                   <Pager />
                 </div>
-                <Search setNameSearch={setNameSearch}/>
+                <Status/>
+                <Search/>
                 <ListTitles columns="6">
                   <span>Título</span>
                   <span>Nome</span>
@@ -62,10 +55,13 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
                   <span>Ações</span>
                 </ListTitles>
               </ListHeader>
-              <RefundManager />
-            </ListContainer>
-          </>
-        )}
+              {refund.length === 0 
+              ? 
+                (<NotRegister>Nenhum reembolso solicitado</NotRegister>) 
+              :
+                (<RefundManager />)
+              }
+            </ListContainer> 
       </Container>
     </>
   );
@@ -73,6 +69,8 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
 
 const mapStateToProps = (state) => ({
   isLoading: state.refundReducer.isLoading,
+  nameSearch: state.refundReducer.nameSearch,
+  statusRefund: state.refundReducer.statusRefund,
   refund: state.refundReducer.refund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,

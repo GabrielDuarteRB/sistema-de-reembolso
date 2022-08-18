@@ -110,7 +110,7 @@ export const getRefundById = async (dispatch, idRefund) => {
 export const getRefundByName = async (dispatch, name, statusRefund, page, size) => {
   try {
     const {data} = await apiRefund.get(`/reembolso/list/nome/status?nome=${name}&statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${size}`)
-   
+    console.log(data)
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
@@ -223,8 +223,23 @@ export const financierAprove = async (
   }
 };
 
+export const changeStatus = (value, dispatch) => {
+  const status = {
+    type: 'SET_STATUS',
+    statusRefund: value
+  }
+  dispatch(status)
+}
+
+export const changeNameSearch = (value, dispatch) => {
+  const name = {
+    type: 'SET_NAME_SEARCH',
+    nameSearch: value
+  }
+  dispatch(name)
+}
+
 export const readUrl = (anexo) => {
-  console.log(anexo);
   const byteString = atob(anexo.anexoDTO.data);
   const ab = new ArrayBuffer(byteString.length);
   const ia = new Uint8Array(ab);

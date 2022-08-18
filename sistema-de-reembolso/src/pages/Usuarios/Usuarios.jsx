@@ -48,28 +48,24 @@ const Usuarios = ({ dispatch, users, isLoading, page, size }) => {
           Cadastrar usuário <FaUserPlus />
         </Button>
 
-        {!users ? (
-          <h2>Nenhum usuário cadastrado</h2>
-        ) : (
-          <>
-            <ListContainer>
-              <ListHeader>
-                <div>
-                  <h2>Usuários</h2>
-                  <Pager />
-                </div>
-                <Search />
-                <ListTitles columns="4">
-                  <span>Email</span>
-                  <span>Nome</span>
-                  <span>Tipo</span>
-                  <span>Editar</span>
-                </ListTitles>
-              </ListHeader>
-              <Users />
-            </ListContainer>
-          </>
-        )}
+        <>
+          <ListContainer>
+            <ListHeader>
+              <div>
+                <h2>Usuários</h2>
+                <Pager />
+              </div>
+              <Search />
+              <ListTitles columns="4">
+                <span>Email</span>
+                <span>Nome</span>
+                <span>Tipo</span>
+                <span>Editar</span>
+              </ListTitles>
+            </ListHeader>
+            {!users ? <h2>Nenhum usuário cadastrado</h2> : <Users />}
+          </ListContainer>
+        </>
       </Container>
     </>
   );
@@ -80,6 +76,7 @@ const mapStateToProps = (state) => ({
   isLoading: state.usersReducer.isLoading,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  nameSearch: state.refundReducer.nameSearch,
 });
 
 export default connect(mapStateToProps)(Usuarios);

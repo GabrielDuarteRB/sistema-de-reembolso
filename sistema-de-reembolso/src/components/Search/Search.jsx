@@ -1,11 +1,13 @@
 import { primaryColor, secondaryColor } from "../../utils/colors"
 import { Button } from "../Button/Button"
 import { FaSearch } from "react-icons/fa";
+import { connect } from "react-redux";
+import { changeNameSearch } from "../../store/actions/refundActions";
 
-const Search = ({setNameSearch}) => {
+const Search = ({dispatch}) => {
   return (
     <section>
-        <input onBlur={e => setNameSearch(e.target.value)} type="text" placeholder="Filtar por nome" />
+        <input onBlur={e => changeNameSearch(e.target.value, dispatch)} type="text" placeholder="Filtar por nome" />
         <Button
           background={primaryColor}
           backgroundHover={secondaryColor}
@@ -20,4 +22,8 @@ const Search = ({setNameSearch}) => {
     </section>
   )
 }
-export default Search
+
+const mapStateToProps = (state) => ({
+  statusRefund: state.refundReducer.statusRefund,
+});
+export default connect(mapStateToProps)(Search);
