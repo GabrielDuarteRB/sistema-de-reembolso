@@ -4,9 +4,9 @@ import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { List } from "../List/List"
 import { FaCheckCircle, FaTrash, FaFileDownload } from "react-icons/fa";
-import { gestorAprove } from "../../store/actions/managerActions";
+import { managerAprove } from "../../store/actions/refundActions";
 
-const RefundPending = ({dispatch, page, size, refund}) => {
+const RefundManager = ({dispatch, page, size, refund}) => {
 
   return (
     <List>
@@ -40,7 +40,7 @@ const RefundPending = ({dispatch, page, size, refund}) => {
                         colorHover={primaryColor}
                         borderColor={primaryColor}
                         padding={"8px"}
-                        onClick={() => gestorAprove(dispatch, r.idReembolso, 'true', page, size)}
+                        onClick={() => managerAprove(dispatch, r.idReembolso, 'true', page, size)}
                     >
                         <FaCheckCircle />
                     </Button>
@@ -52,7 +52,7 @@ const RefundPending = ({dispatch, page, size, refund}) => {
                         colorHover={primaryColor}
                         borderColor={primaryColor}
                         padding={"8px"}
-                        onClick={() => gestorAprove(dispatch, r.idReembolso, 'false', page, size)}
+                        onClick={() => managerAprove(dispatch, r.idReembolso, 'false', page, size)}
                     >
                         <FaTrash />
                     </Button>
@@ -68,5 +68,4 @@ const mapStateToProps = (state) => ({
     page: state.pageReducer.page,
     size: state.pageReducer.size,
 });
-export default connect(mapStateToProps)(RefundPending);
- 
+export default connect(mapStateToProps)(RefundManager); 

@@ -4,14 +4,19 @@ import { useEffect } from "react";
 import { isAuth } from "../../store/actions/authActions";
 import { connect } from "react-redux";
 
-const NotFound = ({dispatch, isLogged}) => {
+const NotFound = ({dispatch, role}) => {
   const navigate = useNavigate();
 
   const logged = () => {
-    if(isLogged) {
-      navigate("/principal")
-    }else{
-      navigate("/")
+    switch(role){
+      case 'ROLE_COLABORADOR':
+        return navigate('/principal')
+      case 'ROLE_GESTOR':
+        return navigate('/gestor')
+      case 'ROLE_FINANCEIRO':
+        return navigate('/financeiro')
+      default:
+        navigate('/')
     }
   }
 
@@ -28,7 +33,7 @@ const NotFound = ({dispatch, isLogged}) => {
 };
 
 const mapStateToProps = (state) => ({
-  isLogged: state.authReducer.isLogged,
+  role: state.authReducer.role,
 });
 
 export default connect(mapStateToProps)(NotFound)

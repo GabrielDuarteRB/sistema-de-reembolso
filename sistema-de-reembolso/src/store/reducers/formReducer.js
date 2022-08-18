@@ -7,11 +7,13 @@ const formReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "DISABLE_FORM":
       return {
+        ...state,
         disabled: true,
       };
 
     case "ENABLE_FORM":
       return {
+        ...state,
         disabled: false,
       };
 

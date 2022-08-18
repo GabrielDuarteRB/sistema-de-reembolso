@@ -9,7 +9,6 @@ export const handleLogin = async (dispatch, values, navigate) => {
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
     apiRefund.defaults.headers.common["Authorization"] = data.token;
-
     const logged = {
       type: "SET_LOGIN",
       token: data.token,
@@ -102,6 +101,7 @@ export const handleLogout = (dispatch, navigate) => {
 
 export const isAuth = (dispatch) => {
   const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
 
   if (token) {
     apiRefund.defaults.headers.common["Authorization"] = token;
@@ -109,6 +109,7 @@ export const isAuth = (dispatch) => {
     const logged = {
       type: "SET_LOGIN",
       token: token,
+      role: role
     };
 
     dispatch(logged);

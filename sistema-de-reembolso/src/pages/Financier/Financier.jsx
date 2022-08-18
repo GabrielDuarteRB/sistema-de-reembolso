@@ -9,22 +9,22 @@ import {
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
-import RefundManager from "../../components/Refund/RefundManager";
+import RefundFinancier from "../../components/Refund/RefundFinancier";
 import { getAllRefund } from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
 
-const Manager = ({ dispatch, isLoading, refund, page, size }) => {
+const Financier = ({ dispatch, isLoading, refund, page, size }) => {
 
   useEffect(() => {
     getUser(dispatch);
   }, []);
   
   useEffect(() => {
-    getAllRefund(dispatch, 'ABERTO', page, size);
+    getAllRefund(dispatch, 'APROVADO_GESTOR', page, size);
   }, [page, size]);
 
   if(isLoading) {
-    return (
+    return(
         <Loading/>
     )
   }
@@ -51,7 +51,7 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
                   <span>Ações</span>
                 </ListTitles>
               </ListHeader>
-              <RefundManager />
+              <RefundFinancier/>
             </ListContainer>
           </>
         )}
@@ -66,4 +66,4 @@ const mapStateToProps = (state) => ({
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });
-export default connect(mapStateToProps)(Manager);
+export default connect(mapStateToProps)(Financier);

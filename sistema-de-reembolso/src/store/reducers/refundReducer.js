@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   refund: [],
   refundId: [],
-  isLoading: false,
+  isLoading: true,
 };
 
 const refundReducer = (state = INITIAL_STATE, action) => {
