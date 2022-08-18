@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-import { FaSearch } from "react-icons/fa";
 import { connect } from "react-redux";
-import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
 import {
@@ -12,9 +10,9 @@ import {
 import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
 import RefundManager from "../../components/Refund/RefundManager";
+import Search from "../../components/Search/Search";
 import { getAllRefund } from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
-import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const Manager = ({ dispatch, isLoading, refund, page, size }) => {
   useEffect(() => {
@@ -43,20 +41,7 @@ const Manager = ({ dispatch, isLoading, refund, page, size }) => {
                   <h2>Reembolsos em aberto</h2>
                   <Pager />
                 </div>
-                <form>
-                  <input type="text" placeholder="Filtar por nome" />
-                  <Button
-                    background={primaryColor}
-                    backgroundHover={secondaryColor}
-                    color={secondaryColor}
-                    colorHover={primaryColor}
-                    borderColor={primaryColor}
-                    padding={"4px"}
-                  >
-                    <FaSearch />
-                  </Button>
-                </form>
-
+                <Search/>
                 <ListTitles>
                   <span>Título</span>
                   <span>Data</span>

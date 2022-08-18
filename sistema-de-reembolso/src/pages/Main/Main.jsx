@@ -16,6 +16,7 @@ import Loading from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { getRefund } from "../../store/actions/refundActions";
 import Refund from "../../components/Refund/Refund";
+import Search from "../../components/Search/Search";
 
 const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
   const navigate = useNavigate();
@@ -58,6 +59,7 @@ const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
                   <h2>Reembolsos</h2>
                   <Pager />
                 </div>
+                <Search/>
                 <ListTitles>
                   <span>Título</span>
                   <span>Data</span>

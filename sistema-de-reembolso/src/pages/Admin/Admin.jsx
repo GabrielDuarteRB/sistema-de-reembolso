@@ -1,7 +1,5 @@
 import { useEffect } from "react";
-import { FaSearch } from "react-icons/fa";
 import { connect } from "react-redux";
-import { Button } from "../../components/Button/Button";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
 import {
@@ -10,9 +8,9 @@ import {
   ListTitles,
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
+import Search from "../../components/Search/Search";
 import Users from "../../components/Users/Users";
 import { getAllUsers } from "../../store/actions/usersActions";
-import { primaryColor, secondaryColor } from "../../utils/colors";
 
 const Admin = ({ dispatch, users, isLoading }) => {
   useEffect(() => {
@@ -28,7 +26,8 @@ const Admin = ({ dispatch, users, isLoading }) => {
     <>
       <Header />
       <Container>
-        {users.length === 0 ? (
+        {console.log(users)}
+        {!users ? (
           <h2>Nenhum usuário cadastrado</h2>
         ) : (
           <>
@@ -38,19 +37,7 @@ const Admin = ({ dispatch, users, isLoading }) => {
                   <h2>Usuários</h2>
                   {/* <Pager /> */}
                 </div>
-                <form>
-                  <input type="text" placeholder="Filtar por nome" />
-                  <Button
-                    background={primaryColor}
-                    backgroundHover={secondaryColor}
-                    color={secondaryColor}
-                    colorHover={primaryColor}
-                    borderColor={primaryColor}
-                    padding={"4px"}
-                  >
-                    <FaSearch />
-                  </Button>
-                </form>
+                <Search/>
                 <ListTitles>
                   <span>Email</span>
                   <span>Id</span>
