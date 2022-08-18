@@ -4,11 +4,12 @@ import { connect } from "react-redux";
 import {
   CardForm,
   FieldForm,
+  FileContainer,
   FormItem,
   HeaderForm,
-  InputContainer,
   TextError,
 } from "./Form.style";
+import Loading from "../../components/Loading/Loading";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Button } from "../Button/Button";
 import { primaryColor, secondaryColor } from "../../utils/colors";
@@ -22,29 +23,34 @@ import {
   handleCreateRefund,
   handleUpdateRefund,
 } from "../../store/actions/refundActions";
-import { useEffect } from "react";
-import Loading from "../Loading/Loading";
+import { useEffect, useState } from "react";
+import { handleForm } from "../../store/actions/formActions";
 
-const FormRefund = ({ dispatch, refundId, isLoading }) => {
+const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
   const navigate = useNavigate();
-
   const { idRefund } = useParams();
+  const [selectedFile, setSelectedFile] = useState("Nenhum anexo selecionado");
 
   const handleFile = (file, setFieldValue) => {
-    // console.log(file);
+    console.log(file);
     setFieldValue("file", file);
+    setSelectedFile(file.name);
   };
 
   useEffect(() => {
-    if(idRefund) {
-      getRefundById(dispatch, idRefund)
+    if (idRefund) {
+      getRefundById(dispatch, idRefund);
     }
-  }, [])
+  }, []);
 
-  if(isLoading){
-    return(
-      <Loading/>
-    )
+  !idRefund ? dispatch({ type: "LOADING_FALSE" }) : <></>;
+
+  useEffect(() => {
+    refundById.anexoDTO && setSelectedFile(refundById.anexoDTO.nome);
+  }, [refundById.anexoDTO]);
+
+  if (isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -56,16 +62,18 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
         </HeaderForm>
         <Formik
           initialValues={{
-            titulo: refundId ? refundId.titulo : '',
-            valor: refundId ? refundId.valor : '',
-            file: "",
+            titulo: refundById ? refundById.titulo : "",
+            valor: refundById.valor || "",
+            file: refundById.anexoDTO ? refundById.anexoDTO.file : "",
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
-            console.log(values.valor)
+            handleForm(dispatch, "disable");
+
             const newValues = {
               titulo: values.titulo,
-              valor: formatNumber(values.valor),
+              valor: formatNumber(values.valor.toString()),
+              file: values.file,
             };
 
             idRefund
@@ -77,12 +85,16 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
             <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
               <FormItem>
                 <label htmlFor="titulo">título*</label>
-                <Field type="text" name="titulo" placeholder="Título" />
+                <Field
+                  type="text"
+                  name="titulo"
+                  placeholder="Título"
+                  disabled={disabled}
+                />
                 {errors.titulo && touched.titulo ? (
                   <TextError>{errors.titulo}</TextError>
                 ) : null}
               </FormItem>
-
               <FormItem>
                 <label htmlFor="valor">valor*</label>
                 <CurrencyInput
@@ -92,6 +104,7 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
                   decimalSeparator=","
                   thousandSeparator="."
                   value={values.valor}
+                  disabled={disabled}
                   onChange={(value) => {
                     setFieldValue("valor", value);
                   }}
@@ -100,40 +113,44 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
                   <TextError>{errors.valor}</TextError>
                 ) : null}
               </FormItem>
-
               <FormItem>
                 <label htmlFor="file">Enviar anexo</label>
-                <InputContainer>
-                  <Field
-                    accept=".pdf, .png, .jpeg, .jpg"
-                    type="file"
-                    name="file"
-                    value={values.file}
-                    onChange={(e) =>
-                      handleFile(e.target.files[0], setFieldValue)
-                    }
-                  />
-                  <button
-                    type="button"
-                    onClick={() => setFieldValue("file", "")}
-                  >
-                    <FaTrash />
-                  </button>
-                </InputContainer>
+                <FileContainer>
+                  <small>{selectedFile || "Nenhum anexo selecionado"}</small>
+
+                  <div>
+                    <Field
+                      accept=".pdf, .png, .jpeg, .jpg"
+                      type="file"
+                      name="file"
+                      value={""}
+                      disabled={disabled}
+                      onChange={(e) =>
+                        handleFile(e.target.files[0], setFieldValue)
+                      }
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => handleFile("", setFieldValue)}
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                </FileContainer>
 
                 {errors.file && touched.file ? (
                   <TextError>{errors.file}</TextError>
                 ) : null}
               </FormItem>
-
               <Button
+                type="submit"
                 background={primaryColor}
                 backgroundHover={secondaryColor}
                 padding={"12px 16px"}
                 color={secondaryColor}
                 colorHover={primaryColor}
                 borderColor={primaryColor}
-                type="submit"
               >
                 {idRefund ? "Atualizar" : "Solicitar"} reembolso
               </Button>
@@ -150,8 +167,9 @@ const FormRefund = ({ dispatch, refundId, isLoading }) => {
 };
 
 const mapStateToProps = (state) => ({
-  refundId: state.refundReducer.refundId,
+  refundById: state.refundReducer.refundById,
   isLoading: state.refundReducer.isLoading,
+  disabled: state.formReducer.disabled,
 });
 
 export default connect(mapStateToProps)(FormRefund);

@@ -4,27 +4,31 @@ import { connect } from "react-redux";
 import {
   CardForm,
   FieldForm,
+  FileContainer,
   FormItem,
   HeaderForm,
-  InputContainer,
+  PasswordContainer,
   TextError,
 } from "./Form.style";
-import {
-  handleSignUp,
-  handleTypePassword,
-} from "../../store/actions/authActions";
+import { handleSignUp } from "../../store/actions/authActions";
 import { Link, useNavigate } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
 import { Button } from "../Button/Button";
 import { FaEye, FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
 import { primaryColor, secondaryColor } from "../../utils/colors";
+import { useState } from "react";
+import {
+  handleForm,
+  handleTypePassword,
+} from "../../store/actions/formActions";
 
-const FormRegister = ({ typePassword, dispatch }) => {
+const FormRegister = ({ typePassword, disabled, dispatch }) => {
   const navigate = useNavigate();
+  const [selectedFoto, setSelectedFoto] = useState("");
 
   const handleFoto = (foto, setFieldValue) => {
     setFieldValue("foto", foto);
-    console.log(foto)
+    setSelectedFoto(foto.name);
   };
 
   return (
@@ -44,7 +48,8 @@ const FormRegister = ({ typePassword, dispatch }) => {
           foto: "",
         }}
         validationSchema={validationRegister}
-        onSubmit={(values, e) => {
+        onSubmit={(values) => {
+          handleForm(dispatch, "disable");
           const newValues = {
             nome: values.nome,
             email: values.email,
@@ -54,7 +59,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
           handleSignUp(dispatch, newValues, navigate);
         }}
       >
-        {({ errors, touched, handleSubmit, setFieldValue, isSubmitting }) => (
+        {({ errors, touched, handleSubmit, setFieldValue }) => (
           <FieldForm
             onSubmit={handleSubmit}
             method="POST"
@@ -62,7 +67,12 @@ const FormRegister = ({ typePassword, dispatch }) => {
           >
             <FormItem>
               <label htmlFor="nome">nome*</label>
-              <Field type="text" name="nome" placeholder="Nome" />
+              <Field
+                type="text"
+                name="nome"
+                placeholder="Nome"
+                disabled={disabled}
+              />
               {errors.nome && touched.nome ? (
                 <TextError>{errors.nome}</TextError>
               ) : null}
@@ -70,7 +80,12 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="email">email*</label>
-              <Field type="email" name="email" placeholder="Email" />
+              <Field
+                type="email"
+                name="email"
+                placeholder="Email"
+                disabled={disabled}
+              />
               {errors.email && touched.email ? (
                 <TextError>{errors.email}</TextError>
               ) : null}
@@ -78,8 +93,13 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="senha">senha*</label>
-              <InputContainer>
-                <Field type={typePassword} name="senha" placeholder="Senha" />
+              <PasswordContainer>
+                <Field
+                  type={typePassword}
+                  name="senha"
+                  placeholder="Senha"
+                  disabled={disabled}
+                />
                 <button
                   type="button"
                   background={"#000"}
@@ -87,7 +107,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
                 >
                   <FaEye />
                 </button>
-              </InputContainer>
+              </PasswordContainer>
               {errors.senha && touched.senha ? (
                 <TextError>{errors.senha}</TextError>
               ) : null}
@@ -99,6 +119,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
                 type="password"
                 name="confirmarSenha"
                 placeholder="Confirme a senha"
+                disabled={disabled}
               />
               {errors.confirmarSenha && touched.confirmarSenha ? (
                 <TextError>{errors.confirmarSenha}</TextError>
@@ -107,23 +128,30 @@ const FormRegister = ({ typePassword, dispatch }) => {
 
             <FormItem>
               <label htmlFor="foto">Escolha uma foto</label>
-              <InputContainer>
+              <FileContainer>
                 <Field
                   accept=".png, .jpeg, .jpg"
                   type="file"
-                  name='foto'
-                  value={''}
+                  name="foto"
+                  value={""}
+                  disabled={disabled}
                   onChange={(e) => handleFoto(e.target.files[0], setFieldValue)}
                 />
-                <button type="button" onClick={() => setFieldValue("foto", "")}>
+
+                <small>{selectedFoto || "Nenhuma foto selecionada"}</small>
+
+                <button
+                  type="button"
+                  disabled={disabled}
+                  onClick={() => handleFoto("", setFieldValue)}
+                >
                   <FaTrash />
                 </button>
-              </InputContainer>
+              </FileContainer>
               {errors.foto && touched.foto ? (
                 <TextError>{errors.foto}</TextError>
               ) : null}
             </FormItem>
-
             <Button
               type="submit"
               background={primaryColor}
@@ -132,7 +160,7 @@ const FormRegister = ({ typePassword, dispatch }) => {
               color={secondaryColor}
               colorHover={primaryColor}
               borderColor={primaryColor}
-              disabled={isSubmitting}
+              disabled={disabled}
             >
               Cadastrar
             </Button>
@@ -148,7 +176,8 @@ const FormRegister = ({ typePassword, dispatch }) => {
 };
 
 const mapStateToProps = (state) => ({
-  typePassword: state.authReducer.typePassword,
+  disabled: state.formReducer.disabled,
+  typePassword: state.formReducer.typePassword,
 });
 
 export default connect(mapStateToProps)(FormRegister);

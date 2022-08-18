@@ -1,12 +1,14 @@
 import { combineReducers } from "redux";
-import authReducer from "./AuthReducers";
-import collaboratorReducer from "./CollaboratorReducers";
-import refundReducer from './RefundReducers'
-import pageReducer from './PageReducers'
+import authReducer from "./authReducer";
+import usersReducer from "./usersReducer";
+import refundReducer from "./refundReducer";
+import pageReducer from "./pageReducer";
+import formReducer from "./formReducer";
 
-export default combineReducers ({
-    authReducer,
-    collaboratorReducer,
-    refundReducer,
-    pageReducer
-})
+export default combineReducers({
+  authReducer,
+  usersReducer,
+  refundReducer,
+  pageReducer,
+  formReducer,
+});

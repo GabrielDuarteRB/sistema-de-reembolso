@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Container } from "../../components/Container/Container";
 import FormRegister from "../../components/Form/FormRegister";
-import { handleTypePassword } from "../../store/actions/authActions";
+import { handleTypePassword } from "../../store/actions/formActions";
 
 const Register = ({ dispatch }) => {
   useEffect(() => {

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Container } from "../../components/Container/Container";
 import FormLogin from "../../components/Form/FormLogin";
-import { handleTypePassword } from "../../store/actions/authActions";
+import { handleTypePassword } from "../../store/actions/formActions";
 
 const Login = ({ dispatch, isLogged }) => {
   const navigate = useNavigate();

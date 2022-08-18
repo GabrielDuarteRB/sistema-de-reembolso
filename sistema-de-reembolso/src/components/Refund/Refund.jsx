@@ -10,9 +10,14 @@ import {
 } from "../../store/actions/refundActions";
 import { useNavigate } from "react-router-dom";
 import { confirmModal } from "../Toaster/Toaster";
+import Loading from "../Loading/Loading";
 
-const Refund = ({ dispatch, refund, page, size }) => {
+const Refund = ({ dispatch, refund, page, size, isLoading }) => {
   const navigate = useNavigate();
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <List>
@@ -30,7 +35,9 @@ const Refund = ({ dispatch, refund, page, size }) => {
               colorHover={primaryColor}
               borderColor={primaryColor}
               padding={"8px"}
-              onClick={() => navigateToUpdate(dispatch, navigate, reembolso.idReembolso)}
+              onClick={() =>
+                navigateToUpdate(dispatch, navigate, reembolso.idReembolso)
+              }
             >
               <FaEdit />
             </Button>
@@ -48,7 +55,7 @@ const Refund = ({ dispatch, refund, page, size }) => {
                   handleDeleteRefund,
                   dispatch,
                   page,
-                  size
+                  size,
                 )
               }
             >
@@ -63,7 +70,9 @@ const Refund = ({ dispatch, refund, page, size }) => {
 
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
+  isLoading: state.refundReducer.isLoading,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });
+
 export default connect(mapStateToProps)(Refund);

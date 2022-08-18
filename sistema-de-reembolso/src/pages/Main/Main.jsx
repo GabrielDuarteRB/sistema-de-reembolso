@@ -10,31 +10,31 @@ import {
 import Pager from "../../components/Pager/Pager";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { useEffect } from "react";
-import { getCollaborator } from "../../store/actions/collaboratorActions";
+import { getUser } from "../../store/actions/usersActions";
 import { connect } from "react-redux";
 import Loading from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import { getRefund } from "../../store/actions/refundActions";
 import Refund from "../../components/Refund/Refund";
 
-const Main = ({ name, page, size , isLoading, dispatch }) => {
+const Main = ({ page, size, isLoadingRefund, refund, dispatch }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    getCollaborator(dispatch);
+    getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    getRefund(dispatch, 'ABERTO', page, size)
-  }, [page, size])
+    getRefund(dispatch, "TODOS", page, size);
+  }, [page, size]);
 
-  if (isLoading) {
-    return (<Loading />);
+  if (isLoadingRefund) {
+    return <Loading />;
   }
 
   return (
     <>
-      <Header nome={name} />
+      <Header />
       <Container>
         <Button
           background={primaryColor}
@@ -48,31 +48,39 @@ const Main = ({ name, page, size , isLoading, dispatch }) => {
           Solicitar reembolso <FaExchangeAlt />
         </Button>
 
-        <ListContainer>
-          <ListHeader>
-            <div>
-              <h2>Reembolsos</h2>
-              <Pager />
-            </div>
-            <ListTitles>
-              <span>Título</span>
-              <span>Data</span>
-              <span>Valor</span>
-              <span>Situação</span>
-              <span>Ações</span>
-            </ListTitles>
-          </ListHeader>
-          <Refund/>
-        </ListContainer>
+        {refund.length === 0 ? (
+          <h2>Nenhum reembolso solicitado</h2>
+        ) : (
+          <>
+            <ListContainer>
+              <ListHeader>
+                <div>
+                  <h2>Reembolsos</h2>
+                  <Pager />
+                </div>
+                <ListTitles>
+                  <span>Título</span>
+                  <span>Data</span>
+                  <span>Valor</span>
+                  <span>Situação</span>
+                  <span>Ações</span>
+                </ListTitles>
+              </ListHeader>
+              <Refund />
+            </ListContainer>
+          </>
+        )}
       </Container>
     </>
   );
 };
 
 const mapStateToProps = (state) => ({
-  name: state.collaboratorReducer.name,
-  isLoading: state.refundReducer.isLoading,
+  isLoadingRefund: state.refundReducer.isLoading,
+  isLoadingUser: state.usersReducer.isLoading,
+  foto: state.usersReducer.foto,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  refund: state.refundReducer.refund,
 });
 export default connect(mapStateToProps)(Main);

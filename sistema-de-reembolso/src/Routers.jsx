@@ -8,8 +8,10 @@ import { isAuth } from "./store/actions/authActions";
 import NotFound from "./pages/NotFound/NotFound";
 import Loading from "./components/Loading/Loading";
 import FormRefund from "./components/Form/FormRefund";
+import Manager from "./pages/Manager/Manager";
+import Financier from "./pages/Financier/Financier";
 
-const Routers = ({ isLogged, isLoading, dispatch }) => {
+const Routers = ({ isLogged, role, isLoading, dispatch }) => {
   useEffect(() => {
     isAuth(dispatch);
   }, []);
@@ -23,9 +25,27 @@ const Routers = ({ isLogged, isLoading, dispatch }) => {
       <Routes>
         {isLogged ? (
           <>
-            <Route path="/principal" element={<Main />} />
-            <Route path="/solicitar-reembolso" element={<FormRefund />} />
-            <Route path="/solicitar-reembolso/:idRefund" element={<FormRefund />} />
+            {
+              role === 'ROLE_COLABORADOR' && (
+                <> 
+                  <Route path="/principal" element={<Main />} />
+                  <Route path="/solicitar-reembolso" element={<FormRefund />} />
+                  <Route path="/solicitar-reembolso/:idRefund" element={<FormRefund />} />
+                </>
+              )
+            }
+
+            {
+              role === 'ROLE_FINANCEIRO' && (
+                <Route path="/financeiro" element={<Financier />} />
+              )
+            }
+
+            {
+              role === 'ROLE_GESTOR' && (
+                <Route path="/gestor" element={<Manager />} />
+              )
+            }
           </>
         ) : (
           <>
@@ -33,7 +53,6 @@ const Routers = ({ isLogged, isLoading, dispatch }) => {
             <Route path="/cadastro" element={<Register />} />
           </>
         )}
-
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
@@ -43,6 +62,7 @@ const Routers = ({ isLogged, isLoading, dispatch }) => {
 const mapStateToProps = (state) => ({
   isLogged: state.authReducer.isLogged,
   isLoading: state.authReducer.isLoading,
+  role: state.authReducer.role,
 });
 
 export default connect(mapStateToProps)(Routers);

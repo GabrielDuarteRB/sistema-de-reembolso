@@ -11,56 +11,62 @@ import { handleLogout } from "../../store/actions/authActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { HeaderContainer } from "./Header.styled";
-import {Image} from '../Image/Image'
-import LogoBranca from '../../img/logoBranca.png'
-import noUser from '../../img/noUser.jpeg'
+import LogoBranca from "../../img/logoBranca.png";
+import noUser from "../../img/noUser.jpeg";
 
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
+import { Img } from "../Image/Img";
+import { LoadingElement } from "../Loading/Loading.styled";
 
-const Header = ({ nome, foto, handleLogout, dispatch }) => {
+const Header = ({ name, foto, dispatch }) => {
   const navigate = useNavigate();
+  const role = localStorage.getItem("role");
 
   return (
     <HeaderContainer>
-      <Image 
-        width='140px'
-        src={LogoBranca}
-        alt="Logo DBC"
-      />
+      <img width="120px" src={LogoBranca} alt="Logo DBC" />
 
       <div>
-        <Dropdown>
-          <Button
-            background={primaryColor}
-            color={secondaryColor}
-            colorHover={secondaryColor}
-            borderColor={primaryColor}
-            padding={"8px"}
-          >
-            <FaBars />
-          </Button>
-          <DropdownContent>
-            <span>Páginas</span>
-            <Link to="/principal">
-              Reembolsos <FaExchangeAlt />
-            </Link>
-            <Link to="/gestor">
-              Gestor <FaUserTie />
-            </Link>
-            <Link to="/financeiro">
-              Financeiro <FaMoneyBill />
-            </Link>
-          </DropdownContent>
-        </Dropdown>
+        {role === "ROLE_ADMIN" ? (
+          <>
+            <Dropdown>
+              <Button
+                background={primaryColor}
+                color={secondaryColor}
+                colorHover={secondaryColor}
+                borderColor={primaryColor}
+                padding={"8px"}
+              >
+                <FaBars />
+              </Button>
 
-        <span>{nome}</span>
-        <Image 
-          borderRadius='100%'
-          height='60px'
-          width='60px'
-          src={foto ? `data:image/jpg;base64,` + foto : noUser} 
-          alt="foto do usuário" 
+              <DropdownContent>
+                <span>Páginas</span>
+                <Link to="/principal">
+                  Reembolsos <FaExchangeAlt />
+                </Link>
+                <Link to="/gestor">
+                  Gestor <FaUserTie />
+                </Link>
+                <Link to="/financeiro">
+                  Financeiro <FaMoneyBill />
+                </Link>
+              </DropdownContent>
+            </Dropdown>
+          </>
+        ) : (
+          <></>
+        )}
+
+        <span>
+          {name ? name : <LoadingElement width={"120px"} height={"24px"} />}
+        </span>
+
+        <Img
+          src={foto ? `data:image/jpg;base64,` + foto : noUser}
+          alt="Foto do usuário"
         />
+
         <Button
           background={secondaryColor}
           backgroundHover={primaryColor}
@@ -78,9 +84,9 @@ const Header = ({ nome, foto, handleLogout, dispatch }) => {
   );
 };
 
-const mapDispatchToProps = (state) => ({
-  handleLogout: (dispatch, navigate) => handleLogout(dispatch, navigate),
-  foto: state.collaboratorReducer.foto,
+const mapStateToProps = (state) => ({
+  foto: state.usersReducer.foto,
+  name: state.usersReducer.name,
 });
 
-export default connect(mapDispatchToProps)(Header);
+export default connect(mapStateToProps)(Header);
