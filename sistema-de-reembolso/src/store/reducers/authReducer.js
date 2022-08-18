@@ -17,15 +17,6 @@ const authReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
       };
 
-    case "SET_SIGNUP":
-      return {
-        ...state,
-        token: action.token,
-        role: action.role,
-        isLogged: true,
-        isLoading: false,
-      };
-
     case "SET_LOGOUT":
       return {
         ...state,

@@ -43,7 +43,7 @@ const Admin = ({ dispatch, users, isLoading, page, size }) => {
           color={secondaryColor}
           colorHover={primaryColor}
           borderColor={primaryColor}
-          onClick={() => navigate("/cadastro")}
+          onClick={() => navigate("/cadastro/byAdmin")}
         >
           Cadastrar usuário <FaUserPlus />
         </Button>
