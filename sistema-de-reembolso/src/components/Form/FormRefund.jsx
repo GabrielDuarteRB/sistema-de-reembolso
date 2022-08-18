@@ -29,9 +29,10 @@ import { handleForm } from "../../store/actions/formActions";
 const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
   const navigate = useNavigate();
   const { idRefund } = useParams();
-  const [selectedFile, setSelectedFile] = useState("");
+  const [selectedFile, setSelectedFile] = useState("Nenhum anexo selecionado");
 
   const handleFile = (file, setFieldValue) => {
+    console.log(file);
     setFieldValue("file", file);
     setSelectedFile(file.name);
   };
@@ -43,6 +44,10 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
   }, []);
 
   !idRefund ? dispatch({ type: "LOADING_FALSE" }) : <></>;
+
+  useEffect(() => {
+    refundById.anexoDTO && setSelectedFile(refundById.anexoDTO.nome);
+  }, [refundById.anexoDTO]);
 
   if (isLoading) {
     return <Loading />;
@@ -57,9 +62,9 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
         </HeaderForm>
         <Formik
           initialValues={{
-            titulo: refundById.titulo || "",
+            titulo: refundById ? refundById.titulo : "",
             valor: refundById.valor || "",
-            file: "",
+            file: refundById.anexoDTO ? refundById.anexoDTO.file : "",
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
@@ -78,8 +83,6 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
         >
           {({ errors, touched, handleSubmit, values, setFieldValue }) => (
             <FieldForm onSubmit={handleSubmit} encType="multipart/form-data">
-              {setSelectedFile(refundById.anexoDTO && refundById.anexoDTO.nome)}
-
               <FormItem>
                 <label htmlFor="titulo">título*</label>
                 <Field
