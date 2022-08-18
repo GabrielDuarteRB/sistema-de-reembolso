@@ -56,7 +56,7 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
         <Formik
           initialValues={{
             titulo: refundById.titulo || "",
-            valor: refundById.valor.toString() || "",
+            valor: refundById.valor || "",
             file: "",
           }}
           validationSchema={validationRefund}
@@ -65,7 +65,7 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
 
             const newValues = {
               titulo: values.titulo,
-              valor: formatNumber(values.valor),
+              valor: formatNumber(values.valor.toString()),
               file: values.file,
             };
 

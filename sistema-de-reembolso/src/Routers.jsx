@@ -26,7 +26,10 @@ const Routers = ({ isLogged, isLoading, dispatch }) => {
           <>
             <Route path="/principal" element={<Main />} />
             <Route path="/solicitar-reembolso" element={<FormRefund />} />
-            <Route path="/solicitar-reembolso/:idRefund" element={<FormRefund />} />
+            <Route
+              path="/solicitar-reembolso/:idRefund"
+              element={<FormRefund />}
+            />
             <Route path="/gestor" element={<Manager />} />
           </>
         ) : (
@@ -35,7 +38,6 @@ const Routers = ({ isLogged, isLoading, dispatch }) => {
             <Route path="/cadastro" element={<Register />} />
           </>
         )}
-
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

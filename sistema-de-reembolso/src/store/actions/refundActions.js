@@ -14,9 +14,7 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
 
     dispatch(create);
 
-    if (values.file) {
-      handleAnexo(data.idReembolso, { file: values.file });
-    }
+    handleAnexo(data.idReembolso, { file: values.file });
 
     handleForm(dispatch, "enable");
     navigate("/principal");

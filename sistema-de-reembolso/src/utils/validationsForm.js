@@ -79,12 +79,14 @@ export const validationRefund = Yup.object().shape({
     .min(1, "Numero minimo")
     .required("Valor obrigatório!"),
 
-  file: Yup.mixed().test(
-    "fileValidation",
-    `Anexo deve ser .png, .jpg, .jpeg ou .pdf`,
-    (value) =>
-      value !== undefined
-        ? validationFile(value.name, ["png", "jpg", "jpeg", "pdf"])
-        : true,
-  ),
+  file: Yup.mixed()
+    .test(
+      "fileValidation",
+      `Anexo deve ser .png, .jpg, .jpeg ou .pdf`,
+      (value) =>
+        value !== undefined
+          ? validationFile(value.name, ["png", "jpg", "jpeg", "pdf"])
+          : true,
+    )
+    .required("<Anexo></Anexo> obrigatório!"),
 });
