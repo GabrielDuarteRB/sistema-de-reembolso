@@ -2,29 +2,45 @@ import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { Button } from "../Button/Button";
-import { List } from "../List/List";
+import { List, ListItem } from "../List/List";
 import moment from "moment";
 import {
   handleDeleteRefund,
   navigateToUpdate,
 } from "../../store/actions/refundActions";
 import { useNavigate } from "react-router-dom";
-import { confirmModal } from "../Toaster/Toaster";
+import { confirmDeleteModal } from "../Toaster/Toaster";
 import Loading from "../Loading/Loading";
 
-const Refund = ({ dispatch, refund, page, size, isLoading }) => {
+const RefundList = ({
+  dispatch,
+  refund,
+  page,
+  size,
+  isLoading,
+  role,
+}) => {
   const navigate = useNavigate();
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (
     <List>
       {refund.map((reembolso) => (
-        <li key={reembolso.idReembolso}>
+        <ListItem
+          backgroundColor={
+            reembolso.statusDoReembolso !== "aberto" ? secondaryColor : "#fff"
+          }
+          borderColor={
+            reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
+          }
+          columns="5"
+          key={reembolso.idReembolso}
+        >
           <span>{reembolso.titulo}</span>
-          <span>{moment(reembolso.data).format("DD/MM/YYYY")}</span>
+          <span>{moment(reembolso.dataEntrada).format("DD/MM/YYYY")}</span>
           <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
           <span>{reembolso.statusDoReembolso}</span>
           <div>
@@ -38,6 +54,7 @@ const Refund = ({ dispatch, refund, page, size, isLoading }) => {
               onClick={() =>
                 navigateToUpdate(dispatch, navigate, reembolso.idReembolso)
               }
+              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
             >
               <FaEdit />
             </Button>
@@ -49,7 +66,7 @@ const Refund = ({ dispatch, refund, page, size, isLoading }) => {
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() =>
-                confirmModal(
+                confirmDeleteModal(
                   "Tem certeza que deseja excluir?",
                   reembolso.idReembolso,
                   handleDeleteRefund,
@@ -58,21 +75,23 @@ const Refund = ({ dispatch, refund, page, size, isLoading }) => {
                   size,
                 )
               }
+              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
             >
               <FaTrash />
             </Button>
           </div>
-        </li>
+        </ListItem>
       ))}
     </List>
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state) => ({ 
   refund: state.refundReducer.refund,
   isLoading: state.refundReducer.isLoading,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  role: state.authReducer.role,
 });
 
-export default connect(mapStateToProps)(Refund);
+export default connect(mapStateToProps)(RefundList);

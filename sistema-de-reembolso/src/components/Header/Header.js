@@ -3,6 +3,7 @@ import {
   FaExchangeAlt,
   FaMoneyBill,
   FaSignOutAlt,
+  FaUsers,
   FaUserTie,
 } from "react-icons/fa";
 import { connect } from "react-redux";
@@ -17,15 +18,18 @@ import noUser from "../../img/noUser.jpeg";
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
 import { Img } from "../Image/Img";
 import { LoadingElement } from "../Loading/Loading.styled";
+import { navigateToPages } from "../../store/actions/refundActions";
 
-const Header = ({ name, foto, dispatch }) => {
+const Header = ({ name, foto, dispatch, title }) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
   return (
     <HeaderContainer>
-      <img width="120px" src={LogoBranca} alt="Logo DBC" />
-
+      <div>
+        <img width="120px" src={LogoBranca} alt="Logo DBC" />
+        <h2>{title}</h2>
+      </div>
       <div>
         {role === "ROLE_ADMIN" ? (
           <>
@@ -42,15 +46,18 @@ const Header = ({ name, foto, dispatch }) => {
 
               <DropdownContent>
                 <span>Páginas</span>
-                <Link to="/principal">
+                <button onClick={() => navigateToPages(dispatch, navigate, '/usarios')}>
+                  Usuários <FaUsers />
+                </button>
+                <button onClick={() => navigateToPages(dispatch, navigate, '/reembolsos')}>
                   Reembolsos <FaExchangeAlt />
-                </Link>
-                <Link to="/gestor">
+                </button>
+                <button onClick={() => navigateToPages(dispatch, navigate, '/gestor')}>
                   Gestor <FaUserTie />
-                </Link>
-                <Link to="/financeiro">
+                </button>
+                <button onClick={() => navigateToPages(dispatch, navigate, '/financeiro')}>
                   Financeiro <FaMoneyBill />
-                </Link>
+                </button>
               </DropdownContent>
             </Dropdown>
           </>

@@ -54,7 +54,7 @@ export const FormItem = styled.div`
     }
   }
 
-  & label {
+  & > label {
     color: #9fa2b4;
     font-weight: 700;
     text-transform: uppercase;
@@ -71,6 +71,14 @@ export const FormItem = styled.div`
     :hover {
       background-color: ${secondaryColor};
     }
+  }
+
+  & > select {
+    padding: 12px 16px;
+    background: #fcfdfe;
+    border: 2px solid #f0f1f7;
+    border-radius: 8px;
+    cursor: pointer;
   }
 `;
 

@@ -11,7 +11,7 @@ import {
   TextError,
 } from "./Form.style";
 import { handleSignUp } from "../../store/actions/authActions";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
 import { Button } from "../Button/Button";
 import { FaEye, FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
@@ -25,6 +25,7 @@ import {
 const FormRegister = ({ typePassword, disabled, dispatch }) => {
   const navigate = useNavigate();
   const [selectedFoto, setSelectedFoto] = useState("");
+  const { byAdmin } = useParams();
 
   const handleFoto = (foto, setFieldValue) => {
     setFieldValue("foto", foto);
@@ -46,6 +47,7 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
           senha: "",
           confirmarSenha: "",
           foto: "",
+          tipoUser: "",
         }}
         validationSchema={validationRegister}
         onSubmit={(values) => {
@@ -55,8 +57,9 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
             email: values.email,
             senha: values.senha,
             foto: values.foto,
+            tipoUser: values.tipoUser,
           };
-          handleSignUp(dispatch, newValues, navigate);
+          handleSignUp(dispatch, newValues, navigate, byAdmin);
         }}
       >
         {({ errors, touched, handleSubmit, setFieldValue }) => (
@@ -126,32 +129,50 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
               ) : null}
             </FormItem>
 
-            <FormItem>
-              <label htmlFor="foto">Escolha uma foto</label>
-              <FileContainer>
-                <Field
-                  accept=".png, .jpeg, .jpg"
-                  type="file"
-                  name="foto"
-                  value={""}
-                  disabled={disabled}
-                  onChange={(e) => handleFoto(e.target.files[0], setFieldValue)}
-                />
+            {byAdmin ? (
+              <FormItem>
+                <label htmlFor="tipoUser">Tipo do usuário</label>
+                <Field component="select" name="tipoUser" multiple={false}>
+                  <option defaultValue value="COLABORADOR">
+                    Colaborador
+                  </option>
+                  <option value="GESTOR">Gestor</option>
+                  <option value="FINANCEIRO">Financeiro</option>
+                  <option value="ADMINISTRADOR">Administrador</option>
+                </Field>
+              </FormItem>
+            ) : (
+              <FormItem>
+                <label htmlFor="foto">Escolha uma foto</label>
+                <FileContainer>
+                  <small>{selectedFoto || "Nenhuma foto selecionada"}</small>
+                  <div>
+                    <Field
+                      accept=".png, .jpeg, .jpg"
+                      type="file"
+                      name="foto"
+                      value={""}
+                      disabled={disabled}
+                      onChange={(e) =>
+                        handleFoto(e.target.files[0], setFieldValue)
+                      }
+                    />
 
-                <small>{selectedFoto || "Nenhuma foto selecionada"}</small>
+                    <button
+                      type="button"
+                      disabled={disabled}
+                      onClick={() => handleFoto("", setFieldValue)}
+                    >
+                      <FaTrash />
+                    </button>
+                  </div>
+                </FileContainer>
+                {errors.foto && touched.foto ? (
+                  <TextError>{errors.foto}</TextError>
+                ) : null}
+              </FormItem>
+            )}
 
-                <button
-                  type="button"
-                  disabled={disabled}
-                  onClick={() => handleFoto("", setFieldValue)}
-                >
-                  <FaTrash />
-                </button>
-              </FileContainer>
-              {errors.foto && touched.foto ? (
-                <TextError>{errors.foto}</TextError>
-              ) : null}
-            </FormItem>
             <Button
               type="submit"
               background={primaryColor}

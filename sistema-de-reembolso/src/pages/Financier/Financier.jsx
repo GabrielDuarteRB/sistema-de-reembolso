@@ -4,57 +4,80 @@ import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
 import {
   ListContainer,
+  ListFilters,
   ListHeader,
   ListTitles,
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
+import { NotRegister } from "../../components/NotRegister/NotRegister";
 import Pager from "../../components/Pager/Pager";
-import RefundFinancier from "../../components/Refund/RefundFinancier";
-import { getAllRefund } from "../../store/actions/refundActions";
+import RefundFinancialList from "../../components/RefundLists/RefundFinancialList";
+import Search from "../../components/Search/Search";
+import Status from "../../components/Status/Status";
+import {
+  getAllRefund,
+  getRefundByName,
+} from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
 
-const Financier = ({ dispatch, isLoading, refund, page, size }) => {
-
+const Financier = ({
+  dispatch,
+  statusRefund,
+  nameSearch,
+  isLoading,
+  refund,
+  page,
+  size,
+}) => {
   useEffect(() => {
     getUser(dispatch);
   }, []);
-  
-  useEffect(() => {
-    getAllRefund(dispatch, 'APROVADO_GESTOR', page, size);
-  }, [page, size]);
 
-  if(isLoading) {
-    return(
-        <Loading/>
-    )
+  useEffect(() => {
+    if (nameSearch === "" && statusRefund === "TODOS") {
+      getAllRefund(dispatch, "TODOS", page, size);
+      return;
+    }
+    getRefundByName(dispatch, nameSearch, statusRefund, page, size);
+  }, [page, size, nameSearch, statusRefund]);
+
+  if (isLoading) {
+    return <Loading height="80vh" />;
   }
 
   return (
     <>
-      <Header />
+      <Header title={"Financeiro"} />
       <Container>
-        {refund.length === 0 ? (
-          <h2>Nenhum reembolso solicitado</h2>
-        ) : (
-          <>
-            <ListContainer>
-              <ListHeader>
-                <div>
-                  <h2>Reembolsos</h2>
-                  <Pager />
-                </div>
-                <ListTitles>
-                  <span>Título</span>
-                  <span>Data</span>
-                  <span>Valor</span>
-                  <span>Situação</span>
-                  <span>Ações</span>
-                </ListTitles>
-              </ListHeader>
-              <RefundFinancier/>
-            </ListContainer>
-          </>
-        )}
+        <ListContainer>
+          <ListHeader>
+            <div>
+              <h2>
+                Reembolsos ({statusRefund.toLowerCase().replace("_", " - ")})
+              </h2>
+
+              <Pager />
+            </div>
+            <ListFilters justify="end">
+              <Status />
+              <Search />
+            </ListFilters>
+          </ListHeader>
+
+          <ListTitles columns="6">
+            <span>Título</span>
+            <span>Nome</span>
+            <span>Data</span>
+            <span>Valor</span>
+            <span>Status</span>
+            <span>Ações</span>
+          </ListTitles>
+          {refund.length === 0 ? (
+            <NotRegister>Nenhum reembolso solicitado</NotRegister>
+          ) : (
+            <RefundFinancialList />
+          )}
+        </ListContainer>
       </Container>
     </>
   );
@@ -62,8 +85,11 @@ const Financier = ({ dispatch, isLoading, refund, page, size }) => {
 
 const mapStateToProps = (state) => ({
   isLoading: state.refundReducer.isLoading,
+  statusRefund: state.refundReducer.statusRefund,
+  nameSearch: state.refundReducer.nameSearch,
   refund: state.refundReducer.refund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });
+
 export default connect(mapStateToProps)(Financier);

@@ -1,4 +1,4 @@
-import { Field, Formik } from "formik";
+import { Field, Formik, validateYupSchema } from "formik";
 import logoAzul from "../../img/logoAzul.png";
 import { connect } from "react-redux";
 import {
@@ -32,7 +32,6 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
   const [selectedFile, setSelectedFile] = useState("Nenhum anexo selecionado");
 
   const handleFile = (file, setFieldValue) => {
-    console.log(file);
     setFieldValue("file", file);
     setSelectedFile(file.name);
   };
@@ -50,7 +49,7 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
   }, [refundById.anexoDTO]);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (
@@ -64,16 +63,20 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
           initialValues={{
             titulo: refundById ? refundById.titulo : "",
             valor: refundById.valor || "",
-            file: refundById.anexoDTO ? refundById.anexoDTO.file : "",
+            file: refundById.anexoDTO
+              ? new File([refundById.anexoDTO.file], refundById.anexoDTO.nome, {
+                  type: "file",
+                })
+              : "",
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
             handleForm(dispatch, "disable");
-
             const newValues = {
               titulo: values.titulo,
               valor: formatNumber(values.valor.toString()),
               file: values.file,
+              // file: new File([file], values.file.name, {type: 'file'}),
             };
 
             idRefund
@@ -157,9 +160,9 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
             </FieldForm>
           )}
         </Formik>
-        <Link to="/principal">
+        <Link to="/reembolsos">
           <FaRegArrowAltCircleLeft />
-          Voltar para a tela principal
+          Voltar para a tela de reembolsos
         </Link>
       </CardForm>
     </Container>

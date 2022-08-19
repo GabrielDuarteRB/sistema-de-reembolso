@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Main from "./pages/Main/Main";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import { useEffect } from "react";
@@ -10,6 +9,8 @@ import Loading from "./components/Loading/Loading";
 import FormRefund from "./components/Form/FormRefund";
 import Manager from "./pages/Manager/Manager";
 import Financier from "./pages/Financier/Financier";
+import Reembolsos from "./pages/Reembolsos/Reembolsos";
+import Usuarios from "./pages/Usuarios/Usuarios";
 
 const Routers = ({ isLogged, role, isLoading, dispatch }) => {
   useEffect(() => {
@@ -17,7 +18,7 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
   }, []);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (
@@ -25,27 +26,31 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
       <Routes>
         {isLogged ? (
           <>
-            {
-              role === 'ROLE_COLABORADOR' && (
-                <> 
-                  <Route path="/principal" element={<Main />} />
-                  <Route path="/solicitar-reembolso" element={<FormRefund />} />
-                  <Route path="/solicitar-reembolso/:idRefund" element={<FormRefund />} />
-                </>
-              )
-            }
+            {["ROLE_COLABORADOR", "ROLE_ADMIN"].find((r) => r === role) && (
+              <>
+                <Route path="/reembolsos" element={<Reembolsos />} />
+                <Route path="/solicitar-reembolso" element={<FormRefund />} />
+                <Route
+                  path="/editar-reembolso/:idRefund"
+                  element={<FormRefund />}
+                />
+              </>
+            )}
 
-            {
-              role === 'ROLE_FINANCEIRO' && (
-                <Route path="/financeiro" element={<Financier />} />
-              )
-            }
+            {["ROLE_FINANCEIRO", "ROLE_ADMIN"].find((r) => r === role) && (
+              <Route path="/financeiro" element={<Financier />} />
+            )}
 
-            {
-              role === 'ROLE_GESTOR' && (
-                <Route path="/gestor" element={<Manager />} />
-              )
-            }
+            {["ROLE_GESTOR", "ROLE_ADMIN"].find((r) => r === role) && (
+              <Route path="/gestor" element={<Manager />} />
+            )}
+
+            {role === "ROLE_ADMIN" && (
+              <>
+                <Route path="/usuarios" element={<Usuarios />} />
+                <Route path="/cadastro/:byAdmin" element={<Register />} />
+              </>
+            )}
           </>
         ) : (
           <>

@@ -15,13 +15,17 @@ export const DropdownContent = styled.div`
     border-radius: 8px 8px 0 0;
   }
 
-  & a {
+  & button {
+    background: none;
+    border: none;
     color: ${primaryColor};
+    cursor: pointer;
     padding: 12px 16px;
     text-decoration: none;
     display: flex;
     align-items: center;
     gap: 8px;
+    width: 100% ;
 
     :hover {
       background-color: ${primaryColor};
@@ -29,7 +33,7 @@ export const DropdownContent = styled.div`
     }
 
     :last-child {
-      border-radius: 0 0 8px 8px;
+      border-radius: 0 0 5px 5px;
     }
   }
 `;

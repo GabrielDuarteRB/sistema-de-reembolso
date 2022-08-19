@@ -18,7 +18,6 @@ const validationCurrency = (number) => {
 };
 
 const validationFile = (url, types) => {
-  console.log(url)
   url = url.split(".");
 
   return types.includes(url.at(-1));
@@ -62,6 +61,7 @@ export const validationRegister = Yup.object().shape({
   confirmarSenha: Yup.string()
     .oneOf([Yup.ref("senha"), null], "Senhas diferentes!")
     .required("Confirme a senha!"),
+
   foto: Yup.mixed().test("fileValidation", "Formato inválido!", (value) =>
     value !== undefined
       ? validationFile(value.name, ["png", "jpg", "jpeg"])
@@ -85,7 +85,7 @@ export const validationRefund = Yup.object().shape({
       "fileValidation",
       `Anexo deve ser .png, .jpg, .jpeg ou .pdf`,
       (value) =>
-        value 
+        value
           ? validationFile(value.name, ["png", "jpg", "jpeg", "pdf"])
           : true,
     )

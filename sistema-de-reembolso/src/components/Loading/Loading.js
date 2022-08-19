@@ -1,10 +1,10 @@
 import { LoadingContainer, LoadingDot } from "./Loading.styled";
 import { Container } from "../Container/Container";
 
-const Loading = () => {
+const Loading = ({ height }) => {
   return (
     <Container>
-      <LoadingContainer>
+      <LoadingContainer height={height}>
         <LoadingDot />
         <LoadingDot />
         <LoadingDot />

@@ -9,7 +9,7 @@ const Login = ({ dispatch, isLogged }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    isLogged && navigate("/principal");
+    isLogged && navigate("/reembolsos");
   }, []);
 
   useEffect(() => {
