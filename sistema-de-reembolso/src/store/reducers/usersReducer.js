@@ -8,6 +8,12 @@ const INITIAL_STATE = {
 
 const usersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case "LOADING_TRUE":
+      return{
+        ...state,
+        isLoading:true
+      }
+
     case "GET_USER":
       return {
         ...state,

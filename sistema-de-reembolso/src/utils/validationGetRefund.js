@@ -1,4 +1,5 @@
 import { getAllRefunds, getRefundByName, getRefundsByUser } from "../store/actions/refundActions";
+import { getAllUsers, getUsersByName } from "../store/actions/usersActions";
 
 export const chooseGet = (dispatch, nameSearch, statusRefund, page, size, role) => {
     if (role === "ROLE_COLABORADOR") {
@@ -11,4 +12,12 @@ export const chooseGet = (dispatch, nameSearch, statusRefund, page, size, role) 
         return
       }
       getRefundByName(dispatch, nameSearch, statusRefund, page, size);
+}
+
+export const chooseGetUsers = (dispatch, nameSearch, page, size) => {
+    if (nameSearch === "") {
+        getAllUsers(dispatch, page, size);
+        return;
+      }
+      getUsersByName(dispatch, nameSearch, page, size);
 }

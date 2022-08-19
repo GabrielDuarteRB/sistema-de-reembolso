@@ -14,13 +14,12 @@ import {
 import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
 import {
-  getAllUsers,
   getUser,
-  getUsersByName,
 } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
 import UsersList from "../../components/UsersList/UsersList";
+import { chooseGetUsers } from "../../utils/validationGetRefund";
 
 const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   const navigate = useNavigate();
@@ -30,16 +29,8 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   }, []);
 
   useEffect(() => {
-    if (nameSearch === "") {
-      getAllUsers(dispatch, page, size);
-      return;
-    }
-    getUsersByName(dispatch, nameSearch, page, size);
+    chooseGetUsers(dispatch, nameSearch, page, size)
   }, [page, size, nameSearch]);
-
-  if (isLoading) {
-    return <Loading height="80vh" />;
-  }
 
   return (
     <>
@@ -75,7 +66,12 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
               <span>Tipo</span>
               <span>Editar</span>
             </ListTitles>
-            {!users ? <h2>Nenhum usuário cadastrado</h2> : <UsersList />}
+            {isLoading
+              ? 
+                <Loading/> 
+              :
+                <UsersList />
+            }
           </ListContainer>
         </>
       </Container>

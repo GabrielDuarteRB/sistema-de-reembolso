@@ -5,13 +5,14 @@ import { handleRole } from "../../store/actions/authActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { List, ListItem } from "../List/List";
-import Loading from "../Loading/Loading";
+import { NotRegister } from "../NotRegister/NotRegister";
 import { confirmUpdateModal } from "../Toaster/Toaster";
 
 const UsersList = ({ users, isLoading }) => {
   const navigate = useNavigate();
-  if (isLoading) {
-    return <Loading height="80vh" />;
+
+  if (users.length === 0) {
+    return <NotRegister>Nenhum reembolso encontrado</NotRegister>
   }
 
   return (

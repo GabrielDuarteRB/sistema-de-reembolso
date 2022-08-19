@@ -35,10 +35,6 @@ const Manager = ({
     chooseGet(dispatch, nameSearch, statusRefund, page, size, role)
   }, [page, size, nameSearch, statusRefund]);
 
-  if (isLoading) {
-    return <Loading height="80vh" />;
-  }
-
   return (
     <>
       <Header title={"Gestor"} />
