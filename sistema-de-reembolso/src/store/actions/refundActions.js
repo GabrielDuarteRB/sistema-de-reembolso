@@ -9,10 +9,15 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       titulo: values.titulo,
       valor: values.valor,
     });
-    handleAnexo(dispatch, data.idReembolso, { file: values.file });
+    handleAnexo(data.idReembolso, { file: values.file }, data.usuario.idUsuario);
 
-    handleForm(dispatch, "enable");
+    const create = {
+      type: "LOADING_TRUE",
+    };
+    dispatch(create);
+
     navigate("/reembolsos");
+    handleForm(dispatch, "enable");
     toast.fire({
       icon: "success",
       title: "Reembolso Solicitado!",
@@ -23,19 +28,15 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
   }
 };
 
-export const handleAnexo = async (dispatch, idReembolso, anexo) => {
+export const handleAnexo = async (idRefund, anexo, idUser) => {
   try {
-    await apiRefund.post(`/upload/anexo?idReembolso=${idReembolso}`, anexo, {
+    
+    await apiRefund.post(`/upload/anexo/reembolso/usuario?idReembolso=${idRefund}&idUsuario=${idUser}`, anexo, {
       headers: { "Content-Type": "multipart/form-data" },
     });
   } catch (error) {
     console.log(error);
   }
-
-  const create = {
-    type: "LOADING_TRUE",
-  };
-  dispatch(create);
 };
 
 export const getRefundsByUser = async (
@@ -154,24 +155,6 @@ export const handleDeleteRefund = async (dispatch, idRefund, page, size, idUser,
     });
 
     chooseGet(dispatch, nameSearch, statusRefund, page, size, role)
-
-    // const getPages = {
-    //   type: "GET_PAGES",
-    //   totalPages: data.totalPages,
-    //   page:
-    //     Math.ceil(data.totalElements / data.size) >= data.page + 1
-    //       ? data.page
-    //       : data.page - 1,
-    // };
-    // dispatch(getPages);
-
-    // const getUsers = {
-    //   type: "GET_REFUNDS_BY_USER",
-    //   refund: data.content,
-    // };
-
-    // dispatch(getUsers);
-
   } catch (error) {
     console.log(error);
   }
@@ -186,8 +169,8 @@ export const handleUpdateRefund = async (
 ) => {
   try {
     await apiRefund.put(`/reembolso/update/${idRefund}/usuario/${idUser}`, values);
-    handleAnexo(idRefund, { file: values.file });
-    
+    handleAnexo(idRefund, { file: values.file }, idUser);
+
     const upload = {
       type: "LOADING_TRUE",
     };
