@@ -6,6 +6,7 @@ import { List, ListItem } from "../List/List";
 import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { readUrl, validationButtonFinancer } from "../../store/actions/refundActions";
+import { NotRegister } from "../NotRegister/NotRegister";
 
 const RefundFinancialList = ({
   dispatch,
@@ -14,6 +15,10 @@ const RefundFinancialList = ({
   size,
   refund,
 }) => {
+
+  if (refund.length === 0) {
+    return <NotRegister>Nenhum reembolso encontrado</NotRegister>
+  }
 
   return (
     <List>

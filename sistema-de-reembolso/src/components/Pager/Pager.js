@@ -6,7 +6,12 @@ import {
   modifyPage,
 } from "../../store/actions/pageActions";
 
-const Pager = ({ dispatch, size, page, totalPages }) => {
+const Pager = ({ dispatch, refund, users, size, page, totalPages }) => {
+
+  if(refund.length === 0 && users.length === 0) {
+    return
+  }
+
   return (
     <PaginationContainer>
       <div>
@@ -42,6 +47,8 @@ const Pager = ({ dispatch, size, page, totalPages }) => {
 };
 
 const mapStateToProps = (state) => ({
+  refund: state.refundReducer.refund,
+  users: state.usersReducer.users,
   page: state.pageReducer.page,
   totalPages: state.pageReducer.totalPages,
   size: state.pageReducer.size,

@@ -15,15 +15,10 @@ import { getUser } from "../../store/actions/usersActions";
 import { connect } from "react-redux";
 import Loading from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
-import {
-  getAllRefunds,
-  getRefundsByUser,
-  getRefundByName,
-} from "../../store/actions/refundActions";
 import Search from "../../components/Search/Search";
 import Status from "../../components/Status/Status";
-import { NotRegister } from "../../components/NotRegister/NotRegister";
 import RefundList from "../../components/RefundLists/RefundList";
+import { chooseGet } from "../../utils/validationGetRefund";
 
 const Reembolsos = ({
   page,
@@ -31,7 +26,7 @@ const Reembolsos = ({
   statusRefund,
   nameSearch,
   size,
-  isLoadingRefund,
+  isLoading,
   refund,
   dispatch,
 }) => {
@@ -42,21 +37,8 @@ const Reembolsos = ({
   }, []);
 
   useEffect(() => {
-    if (role === "ROLE_COLABORADOR") {
-      getRefundsByUser(dispatch, statusRefund, page, size);
-      return;
-    }
-
-    if (nameSearch === "") {
-      getAllRefunds(dispatch, statusRefund, page, size);
-      return;
-    }
-    getRefundByName(dispatch, nameSearch, statusRefund, page, size);
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role)
   }, [page, size, nameSearch, statusRefund]);
-
-  if (isLoadingRefund) {
-    return <Loading height="80vh" />;
-  }
 
   return (
     <>
@@ -92,17 +74,12 @@ const Reembolsos = ({
             <span>Status</span>
             <span>Ações</span>
           </ListTitles>
-          {role === "ROLE_ADMIN" ? (
-            refund.length === 0 ? (
-              <NotRegister>Nenhum reembolso cadastrado</NotRegister>
-            ) : (
-              <RefundList />
-            )
-          ) : refund.length === 0 ? (
-            <NotRegister>Nenhum reembolso cadastrado</NotRegister>
-          ) : (
-            <RefundList />
-          )}
+          {isLoading 
+            ? 
+              <Loading/> 
+            : 
+              <RefundList/>
+          }
         </ListContainer>
       </Container>
     </>
@@ -110,7 +87,7 @@ const Reembolsos = ({
 };
 
 const mapStateToProps = (state) => ({
-  isLoadingRefund: state.refundReducer.isLoading,
+  isLoading: state.refundReducer.isLoading,
   refund: state.refundReducer.refund,
   statusRefund: state.refundReducer.statusRefund,
   nameSearch: state.refundReducer.nameSearch,

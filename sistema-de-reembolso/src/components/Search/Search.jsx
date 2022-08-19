@@ -4,7 +4,8 @@ import { FaSearch } from "react-icons/fa";
 import { connect } from "react-redux";
 import { changeNameSearch } from "../../store/actions/refundActions";
 
-const Search = ({ dispatch }) => {
+const Search = ({ dispatch, refund, users }) => {
+
   return (
     <div>
       <span>Filtrar por nome</span>
@@ -28,6 +29,7 @@ const Search = ({ dispatch }) => {
 };
 
 const mapStateToProps = (state) => ({
-  statusRefund: state.refundReducer.statusRefund,
+  refund: state.refundReducer.refund,
 });
+
 export default connect(mapStateToProps)(Search);

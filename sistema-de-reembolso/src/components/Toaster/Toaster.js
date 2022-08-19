@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { handleDeleteRefund } from "../../store/actions/refundActions";
 
 export const toast = Swal.mixin({
   toast: true,
@@ -10,11 +11,14 @@ export const toast = Swal.mixin({
 
 export const confirmDeleteModal = (
   title,
-  id,
-  handleDelete,
+  idRefund,
   dispatch,
   page,
   size,
+  idUser, 
+  nameSearch, 
+  statusRefund,
+  role
 ) => {
   Swal.fire({
     title: title,
@@ -24,7 +28,7 @@ export const confirmDeleteModal = (
     denyButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-      handleDelete(dispatch, id, page, size);
+      handleDeleteRefund(dispatch, idRefund, page, size, idUser, nameSearch, statusRefund, role);
     }
   });
 };

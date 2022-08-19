@@ -4,6 +4,7 @@ export const handleForm = (dispatch, switchForm) => {
       type: "DISABLE_FORM",
     };
     dispatch(disable);
+    return
   }
 
   if (switchForm === "enable") {

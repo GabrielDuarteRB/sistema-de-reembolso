@@ -1,5 +1,6 @@
 import { apiRefund } from "../../api";
 import { toast } from "../../components/Toaster/Toaster";
+import { chooseGet } from "../../utils/validationGetRefund";
 import { handleForm } from "./formActions";
 
 export const handleCreateRefund = async (dispatch, values, navigate) => {
@@ -8,13 +9,7 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       titulo: values.titulo,
       valor: values.valor,
     });
-    const create = {
-      type: "LOADING_TRUE",
-    };
-
-    dispatch(create);
-
-    handleAnexo(data.idReembolso, { file: values.file });
+    handleAnexo(dispatch, data.idReembolso, { file: values.file });
 
     handleForm(dispatch, "enable");
     navigate("/reembolsos");
@@ -28,7 +23,7 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
   }
 };
 
-export const handleAnexo = async (idReembolso, anexo) => {
+export const handleAnexo = async (dispatch, idReembolso, anexo) => {
   try {
     await apiRefund.post(`/upload/anexo?idReembolso=${idReembolso}`, anexo, {
       headers: { "Content-Type": "multipart/form-data" },
@@ -36,6 +31,11 @@ export const handleAnexo = async (idReembolso, anexo) => {
   } catch (error) {
     console.log(error);
   }
+
+  const create = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(create);
 };
 
 export const getRefundsByUser = async (
@@ -137,15 +137,15 @@ export const getRefundByName = async (
   }
 };
 
-export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
+export const handleDeleteRefund = async (dispatch, idRefund, page, size, idUser, nameSearch, statusRefund, role) => {
   try {
     const loading = {
       type: "LOADING_TRUE",
     };
     dispatch(loading);
 
-    const { data } = await apiRefund.delete(
-      `/reembolso/logged/delete/${idRefund}?pagina=${page}&quantidadeDeRegistros=${size}`,
+    await apiRefund.delete(
+      `/reembolso/delete/${idRefund}/usuario/${idUser}`,
     );
 
     toast.fire({
@@ -153,22 +153,25 @@ export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
       title: "Reembolso deletado",
     });
 
-    const getPages = {
-      type: "GET_PAGES",
-      totalPages: data.totalPages,
-      page:
-        Math.ceil(data.totalElements / data.size) >= data.page + 1
-          ? data.page
-          : data.page - 1,
-    };
-    dispatch(getPages);
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role)
 
-    const get = {
-      type: "GET_REFUNDS_BY_USER",
-      refund: data.content,
-    };
+    // const getPages = {
+    //   type: "GET_PAGES",
+    //   totalPages: data.totalPages,
+    //   page:
+    //     Math.ceil(data.totalElements / data.size) >= data.page + 1
+    //       ? data.page
+    //       : data.page - 1,
+    // };
+    // dispatch(getPages);
 
-    dispatch(get);
+    // const getUsers = {
+    //   type: "GET_REFUNDS_BY_USER",
+    //   refund: data.content,
+    // };
+
+    // dispatch(getUsers);
+
   } catch (error) {
     console.log(error);
   }
@@ -178,17 +181,18 @@ export const handleUpdateRefund = async (
   dispatch,
   values,
   idRefund,
+  idUser,
   navigate,
 ) => {
   try {
-    await apiRefund.put(`/reembolso/logged/update/${idRefund}`, values);
+    await apiRefund.put(`/reembolso/update/${idRefund}/usuario/${idUser}`, values);
+    handleAnexo(idRefund, { file: values.file });
+    
     const upload = {
       type: "LOADING_TRUE",
     };
-
-    handleAnexo(idRefund, { file: values.file });
-
     dispatch(upload);
+    
     handleForm(dispatch, "enable");
 
     toast.fire({
@@ -252,6 +256,11 @@ export const changeStatus = (value, dispatch) => {
     statusRefund: value,
   };
   dispatch(status);
+
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
 };
 
 export const changeNameSearch = (value, dispatch) => {
@@ -260,6 +269,11 @@ export const changeNameSearch = (value, dispatch) => {
     nameSearch: value,
   };
   dispatch(name);
+
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
 };
 
 export const readUrl = (anexo) => {
