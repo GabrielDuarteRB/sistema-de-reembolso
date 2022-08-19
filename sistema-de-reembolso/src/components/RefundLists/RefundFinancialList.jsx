@@ -9,6 +9,7 @@ import {
   readUrl,
   validationButtonFinancer,
 } from "../../store/actions/refundActions";
+import { NotRegister } from "../NotRegister/NotRegister";
 
 const RefundFinancialList = ({
   dispatch,
@@ -17,6 +18,10 @@ const RefundFinancialList = ({
   size,
   refund,
 }) => {
+  if (refund.length === 0) {
+    return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
+  }
+
   return (
     <List>
       {refund.map((reembolso) => (

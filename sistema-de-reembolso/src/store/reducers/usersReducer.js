@@ -8,6 +8,12 @@ const INITIAL_STATE = {
 
 const usersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case "LOADING_TRUE":
+      return{
+        ...state,
+        isLoading:true
+      }
+
     case "GET_USER":
       return {
         ...state,
@@ -15,6 +21,14 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         email: action.email,
         foto: action.foto,
         isLoading: false,
+      };
+    case "SET_CLEAR":
+      return {
+        users: [],
+        name: "",
+        email: "",
+        foto: "",
+        isLoading: true,
       };
 
     case "SET_LOGOUT":

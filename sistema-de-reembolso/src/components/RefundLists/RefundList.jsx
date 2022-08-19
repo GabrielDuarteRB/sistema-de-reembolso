@@ -5,19 +5,18 @@ import { Button } from "../Button/Button";
 import { List, ListItem } from "../List/List";
 import moment from "moment";
 import {
-  handleDeleteRefund,
   navigateToUpdate,
   readUrl,
 } from "../../store/actions/refundActions";
 import { useNavigate } from "react-router-dom";
 import { confirmDeleteModal } from "../Toaster/Toaster";
-import Loading from "../Loading/Loading";
+import { NotRegister } from "../NotRegister/NotRegister";
 
-const RefundList = ({ dispatch, refund, page, size, isLoading, role }) => {
+const RefundList = ({ dispatch, refund, page, size, isLoading, nameSearch, statusRefund, role }) => {
   const navigate = useNavigate();
 
-  if (isLoading) {
-    return <Loading height="80vh" />;
+  if (refund.length === 0) {
+    return <NotRegister>Nenhum reembolso encontrado</NotRegister>
   }
 
   return (
@@ -88,10 +87,13 @@ const RefundList = ({ dispatch, refund, page, size, isLoading, role }) => {
                 confirmDeleteModal(
                   "Tem certeza que deseja excluir?",
                   reembolso.idReembolso,
-                  handleDeleteRefund,
                   dispatch,
                   page,
                   size,
+                  reembolso.usuario.idUsuario,
+                  nameSearch,
+                  statusRefund,
+                  role
                 )
               }
               disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
@@ -108,6 +110,8 @@ const RefundList = ({ dispatch, refund, page, size, isLoading, role }) => {
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
   isLoading: state.refundReducer.isLoading,
+  statusRefund: state.refundReducer.statusRefund,
+  nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
   role: state.authReducer.role,

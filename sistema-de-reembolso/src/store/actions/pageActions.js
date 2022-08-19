@@ -1,4 +1,8 @@
 export const modifyPage = (dispatch, page, action) => {
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
   switch (action) {
     case "sum":
       const sumPage = {
@@ -25,4 +29,10 @@ export const modifyItensPerPage = (e, dispatch) => {
     size: e.target.value,
   };
   dispatch(itensPerPage);
+
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  console.log(loading)
+  dispatch(loading);
 };

@@ -9,16 +9,12 @@ import {
   ListTitles,
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
-import { NotRegister } from "../../components/NotRegister/NotRegister";
 import Pager from "../../components/Pager/Pager";
 import RefundFinancialList from "../../components/RefundLists/RefundFinancialList";
 import Search from "../../components/Search/Search";
 import Status from "../../components/Status/Status";
-import {
-  getAllRefunds,
-  getRefundByName,
-} from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
+import { chooseGet } from "../../utils/validationGetRefund";
 
 const Financier = ({
   dispatch,
@@ -28,22 +24,15 @@ const Financier = ({
   refund,
   page,
   size,
+  role
 }) => {
   useEffect(() => {
     getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    if (nameSearch === "" && statusRefund === "TODOS") {
-      getAllRefunds(dispatch, "TODOS", page, size);
-      return;
-    }
-    getRefundByName(dispatch, nameSearch, statusRefund, page, size);
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role)
   }, [page, size, nameSearch, statusRefund]);
-
-  if (isLoading) {
-    return <Loading height="80vh" />;
-  }
 
   return (
     <>
@@ -72,11 +61,12 @@ const Financier = ({
             <strong>Status</strong>
             <strong>Ações</strong>
           </ListTitles>
-          {refund.length === 0 ? (
-            <NotRegister>Nenhum reembolso solicitado</NotRegister>
-          ) : (
+          {isLoading 
+          ?
+            <Loading/>
+          :
             <RefundFinancialList />
-          )}
+          }
         </ListContainer>
       </Container>
     </>
@@ -90,6 +80,7 @@ const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  role: state.authReducer.role,
 });
 
 export default connect(mapStateToProps)(Financier);

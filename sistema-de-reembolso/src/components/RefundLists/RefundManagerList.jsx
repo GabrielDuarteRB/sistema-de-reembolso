@@ -9,9 +9,21 @@ import {
   readUrl,
   validationButtonManager,
 } from "../../store/actions/refundActions";
+import { NotRegister } from "../NotRegister/NotRegister";
 
-const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
-  return (
+const RefundManagerList = ({
+  dispatch,
+  statusRefund,
+  page,
+  size,
+  refund,
+}) => {
+
+  if (refund.length === 0) {
+    return <NotRegister>Nenhum reembolso encontrado</NotRegister>
+  }
+
+  return (    
     <List>
       {refund.map((reembolso) => (
         <ListItem

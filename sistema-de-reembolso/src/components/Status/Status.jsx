@@ -3,6 +3,7 @@ import { changeStatus } from "../../store/actions/refundActions";
 import { RefundSituation } from "./Status.styled";
 
 const Status = ({ dispatch }) => {
+
   return (
     <div>
       <span>Filtrar por tipo</span>
@@ -18,6 +19,6 @@ const Status = ({ dispatch }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  statusRefund: state.refundReducer.statusRefund,
+  refund: state.refundReducer.refund,
 });
 export default connect(mapStateToProps)(Status);
