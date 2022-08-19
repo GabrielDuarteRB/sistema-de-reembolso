@@ -13,9 +13,7 @@ import {
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
-import {
-  getUser,
-} from "../../store/actions/usersActions";
+import { getUser } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
 import UsersList from "../../components/UsersList/UsersList";
@@ -29,12 +27,12 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   }, []);
 
   useEffect(() => {
-    chooseGetUsers(dispatch, nameSearch, page, size)
+    chooseGetUsers(dispatch, nameSearch, page, size);
   }, [page, size, nameSearch]);
 
   return (
     <>
-      <Header />
+      <Header actualPage="/usuarios" />
       <Container>
         <Button
           background={primaryColor}
@@ -61,17 +59,12 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
             </ListHeader>
 
             <ListTitles columns="4">
-              <span>Email</span>
-              <span>Nome</span>
-              <span>Tipo</span>
-              <span>Editar</span>
+              <strong>Email</strong>
+              <strong>Nome</strong>
+              <strong>Tipo</strong>
+              <strong>Editar</strong>
             </ListTitles>
-            {isLoading
-              ? 
-                <Loading/> 
-              :
-                <UsersList />
-            }
+            {isLoading ? <Loading /> : <UsersList />}
           </ListContainer>
         </>
       </Container>

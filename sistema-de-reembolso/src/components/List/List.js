@@ -38,6 +38,12 @@ export const ListHeader = styled.div`
     align-items: center;
   }
 
+  & > div:last-child {
+    & > div:last-child {
+      grid-row: 1;
+    }
+  }
+
   @media (max-width: 768px) {
     gap: 24px;
     justify-content: center;
@@ -143,7 +149,8 @@ export const ListItem = styled.li`
       "titulo titulo titulo"
       "nome data valor"
       "status status acoes";
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: ${(props) =>
+      props.mdColumns ? props.mdColumns : "1fr 1fr 1fr"};
     align-items: center;
     justify-items: left;
     text-align: left;
@@ -156,7 +163,8 @@ export const ListItem = styled.li`
       "nome data"
       "valor status"
       "acoes acoes";
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: ${(props) =>
+      props.smColumns ? props.smColumns : "1fr 1fr"};
   }
 
   @media (max-width: 425px) {
@@ -177,6 +185,10 @@ export const ItemInfo = styled.span`
   flex-wrap: wrap;
   gap: 4px;
 
+  :first-child {
+    word-break: break-all;
+  }
+
   & strong {
     display: none;
   }
@@ -185,7 +197,6 @@ export const ItemInfo = styled.span`
     :first-child {
       grid-area: titulo;
       max-width: auto;
-      word-wrap: normal;
     }
 
     :nth-child(2) {

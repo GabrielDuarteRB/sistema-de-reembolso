@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { handleRole } from "../../store/actions/authActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
-import { List, ListItem } from "../List/List";
+import { ItemInfo, List, ListItem } from "../List/List";
 import { NotRegister } from "../NotRegister/NotRegister";
 import { confirmUpdateModal } from "../Toaster/Toaster";
 
@@ -12,16 +12,30 @@ const UsersList = ({ users, isLoading }) => {
   const navigate = useNavigate();
 
   if (users.length === 0) {
-    return <NotRegister>Nenhum reembolso encontrado</NotRegister>
+    return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
 
   return (
     <List>
       {users.map((user) => (
-        <ListItem borderColor={secondaryColor} columns="4" key={user.idUsuario}>
-          <span>{user.email}</span>
-          <span>{user.nome}</span>
-          <span>{user.rolesDTO.nome.split("ROLE_")}</span>
+        <ListItem
+          borderColor={secondaryColor}
+          columns="4"
+          mdColumns="1fr 1fr"
+          smColumns="1fr"
+          key={user.idUsuario}
+        >
+          <ItemInfo>
+            <strong>Email</strong> {user.email}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Nome</strong>
+            {user.nome}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Tipo</strong>
+            {user.rolesDTO.nome.split("ROLE_")}
+          </ItemInfo>
 
           <Button
             background={primaryColor}

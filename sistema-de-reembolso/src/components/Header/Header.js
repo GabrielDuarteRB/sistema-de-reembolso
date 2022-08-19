@@ -14,13 +14,12 @@ import { Button } from "../Button/Button";
 import { HeaderContainer } from "./Header.styled";
 import LogoBranca from "../../img/logoBranca.png";
 import noUser from "../../img/noUser.jpeg";
-
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
 import { Img } from "../Image/Img";
 import { LoadingElement } from "../Loading/Loading.styled";
 import { navigateToPages } from "../../store/actions/refundActions";
 
-const Header = ({ name, foto, dispatch, title }) => {
+const Header = ({ name, foto, dispatch, title, actualPage }) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
@@ -48,26 +47,38 @@ const Header = ({ name, foto, dispatch, title }) => {
                 <span>Páginas</span>
                 <button
                   onClick={() =>
-                    navigateToPages(dispatch, navigate, "/usarios")
+                    navigateToPages(dispatch, navigate, "/usuarios", actualPage)
                   }
                 >
                   Usuários <FaUsers />
                 </button>
                 <button
                   onClick={() =>
-                    navigateToPages(dispatch, navigate, "/reembolsos")
+                    navigateToPages(
+                      dispatch,
+                      navigate,
+                      "/reembolsos",
+                      actualPage,
+                    )
                   }
                 >
                   Reembolsos <FaExchangeAlt />
                 </button>
                 <button
-                  onClick={() => navigateToPages(dispatch, navigate, "/gestor")}
+                  onClick={() =>
+                    navigateToPages(dispatch, navigate, "/gestor", actualPage)
+                  }
                 >
                   Gestor <FaUserTie />
                 </button>
                 <button
                   onClick={() =>
-                    navigateToPages(dispatch, navigate, "/financeiro")
+                    navigateToPages(
+                      dispatch,
+                      navigate,
+                      "/financeiro",
+                      actualPage,
+                    )
                   }
                 >
                   Financeiro <FaMoneyBill />
