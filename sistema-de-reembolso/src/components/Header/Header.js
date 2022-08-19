@@ -18,7 +18,7 @@ import noUser from "../../img/noUser.jpeg";
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
 import { Img } from "../Image/Img";
 import { LoadingElement } from "../Loading/Loading.styled";
-import { navigateToPages } from "../../store/actions/refundActions";
+import { navigateToPages } from "../../store/actions/pageActions";
 
 const Header = ({ name, foto, dispatch, title }) => {
   const navigate = useNavigate();

@@ -42,38 +42,43 @@ export const handleSignUp = async (dispatch, values, navigate, byAdmin) => {
       email: values.email,
       senha: values.senha,
     });
-    const token = data.token;
+    handleForm(dispatch, "enable");
 
     if (byAdmin) {
+      console.log(data.idUsuario, values.tipoUser)
       await handleRole(data.idUsuario, values.tipoUser);
       navigate("/usuarios");
-    } else {
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.role);
-      apiRefund.defaults.headers.common["Authorization"] = data.token;
+      toast.fire({
+        icon: "sucess",
+        title: "Usuario cadastrado",
+      });
+      return
+    } 
+    console.log('vai ate aki?')
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("role", data.role);
+    apiRefund.defaults.headers.common["Authorization"] = data.token;
 
-      if (token && values.foto) {
-        await signUpImage({ file: values.foto });
-      }
-
-      const signUp = {
-        type: "SET_LOGIN",
-        token: data.token,
-        role: data.role,
-      };
-      dispatch(signUp);
-      navigate("/reembolsos");
+    if (data.token && values.foto) {
+      await signUpImage({ file: values.foto });
     }
 
-    handleForm(dispatch, "enable");
+    const signUp = {
+      type: "SET_LOGIN",
+      token: data.token,
+      role: data.role,
+    };
+    dispatch(signUp);
+    navigate("/reembolsos");
   } catch (error) {
+    
     handleForm(dispatch, "enable");
     if (error.response.status === 400) {
-      console.log(error);
       toast.fire({
         icon: "error",
         title: "Email já cadastrado",
       });
+      return
     }
     toast.fire({
       icon: "error",

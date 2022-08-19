@@ -33,6 +33,19 @@ export const modifyItensPerPage = (e, dispatch) => {
   const loading = {
     type: "LOADING_TRUE",
   };
-  console.log(loading)
   dispatch(loading);
 };
+
+export const navigateToPages = (dispatch, navigate, page) => {
+  navigate(page);
+  const clear = {
+    type: "SET_CLEAR",
+  };
+  dispatch(clear);
+  
+  const resetPages = {
+    type: "SET_RESET",
+  };
+  dispatch(resetPages);
+};
+

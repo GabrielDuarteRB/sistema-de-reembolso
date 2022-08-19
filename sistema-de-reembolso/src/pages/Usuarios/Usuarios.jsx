@@ -20,6 +20,7 @@ import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
 import UsersList from "../../components/UsersList/UsersList";
 import { chooseGetUsers } from "../../utils/validationGetRefund";
+import { navigateToPages } from "../../store/actions/pageActions";
 
 const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   const navigate = useNavigate();
@@ -43,7 +44,7 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
           color={secondaryColor}
           colorHover={primaryColor}
           borderColor={primaryColor}
-          onClick={() => navigate("/cadastro/byAdmin")}
+          onClick={() => navigateToPages(dispatch, navigate, '/cadastro')}
         >
           Cadastrar usuário <FaUserPlus />
         </Button>

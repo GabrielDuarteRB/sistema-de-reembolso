@@ -73,6 +73,8 @@ export const getAllRefunds = async (
   page,
   quantityPerPage,
 ) => {
+
+  console.log('OI')
   try {
     const { data } = await apiRefund.get(
       `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
@@ -83,6 +85,7 @@ export const getAllRefunds = async (
       page: data.page,
       totalPages: data.totalPages,
     };
+
     dispatch(getPages);
 
     const get = {
@@ -120,19 +123,19 @@ export const getRefundByName = async (
       `/reembolso/list/nome/status?nome=${name}&statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${size}`,
     );
 
+    const get = {
+      type: "GET_REFUNDS_BY_USER",
+      refund: data.content,
+    };
+    dispatch(get);
+
+    console.log(data)
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
     };
     dispatch(getPages);
-
-    console.log(data.content);
-    const get = {
-      type: "GET_REFUNDS_BY_USER",
-      refund: data.content,
-    };
-    dispatch(get);
   } catch (error) {
     console.log(error);
   }
@@ -234,19 +237,29 @@ export const financierAprove = async (
 };
 
 export const changeStatus = (value, dispatch) => {
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
+
   const status = {
     type: "SET_STATUS",
     statusRefund: value,
   };
   dispatch(status);
 
-  const loading = {
-    type: "LOADING_TRUE",
+  const resetPages = {
+    type: "SET_RESET",
   };
-  dispatch(loading);
+  dispatch(resetPages);
 };
 
-export const changeNameSearch = (value, dispatch) => {
+export const changeNameSearch = (value, dispatch, lastValue) => {
+
+  if(value === lastValue){
+    return 
+  }
+
   const name = {
     type: "SET_NAME_SEARCH",
     nameSearch: value,
@@ -257,6 +270,11 @@ export const changeNameSearch = (value, dispatch) => {
     type: "LOADING_TRUE",
   };
   dispatch(loading);
+
+  const resetPages = {
+    type: "SET_RESET",
+  };
+  dispatch(resetPages);
 };
 
 export const readUrl = (anexo) => {
@@ -279,14 +297,6 @@ export const navigateToUpdate = (dispatch, navigate, idRefund) => {
     type: "LOADING_TRUE",
   };
   dispatch(loading);
-};
-
-export const navigateToPages = (dispatch, navigate, page) => {
-  navigate(page);
-  const clear = {
-    type: "SET_CLEAR",
-  };
-  dispatch(clear);
 };
 
 export const validationButtonManager = (

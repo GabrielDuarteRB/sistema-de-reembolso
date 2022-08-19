@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
-  page: "0",
+  page: 0,
   totalPages: "",
-  size: "5",
+  size: 5,
 };
 
 const pageReducer = (state = INITIAL_STATE, action) => {
@@ -24,15 +24,15 @@ const pageReducer = (state = INITIAL_STATE, action) => {
       };
     case "SET_RESET":
       return {
-        page: "0",
+        page: 0,
         totalPages: "",
-        size: "5",
+        size: 5,
       };
     case "SET_LOGOUT":
       return {
-        page: "0",
+        page: 0,
         totalPages: "",
-        size: "5",
+        size: 5,
       };
     default:
       return state;

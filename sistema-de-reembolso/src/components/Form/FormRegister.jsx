@@ -22,10 +22,9 @@ import {
   handleTypePassword,
 } from "../../store/actions/formActions";
 
-const FormRegister = ({ typePassword, disabled, dispatch }) => {
+const FormRegister = ({ typePassword, disabled, dispatch, isLogged }) => {
   const navigate = useNavigate();
   const [selectedFoto, setSelectedFoto] = useState("");
-  const { byAdmin } = useParams();
 
   const handleFoto = (foto, setFieldValue) => {
     setFieldValue("foto", foto);
@@ -47,7 +46,7 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
           senha: "",
           confirmarSenha: "",
           foto: "",
-          tipoUser: "",
+          tipoUser: "COLABORADOR",
         }}
         validationSchema={validationRegister}
         onSubmit={(values) => {
@@ -59,7 +58,7 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
             foto: values.foto,
             tipoUser: values.tipoUser,
           };
-          handleSignUp(dispatch, newValues, navigate, byAdmin);
+          handleSignUp(dispatch, newValues, navigate, isLogged);
         }}
       >
         {({ errors, touched, handleSubmit, setFieldValue }) => (
@@ -129,13 +128,11 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
               ) : null}
             </FormItem>
 
-            {byAdmin ? (
+            {isLogged ? (
               <FormItem>
                 <label htmlFor="tipoUser">Tipo do usuário</label>
                 <Field component="select" name="tipoUser" multiple={false}>
-                  <option defaultValue value="COLABORADOR">
-                    Colaborador
-                  </option>
+                  <option value="COLABORADOR">Colaborador</option>
                   <option value="GESTOR">Gestor</option>
                   <option value="FINANCEIRO">Financeiro</option>
                   <option value="ADMINISTRADOR">Administrador</option>
@@ -189,8 +186,8 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
         )}
       </Formik>
 
-      <Link to="/">
-        <FaRegArrowAltCircleLeft /> Voltar para o login
+      <Link to="/usuarios">
+        <FaRegArrowAltCircleLeft /> Voltar para {isLogged ? 'a tela principal' : 'o login'}
       </Link>
     </CardForm>
   );
@@ -199,6 +196,7 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
 const mapStateToProps = (state) => ({
   disabled: state.formReducer.disabled,
   typePassword: state.formReducer.typePassword,
+  isLogged: state.authReducer.isLogged,
 });
 
 export default connect(mapStateToProps)(FormRegister);

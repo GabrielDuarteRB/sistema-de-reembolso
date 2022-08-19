@@ -20,6 +20,7 @@ const Pager = ({ dispatch, refund, users, size, page, totalPages, isLoadingRefun
           onChange={(e) => modifyItensPerPage(e, dispatch)}
           name="itens"
           defaultValue={size}
+          disabled={isLoadingRefund && isLoadingUsers}
         >
           <option value="5">5</option>
           <option value="10">10</option>
@@ -37,7 +38,7 @@ const Pager = ({ dispatch, refund, users, size, page, totalPages, isLoadingRefun
           </button>
         ) : null}
         {page + 1 !== totalPages ? (
-          <button disabled={isLoadingRefund && isLoadingUsers} onClick={() => modifyPage(dispatch, page, "sum")}>
+          <button disabled={isLoadingRefund  && isLoadingUsers} onClick={() => modifyPage(dispatch, page, "sum")}>
             <FaArrowRight />
           </button>
         ) : null}

@@ -44,6 +44,8 @@ export const validationRegister = Yup.object().shape({
     .required("Email obrigatório!"),
 
   senha: Yup.string()
+    .min(8, "Senha muito curta!")
+    .max(20, "Senha muito longa!")
     .test(
       "regex",
       `Obrigatório conter:

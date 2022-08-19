@@ -2,12 +2,12 @@ import { connect } from "react-redux";
 import { changeStatus } from "../../store/actions/refundActions";
 import { RefundSituation } from "./Status.styled";
 
-const Status = ({ dispatch }) => {
+const Status = ({ dispatch, isLoading }) => {
 
   return (
     <div>
       <span>Filtrar por tipo</span>
-      <RefundSituation onChange={(e) => changeStatus(e.target.value, dispatch)}>
+      <RefundSituation disabled={isLoading} onChange={(e) => changeStatus(e.target.value, dispatch)}>
         <option value="TODOS">Todos</option>
         <option value="ABERTO">Aberto</option>
         <option value="APROVADO_GESTOR">Aprovado pelo gestor</option>
@@ -19,6 +19,6 @@ const Status = ({ dispatch }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  refund: state.refundReducer.refund,
+  isLoading: state.refundReducer.isLoading,
 });
 export default connect(mapStateToProps)(Status);
