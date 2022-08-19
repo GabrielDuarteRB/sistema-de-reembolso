@@ -191,10 +191,10 @@ export const handleUpdateRefund = async (
   }
 };
 
-export const managerAprove = async (dispatch, idRefund, action, page, size) => {
+export const managerAprove = async (dispatch, idRefund, action, page, size, statusRefund) => {
   try {
     await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`);
-    getAllRefund(dispatch, "ABERTO", page, size);
+    getAllRefund(dispatch, statusRefund, page, size);
     toast.fire({
       icon: "success",
       title: `Reembolso ${action === "true" ? "Aprovado" : "Negado"}!`,
@@ -267,5 +267,27 @@ export const navigateToPages = (dispatch, navigate, page) => {
     type: 'SET_CLEAR'
   }
   dispatch(clear)
+}
+
+export const validationButtonManager = (dispatch, size, statusRefund, idRefund, page, actualStatusRefund, bool, status) => {
+  statusRefund === status 
+    ? 
+      managerAprove(dispatch, idRefund, bool, page, size, actualStatusRefund) 
+    : 
+      toast.fire({
+        icon: 'error',
+        title: 'Não é possivel mais modificar o status desse reembolso'
+      })
+}
+
+export const validationButtonFinancer = (dispatch, size, statusRefund, idRefund, page, actualStatusRefund, bool, status) => {
+  statusRefund === status 
+    ? 
+     financierAprove(dispatch, idRefund, bool, page, size, actualStatusRefund) 
+    : 
+      toast.fire({
+        icon: 'error',
+        title: 'Não é possivel mais modificar o status desse reembolso'
+      })
 }
 

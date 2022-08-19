@@ -5,9 +5,10 @@ import { Button } from "../Button/Button";
 import { List, ListItem } from "../List/List";
 import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
-import { managerAprove, readUrl } from "../../store/actions/refundActions";
+import { readUrl, validationButtonManager } from "../../store/actions/refundActions";
 
-const RefundManager = ({ dispatch, page, size, refund }) => {
+const RefundManager = ({ dispatch, statusRefund, page, size, refund }) => {
+
   return (
     <List>
       {refund.map((reembolso) => (
@@ -40,13 +41,10 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() =>
-                managerAprove(
-                  dispatch,
-                  reembolso.idReembolso,
-                  "true",
-                  page,
-                  size,
-                )
+                  validationButtonManager(
+                    dispatch, size, reembolso.statusDoReembolso, 
+                    reembolso.idReembolso, page, statusRefund, 'true', 'aberto'
+                  )
               }
             >
               <FaCheckCircle />
@@ -60,12 +58,9 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() =>
-                managerAprove(
-                  dispatch,
-                  reembolso.idReembolso,
-                  "false",
-                  page,
-                  size,
+                validationButtonManager(
+                  dispatch, size, reembolso.statusDoReembolso, 
+                  reembolso.idReembolso, page, statusRefund, "false", 'aberto'
                 )
               }
             >
@@ -79,6 +74,7 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
 };
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
+  statusRefund: state.refundReducer.statusRefund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });

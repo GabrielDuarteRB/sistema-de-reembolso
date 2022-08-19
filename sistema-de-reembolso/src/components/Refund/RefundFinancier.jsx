@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { List, ListItem } from "../List/List";
-import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
-import { financierAprove } from "../../store/actions/refundActions";
+import { FaCheckCircle, FaFileAlt } from "react-icons/fa"
 import { MdCancel } from "react-icons/md";
+import { validationButtonFinancer } from "../../store/actions/refundActions";
 
-const RefundManager = ({ dispatch, page, size, refund }) => {
+const RefundManager = ({ dispatch, statusRefund, page, size, refund }) => {
   return (
     <List>
       {refund.map((reembolso) => (
@@ -44,12 +44,9 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() =>
-                financierAprove(
-                  dispatch,
-                  reembolso.idReembolso,
-                  "true",
-                  page,
-                  size,
+                validationButtonFinancer(
+                  dispatch, size, reembolso.statusDoReembolso, 
+                    reembolso.idReembolso, page, statusRefund, 'true', 'aprovado gestor'
                 )
               }
             >
@@ -64,12 +61,9 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() =>
-                financierAprove(
-                  dispatch,
-                  reembolso.idReembolso,
-                  "false",
-                  page,
-                  size,
+                validationButtonFinancer(
+                  dispatch, size, reembolso.statusDoReembolso, 
+                    reembolso.idReembolso, page, statusRefund, 'false', 'aprovado gestor'
                 )
               }
             >
@@ -83,6 +77,7 @@ const RefundManager = ({ dispatch, page, size, refund }) => {
 };
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
+  statusRefund: state.refundReducer.statusRefund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });

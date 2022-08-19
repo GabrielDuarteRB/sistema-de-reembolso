@@ -30,11 +30,13 @@ const refundReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         statusRefund: action.statusRefund,
+        // isLoading: true
       };
     case "SET_NAME_SEARCH":
       return {
         ...state,
         nameSearch: action.nameSearch,
+        // isLoading: true
       };
     case "GET_REFUND":
       return {

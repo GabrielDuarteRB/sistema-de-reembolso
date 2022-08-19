@@ -41,7 +41,7 @@ const Manager = ({ dispatch, statusRefund, nameSearch, isLoading, refund, page, 
             <ListContainer>
               <ListHeader>
                 <div>
-                  <h2>Reembolsos em aberto</h2>
+                  <h2>Reembolsos ({statusRefund.toLowerCase().replace('_', ' ')})</h2>
                   <Pager />
                 </div>
                 <Status/>

@@ -13,7 +13,7 @@ import {
 import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
 import Users from "../../components/Users/Users";
-import { getAllUsers, getUser } from "../../store/actions/usersActions";
+import { getAllUsers, getUser, getUsersByName } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
 
@@ -25,8 +25,12 @@ const Admin = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   }, []);
 
   useEffect(() => {
-    getAllUsers(dispatch, page, size);
-  }, [page, size]);
+    if(nameSearch === '') {
+      getAllUsers(dispatch, page, size);
+      return
+    }
+    getUsersByName(dispatch, nameSearch, page, size)
+  }, [page, size, nameSearch]);
 
   if (isLoading) {
     return <Loading />;

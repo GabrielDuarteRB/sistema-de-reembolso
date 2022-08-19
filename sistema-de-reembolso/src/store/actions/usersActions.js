@@ -18,7 +18,7 @@ export const getUser = async (dispatch) => {
 export const getAllUsers = async (dispatch, page, size) => {
   try {
     const { data } = await apiRefund.get(
-      `/usuario/listar?pagina=${page}&quantidadeDeRegistros=${size}`,
+      `/usuario/listar?pagina=${page}&quantidadeDeRegistros=${size}`
     );
 
     const users = {
@@ -38,3 +38,25 @@ export const getAllUsers = async (dispatch, page, size) => {
     console.log(error);
   }
 };
+
+export const getUsersByName = async (dispatch, name, page, size) => {
+  try {
+    const {data} = await apiRefund.get(`/usuario/listar/nome?nome=${name}&pagina=${page}&quantidadeDeRegistros=${size}`)
+
+    const users = {
+      type: "GET_ALL_USERS",
+      users: data.content,
+    };
+
+    dispatch(users);
+
+    const getPages = {
+      type: "GET_PAGES",
+      page: data.page,
+      totalPages: data.totalPages,
+    };
+    dispatch(getPages);
+  } catch (error) {
+    console.log(error);
+  }
+}

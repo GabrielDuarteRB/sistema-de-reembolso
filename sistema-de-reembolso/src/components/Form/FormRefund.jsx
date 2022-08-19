@@ -52,8 +52,6 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
     return <Loading />;
   }
 
-  console.log(refundById)
-
   return (
     <Container>
       <CardForm>
