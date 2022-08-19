@@ -77,4 +77,9 @@ export const ListItem = styled.li`
   :hover {
     background-color: ${secondaryColor};
   }
+
+  & select {
+    padding: 4px;
+    border-radius: 4px;
+  }
 `;

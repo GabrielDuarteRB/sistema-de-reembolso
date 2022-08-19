@@ -7,7 +7,8 @@ import { FaCheckCircle, FaFileAlt } from "react-icons/fa"
 import { MdCancel } from "react-icons/md";
 import { validationButtonFinancer } from "../../store/actions/refundActions";
 
-const RefundManager = ({ dispatch, statusRefund, page, size, refund }) => {
+
+const RefundFinancialList = ({ dispatch, statusRefund, page, size, refund }) => {
   return (
     <List>
       {refund.map((reembolso) => (
@@ -81,4 +82,4 @@ const mapStateToProps = (state) => ({
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });
-export default connect(mapStateToProps)(RefundManager);
+export default connect(mapStateToProps)(RefundFinancialList);

@@ -63,15 +63,19 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
           initialValues={{
             titulo: refundById ? refundById.titulo : "",
             valor: refundById.valor || "",
-            file: refundById.anexoDTO ? new File([refundById.anexoDTO.file], refundById.anexoDTO.nome, {type: 'file'}) : "",
+            file: refundById.anexoDTO
+              ? new File([refundById.anexoDTO.file], refundById.anexoDTO.nome, {
+                  type: "file",
+                })
+              : "",
           }}
           validationSchema={validationRefund}
           onSubmit={(values) => {
-            handleForm(dispatch, "disable")
+            handleForm(dispatch, "disable");
             const newValues = {
               titulo: values.titulo,
               valor: formatNumber(values.valor.toString()),
-              file: values.file
+              file: values.file,
               // file: new File([file], values.file.name, {type: 'file'}),
             };
 

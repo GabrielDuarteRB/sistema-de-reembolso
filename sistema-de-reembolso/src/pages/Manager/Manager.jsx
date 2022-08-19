@@ -10,24 +10,34 @@ import {
 import Loading from "../../components/Loading/Loading";
 import { NotRegister } from "../../components/NotRegister/NotRegister";
 import Pager from "../../components/Pager/Pager";
-import RefundManager from "../../components/Refund/RefundManager";
+import RefundManagerList from "../../components/RefundLists/RefundManagerList";
 import Search from "../../components/Search/Search";
 import Status from "../../components/Status/Status";
-import { getAllRefund, getRefundByName } from "../../store/actions/refundActions";
+import {
+  getAllRefund,
+  getRefundByName,
+} from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
 
-const Manager = ({ dispatch, statusRefund, nameSearch, isLoading, refund, page, size }) => {
-
+const Manager = ({
+  dispatch,
+  statusRefund,
+  nameSearch,
+  isLoading,
+  refund,
+  page,
+  size,
+}) => {
   useEffect(() => {
     getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    if(nameSearch === '' && statusRefund === 'TODOS'){
+    if (nameSearch === "" && statusRefund === "TODOS") {
       getAllRefund(dispatch, "TODOS", page, size);
-      return
+      return;
     }
-    getRefundByName(dispatch, nameSearch, statusRefund, page, size)
+    getRefundByName(dispatch, nameSearch, statusRefund, page, size);
   }, [page, size, nameSearch, statusRefund]);
 
   if (isLoading) {
@@ -38,30 +48,30 @@ const Manager = ({ dispatch, statusRefund, nameSearch, isLoading, refund, page, 
     <>
       <Header title={"Gestor"} />
       <Container>
-            <ListContainer>
-              <ListHeader>
-                <div>
-                  <h2>Reembolsos ({statusRefund.toLowerCase().replace('_', ' ')})</h2>
-                  <Pager />
-                </div>
-                <Status/>
-                <Search/>
-                <ListTitles columns="6">
-                  <span>Título</span>
-                  <span>Nome</span>
-                  <span>Data</span>
-                  <span>Valor</span>
-                  <span>Status</span>
-                  <span>Ações</span>
-                </ListTitles>
-              </ListHeader>
-              {refund.length === 0 
-              ? 
-                (<NotRegister>Nenhum reembolso solicitado</NotRegister>) 
-              :
-                (<RefundManager />)
-              }
-            </ListContainer> 
+        <ListContainer>
+          <ListHeader>
+            <div>
+              <h2>Reembolsos ({statusRefund.toLowerCase().replace('_', ' ')})</h2>
+              <Pager />
+            </div>
+            <Status/>
+            <Search/>
+            <ListTitles columns="6">
+              <span>Título</span>
+              <span>Nome</span>
+              <span>Data</span>
+              <span>Valor</span>
+              <span>Status</span>
+              <span>Ações</span>
+            </ListTitles>
+          </ListHeader>
+          {refund.length === 0 
+          ? 
+            (<NotRegister>Nenhum reembolso solicitado</NotRegister>) 
+          :
+            (<RefundManagerList />)
+          }
+        </ListContainer> 
       </Container>
     </>
   );

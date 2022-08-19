@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { FaSearch, FaUserPlus } from "react-icons/fa";
+import { FaUserPlus } from "react-icons/fa";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../components/Button/Button";
@@ -12,12 +12,12 @@ import {
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
-import Users from "../../components/Users/Users";
 import { getAllUsers, getUser, getUsersByName } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
+import UsersList from "../../components/UsersList/UsersList";
 
-const Admin = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
+const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const Admin = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
 
   return (
     <>
-      <Header />
+      <Header title={"Usuários"} />
       <Container>
         <Button
           background={primaryColor}
@@ -52,30 +52,24 @@ const Admin = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
           Cadastrar usuário <FaUserPlus />
         </Button>
 
-        
-          <>
-            <ListContainer>
-              <ListHeader>
-                <div>
-                  <h2>Usuários</h2>
-                  <Pager />
-                </div>
-                <Search />
-                <ListTitles columns="5">
-                  <span>Email</span>
-                  <span>Id</span>
-                  <span>Nome</span>
-                  <span>Tipo</span>
-                  <span>Editar</span>
-                </ListTitles>
-              </ListHeader>
-              {!users 
-              ? 
-                (<h2>Nenhum usuário cadastrado</h2>) 
-              : 
-                (<Users />)}
-            </ListContainer>
-          </>
+        <>
+          <ListContainer>
+            <ListHeader>
+              <div>
+                <h2>Usuários</h2>
+                <Pager />
+              </div>
+              <Search />
+              <ListTitles columns="4">
+                <span>Email</span>
+                <span>Nome</span>
+                <span>Tipo</span>
+                <span>Editar</span>
+              </ListTitles>
+            </ListHeader>
+            {!users ? <h2>Nenhum usuário cadastrado</h2> : <UsersList />}
+          </ListContainer>
+        </>
       </Container>
     </>
   );
@@ -89,4 +83,4 @@ const mapStateToProps = (state) => ({
   nameSearch: state.refundReducer.nameSearch,
 });
 
-export default connect(mapStateToProps)(Admin);
+export default connect(mapStateToProps)(Usuarios);
