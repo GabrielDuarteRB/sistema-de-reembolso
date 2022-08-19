@@ -25,7 +25,7 @@ const Financier = ({
   statusRefund,
   nameSearch,
   isLoading,
-  allRefunds,
+  refund,
   page,
   size,
 }) => {
@@ -72,7 +72,7 @@ const Financier = ({
             <span>Status</span>
             <span>Ações</span>
           </ListTitles>
-          {allRefunds.length === 0 ? (
+          {refund.length === 0 ? (
             <NotRegister>Nenhum reembolso solicitado</NotRegister>
           ) : (
             <RefundFinancialList />
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => ({
   isLoading: state.refundReducer.isLoading,
   statusRefund: state.refundReducer.statusRefund,
   nameSearch: state.refundReducer.nameSearch,
-  allRefunds: state.refundReducer.allRefunds,
+  refund: state.refundReducer.refund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });

@@ -17,6 +17,7 @@ import Loading from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import {
   getAllRefund,
+  getRefund,
   getRefundByName,
 } from "../../store/actions/refundActions";
 import Search from "../../components/Search/Search";
@@ -31,7 +32,7 @@ const Reembolsos = ({
   nameSearch,
   size,
   isLoadingRefund,
-  allRefunds,
+  refund,
   refundsByUser,
   dispatch,
 }) => {
@@ -42,6 +43,11 @@ const Reembolsos = ({
   }, []);
 
   useEffect(() => {
+    if(role === 'ROLE_COLABORADOR') {
+      getRefund(dispatch, statusRefund, page, size)
+      return
+    }
+
     if (nameSearch === "") {
       getAllRefund(dispatch, statusRefund, page, size);
       return;
@@ -88,12 +94,12 @@ const Reembolsos = ({
             <span>Ações</span>
           </ListTitles>
           {role === "ROLE_ADMIN" ? (
-            allRefunds.length === 0 ? (
+            refund.length === 0 ? (
               <NotRegister>Nenhum reembolso cadastrado</NotRegister>
             ) : (
               <RefundList />
             )
-          ) : refundsByUser.length === 0 ? (
+          ) : refund.length === 0 ? (
             <NotRegister>Nenhum reembolso cadastrado</NotRegister>
           ) : (
             <RefundList />
@@ -106,7 +112,7 @@ const Reembolsos = ({
 
 const mapStateToProps = (state) => ({
   isLoadingRefund: state.refundReducer.isLoading,
-  allRefunds: state.refundReducer.allRefunds,
+  refund: state.refundReducer.refund,
   refundsByUser: state.refundReducer.refundsByUser,
   statusRefund: state.refundReducer.statusRefund,
   nameSearch: state.refundReducer.nameSearch,

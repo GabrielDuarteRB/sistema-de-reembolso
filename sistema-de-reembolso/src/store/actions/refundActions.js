@@ -55,10 +55,11 @@ export const getRefund = async (
       totalPages: data.totalPages,
     };
     dispatch(getPages);
+    console.log(data)
 
     const get = {
-      type: "GET_REFUNDS_BY_USER",
-      refundsrefundsByUser: data.content,
+      type: "GET_REFUND_BY_USER",
+      refund: data.content,
     };
     dispatch(get);
   } catch (error) {
@@ -86,7 +87,7 @@ export const getAllRefund = async (
 
     const get = {
       type: "GET_ALL_REFUNDS",
-      allRefunds: data.content,
+      refund: data.content,
     };
     dispatch(get);
   } catch (error) {
@@ -126,9 +127,10 @@ export const getRefundByName = async (
     };
     dispatch(getPages);
 
+    console.log(data.content)
     const get = {
-      type: "GET_REFUNDS_BY_USER",
-      refundsByUser: data.content,
+      type: "GET_REFUND_BY_USER",
+      refund: data.content,
     };
     dispatch(get);
   } catch (error) {

@@ -25,7 +25,7 @@ const Manager = ({
   statusRefund,
   nameSearch,
   isLoading,
-  allRefunds,
+  refund,
   page,
   size,
 }) => {
@@ -71,7 +71,7 @@ const Manager = ({
             <span>Status</span>
             <span>Ações</span>
           </ListTitles>
-          {allRefunds.length === 0 ? (
+          {refund.length === 0 ? (
             <NotRegister>Nenhum reembolso solicitado</NotRegister>
           ) : (
             <RefundManagerList />
@@ -86,7 +86,7 @@ const mapStateToProps = (state) => ({
   isLoading: state.refundReducer.isLoading,
   nameSearch: state.refundReducer.nameSearch,
   statusRefund: state.refundReducer.statusRefund,
-  allRefunds: state.refundReducer.allRefunds,
+  refund: state.refundReducer.refund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });

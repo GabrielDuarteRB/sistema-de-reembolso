@@ -11,23 +11,16 @@ import {
 import { useNavigate } from "react-router-dom";
 import { confirmDeleteModal } from "../Toaster/Toaster";
 import Loading from "../Loading/Loading";
-import { useEffect, useState } from "react";
 
 const RefundList = ({
   dispatch,
-  refundsByUser,
-  allRefunds,
+  refund,
   page,
   size,
   isLoading,
   role,
 }) => {
   const navigate = useNavigate();
-  const [refunds, setRefunds] = useState([]);
-
-  useEffect(() => {
-    role === "ROLE_ADMIN" ? setRefunds(allRefunds) : setRefunds(refundsByUser);
-  }, []);
 
   if (isLoading) {
     return <Loading height="80vh" />;
@@ -35,7 +28,7 @@ const RefundList = ({
 
   return (
     <List>
-      {refunds.map((reembolso) => (
+      {refund.map((reembolso) => (
         <ListItem
           backgroundColor={
             reembolso.statusDoReembolso !== "aberto" ? secondaryColor : "#fff"
@@ -93,9 +86,8 @@ const RefundList = ({
   );
 };
 
-const mapStateToProps = (state) => ({
-  refundsByUser: state.refundReducer.refundsByUser,
-  allRefunds: state.refundReducer.allRefunds,
+const mapStateToProps = (state) => ({ 
+  refund: state.refundReducer.refund,
   isLoading: state.refundReducer.isLoading,
   page: state.pageReducer.page,
   size: state.pageReducer.size,

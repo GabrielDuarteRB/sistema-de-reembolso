@@ -1,6 +1,5 @@
 const INITIAL_STATE = {
-  refundsByUser: [],
-  allRefunds: [],
+  refund: [],
   refundById: {},
   statusRefund: "TODOS",
   nameSearch: "",
@@ -23,7 +22,7 @@ const refundReducer = (state = INITIAL_STATE, action) => {
 
     case "SET_CLEAR":
       return {
-        refundsByUser: [],
+        refund: [],
         refundById: {},
         statusRefund: "TODOS",
         nameSearch: "",
@@ -45,15 +44,15 @@ const refundReducer = (state = INITIAL_STATE, action) => {
     case "GET_REFUNDS_BY_USER":
       return {
         ...state,
-        refundsByUser: action.refundsByUser,
-        refundById: [],
+        refund: action.refund,
+        refundById: {},
         isLoading: false,
       };
 
     case "GET_ALL_REFUNDS":
       return {
         ...state,
-        allRefunds: action.allRefunds,
+        refund: action.refund,
         isLoading: false,
       };
 
@@ -66,8 +65,8 @@ const refundReducer = (state = INITIAL_STATE, action) => {
 
     case "SET_LOGOUT":
       return {
-        refundsByUser: [],
-        refundById: [],
+        refund: [],
+        refundById: {},
         statusRefund: "TODOS",
         nameSearch: "",
         isLoading: true,
