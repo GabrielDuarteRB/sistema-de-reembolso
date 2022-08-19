@@ -18,7 +18,7 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
   }, []);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (

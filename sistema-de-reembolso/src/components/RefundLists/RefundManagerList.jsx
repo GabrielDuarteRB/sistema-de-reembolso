@@ -5,14 +5,28 @@ import { Button } from "../Button/Button";
 import { List, ListItem } from "../List/List";
 import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
-import { readUrl, validationButtonManager } from "../../store/actions/refundActions";
+import {
+  readUrl,
+  validationButtonManager,
+} from "../../store/actions/refundActions";
 
-const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
-
+const RefundManagerList = ({
+  dispatch,
+  statusRefund,
+  page,
+  size,
+  allRefunds,
+}) => {
   return (
     <List>
-      {refund.map((reembolso) => (
-        <ListItem columns="6" key={reembolso.idReembolso}>
+      {allRefunds.map((reembolso) => (
+        <ListItem
+          borderColor={
+            reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
+          }
+          columns="6"
+          key={reembolso.idReembolso}
+        >
           <span>{reembolso.titulo}</span>
           <span>{reembolso.usuario.nome}</span>
           <span>{moment(reembolso.data).format("DD/MM/YYYY")}</span>
@@ -41,10 +55,16 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() =>
-                  validationButtonManager(
-                    dispatch, size, reembolso.statusDoReembolso, 
-                    reembolso.idReembolso, page, statusRefund, 'true', 'aberto'
-                  )
+                validationButtonManager(
+                  dispatch,
+                  size,
+                  reembolso.statusDoReembolso,
+                  reembolso.idReembolso,
+                  page,
+                  statusRefund,
+                  "true",
+                  "aberto",
+                )
               }
             >
               <FaCheckCircle />
@@ -59,8 +79,14 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
               padding={"8px"}
               onClick={() =>
                 validationButtonManager(
-                  dispatch, size, reembolso.statusDoReembolso, 
-                  reembolso.idReembolso, page, statusRefund, "false", 'aberto'
+                  dispatch,
+                  size,
+                  reembolso.statusDoReembolso,
+                  reembolso.idReembolso,
+                  page,
+                  statusRefund,
+                  "false",
+                  "aberto",
                 )
               }
             >
@@ -73,7 +99,7 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
   );
 };
 const mapStateToProps = (state) => ({
-  refund: state.refundReducer.refund,
+  allRefunds: state.refundReducer.allRefunds,
   statusRefund: state.refundReducer.statusRefund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,

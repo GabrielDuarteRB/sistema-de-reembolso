@@ -3,16 +3,27 @@ import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { List, ListItem } from "../List/List";
-import { FaCheckCircle, FaFileAlt } from "react-icons/fa"
+import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import { validationButtonFinancer } from "../../store/actions/refundActions";
 
-
-const RefundFinancialList = ({ dispatch, statusRefund, page, size, refund }) => {
+const RefundFinancialList = ({
+  dispatch,
+  statusRefund,
+  page,
+  size,
+  allRefunds,
+}) => {
   return (
     <List>
-      {refund.map((reembolso) => (
-        <ListItem columns="6" key={reembolso.idReembolso}>
+      {allRefunds.map((reembolso) => (
+        <ListItem
+          borderColor={
+            reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
+          }
+          columns="6"
+          key={reembolso.idReembolso}
+        >
           <span>{reembolso.titulo}</span>
           <span>{reembolso.usuario.nome}</span>
           <span>{moment(reembolso.data).format("DD/MM/YYYY")}</span>
@@ -46,8 +57,14 @@ const RefundFinancialList = ({ dispatch, statusRefund, page, size, refund }) => 
               padding={"8px"}
               onClick={() =>
                 validationButtonFinancer(
-                  dispatch, size, reembolso.statusDoReembolso, 
-                    reembolso.idReembolso, page, statusRefund, 'true', 'aprovado gestor'
+                  dispatch,
+                  size,
+                  reembolso.statusDoReembolso,
+                  reembolso.idReembolso,
+                  page,
+                  statusRefund,
+                  "true",
+                  "aprovado gestor",
                 )
               }
             >
@@ -63,8 +80,14 @@ const RefundFinancialList = ({ dispatch, statusRefund, page, size, refund }) => 
               padding={"8px"}
               onClick={() =>
                 validationButtonFinancer(
-                  dispatch, size, reembolso.statusDoReembolso, 
-                    reembolso.idReembolso, page, statusRefund, 'false', 'aprovado gestor'
+                  dispatch,
+                  size,
+                  reembolso.statusDoReembolso,
+                  reembolso.idReembolso,
+                  page,
+                  statusRefund,
+                  "false",
+                  "aprovado gestor",
                 )
               }
             >
@@ -76,10 +99,12 @@ const RefundFinancialList = ({ dispatch, statusRefund, page, size, refund }) => 
     </List>
   );
 };
+
 const mapStateToProps = (state) => ({
-  refund: state.refundReducer.refund,
+  allRefunds: state.refundReducer.allRefunds,
   statusRefund: state.refundReducer.statusRefund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });
+
 export default connect(mapStateToProps)(RefundFinancialList);

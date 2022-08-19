@@ -68,7 +68,8 @@ export const ListItem = styled.li`
   align-items: center;
   grid-template-columns: repeat(${(props) => props.columns}, 1fr);
   padding: 16px 32px;
-  border-top: 1px solid ${secondaryColor};
+  border-top: 2px solid ${(props) => props.borderColor};
+  background-color: ${(props) => props.backgroundColor};
 
   & span {
     :first-child {
@@ -89,5 +90,15 @@ export const ListItem = styled.li`
   & select {
     padding: 4px;
     border-radius: 4px;
+  }
+
+  & button:disabled {
+    background: #9fa2b4;
+    border: 2px solid #9fa2b4;
+    cursor: default;
+
+    :hover {
+      color: ${secondaryColor};
+    }
   }
 `;

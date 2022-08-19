@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
@@ -25,7 +25,7 @@ const Financier = ({
   statusRefund,
   nameSearch,
   isLoading,
-  refund,
+  allRefunds,
   page,
   size,
 }) => {
@@ -42,7 +42,7 @@ const Financier = ({
   }, [page, size, nameSearch, statusRefund]);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (
@@ -72,7 +72,7 @@ const Financier = ({
             <span>Status</span>
             <span>Ações</span>
           </ListTitles>
-          {refund.length === 0 ? (
+          {allRefunds.length === 0 ? (
             <NotRegister>Nenhum reembolso solicitado</NotRegister>
           ) : (
             <RefundFinancialList />
@@ -87,7 +87,7 @@ const mapStateToProps = (state) => ({
   isLoading: state.refundReducer.isLoading,
   statusRefund: state.refundReducer.statusRefund,
   nameSearch: state.refundReducer.nameSearch,
-  refund: state.refundReducer.refund,
+  allRefunds: state.refundReducer.allRefunds,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
 });

@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { handleRole } from "../../store/actions/authActions";
+import { secondaryColor } from "../../utils/colors";
 import { List, ListItem } from "../List/List";
 import Loading from "../Loading/Loading";
 import { confirmUpdateModal } from "../Toaster/Toaster";
@@ -8,13 +9,13 @@ import { confirmUpdateModal } from "../Toaster/Toaster";
 const UsersList = ({ users, isLoading }) => {
   const navigate = useNavigate();
   if (isLoading) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (
     <List>
       {users.map((user) => (
-        <ListItem columns="4" key={user.idUsuario}>
+        <ListItem borderColor={secondaryColor} columns="4" key={user.idUsuario}>
           <span>{user.email}</span>
           <span>{user.nome}</span>
           <span>{user.rolesDTO.nome.split("ROLE_")}</span>

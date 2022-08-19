@@ -11,18 +11,41 @@ import {
 import { useNavigate } from "react-router-dom";
 import { confirmDeleteModal } from "../Toaster/Toaster";
 import Loading from "../Loading/Loading";
+import { useEffect, useState } from "react";
 
-const RefundList = ({ dispatch, refund, page, size, isLoading }) => {
+const RefundList = ({
+  dispatch,
+  refundsByUser,
+  allRefunds,
+  page,
+  size,
+  isLoading,
+  role,
+}) => {
   const navigate = useNavigate();
+  const [refunds, setRefunds] = useState([]);
+
+  useEffect(() => {
+    role === "ROLE_ADMIN" ? setRefunds(allRefunds) : setRefunds(refundsByUser);
+  }, []);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (
     <List>
-      {refund.map((reembolso) => (
-        <ListItem columns="5" key={reembolso.idReembolso}>
+      {refunds.map((reembolso) => (
+        <ListItem
+          backgroundColor={
+            reembolso.statusDoReembolso !== "aberto" ? secondaryColor : "#fff"
+          }
+          borderColor={
+            reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
+          }
+          columns="5"
+          key={reembolso.idReembolso}
+        >
           <span>{reembolso.titulo}</span>
           <span>{moment(reembolso.dataEntrada).format("DD/MM/YYYY")}</span>
           <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
@@ -38,6 +61,7 @@ const RefundList = ({ dispatch, refund, page, size, isLoading }) => {
               onClick={() =>
                 navigateToUpdate(dispatch, navigate, reembolso.idReembolso)
               }
+              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
             >
               <FaEdit />
             </Button>
@@ -58,6 +82,7 @@ const RefundList = ({ dispatch, refund, page, size, isLoading }) => {
                   size,
                 )
               }
+              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
             >
               <FaTrash />
             </Button>
@@ -69,10 +94,12 @@ const RefundList = ({ dispatch, refund, page, size, isLoading }) => {
 };
 
 const mapStateToProps = (state) => ({
-  refund: state.refundReducer.refund,
+  refundsByUser: state.refundReducer.refundsByUser,
+  allRefunds: state.refundReducer.allRefunds,
   isLoading: state.refundReducer.isLoading,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  role: state.authReducer.role,
 });
 
 export default connect(mapStateToProps)(RefundList);

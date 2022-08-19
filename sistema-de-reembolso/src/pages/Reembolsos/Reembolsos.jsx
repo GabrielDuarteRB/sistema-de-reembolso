@@ -4,6 +4,7 @@ import Header from "../../components/Header/Header";
 import { FaExchangeAlt } from "react-icons/fa";
 import {
   ListContainer,
+  ListFilters,
   ListHeader,
   ListTitles,
 } from "../../components/List/List";
@@ -30,7 +31,8 @@ const Reembolsos = ({
   nameSearch,
   size,
   isLoadingRefund,
-  refund,
+  allRefunds,
+  refundsByUser,
   dispatch,
 }) => {
   const navigate = useNavigate();
@@ -48,7 +50,7 @@ const Reembolsos = ({
   }, [page, size, nameSearch, statusRefund]);
 
   if (isLoadingRefund) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (
@@ -72,19 +74,27 @@ const Reembolsos = ({
               <h2>Reembolsos</h2>
               <Pager />
             </div>
-            <Status />
-            {role === "ROLE_ADMIN" ? <Search /> : null}
-
-            <ListTitles columns="5">
-              <span>Título</span>
-              <span>Data</span>
-              <span>Valor</span>
-              <span>Status</span>
-              <span>Ações</span>
-            </ListTitles>
+            <ListFilters>
+              <Status />
+              {role === "ROLE_ADMIN" ? <Search /> : null}
+            </ListFilters>
           </ListHeader>
-          {refund.length === 0 ? (
-            <NotRegister>Nenhum reembolso solicitado</NotRegister>
+
+          <ListTitles columns="5">
+            <span>Título</span>
+            <span>Data</span>
+            <span>Valor</span>
+            <span>Status</span>
+            <span>Ações</span>
+          </ListTitles>
+          {role === "ROLE_ADMIN" ? (
+            allRefunds.length === 0 ? (
+              <NotRegister>Nenhum reembolso cadastrado</NotRegister>
+            ) : (
+              <RefundList />
+            )
+          ) : refundsByUser.length === 0 ? (
+            <NotRegister>Nenhum reembolso cadastrado</NotRegister>
           ) : (
             <RefundList />
           )}
@@ -96,11 +106,13 @@ const Reembolsos = ({
 
 const mapStateToProps = (state) => ({
   isLoadingRefund: state.refundReducer.isLoading,
-  refund: state.refundReducer.refund,
+  allRefunds: state.refundReducer.allRefunds,
+  refundsByUser: state.refundReducer.refundsByUser,
   statusRefund: state.refundReducer.statusRefund,
   nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
   role: state.authReducer.role,
 });
+
 export default connect(mapStateToProps)(Reembolsos);

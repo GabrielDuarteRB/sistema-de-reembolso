@@ -49,7 +49,7 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
   }, [refundById.anexoDTO]);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (

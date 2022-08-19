@@ -38,7 +38,7 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   }, [page, size, nameSearch]);
 
   if (isLoading) {
-    return <Loading />;
+    return <Loading height="80vh" />;
   }
 
   return (

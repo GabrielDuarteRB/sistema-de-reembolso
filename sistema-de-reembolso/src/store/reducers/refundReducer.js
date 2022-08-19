@@ -1,8 +1,9 @@
 const INITIAL_STATE = {
-  refund: [],
+  refundsByUser: [],
+  allRefunds: [],
   refundById: {},
-  statusRefund: 'TODOS',
-  nameSearch: '',
+  statusRefund: "TODOS",
+  nameSearch: "",
   isLoading: true,
 };
 
@@ -13,36 +14,46 @@ const refundReducer = (state = INITIAL_STATE, action) => {
         ...state,
         isLoading: true,
       };
+
     case "LOADING_FALSE":
       return {
         ...state,
         isLoading: false,
       };
+
     case "SET_CLEAR":
       return {
-        refund: [],
+        refundsByUser: [],
         refundById: {},
-        statusRefund: 'TODOS',
-        nameSearch: '',
+        statusRefund: "TODOS",
+        nameSearch: "",
         isLoading: true,
       };
+
     case "SET_STATUS":
       return {
         ...state,
         statusRefund: action.statusRefund,
-        // isLoading: true
       };
+
     case "SET_NAME_SEARCH":
       return {
         ...state,
         nameSearch: action.nameSearch,
-        // isLoading: true
       };
-    case "GET_REFUND":
+
+    case "GET_REFUND_BY_USER":
       return {
         ...state,
-        refund: action.refund,
+        refundsByUser: action.refundsByUser,
         refundById: [],
+        isLoading: false,
+      };
+
+    case "GET_ALL_REFUNDS":
+      return {
+        ...state,
+        allRefunds: action.allRefunds,
         isLoading: false,
       };
 
@@ -52,14 +63,16 @@ const refundReducer = (state = INITIAL_STATE, action) => {
         refundById: action.refundById,
         isLoading: false,
       };
+
     case "SET_LOGOUT":
       return {
-        refund: [],
+        refundsByUser: [],
         refundById: [],
-        statusRefund: 'TODOS',
-        nameSearch: '',
+        statusRefund: "TODOS",
+        nameSearch: "",
         isLoading: true,
       };
+
     default:
       return state;
   }
