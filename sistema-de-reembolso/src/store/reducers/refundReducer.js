@@ -22,6 +22,7 @@ const refundReducer = (state = INITIAL_STATE, action) => {
 
     case "SET_CLEAR":
       return {
+        ...state,
         refund: [],
         refundById: {},
         statusRefund: "TODOS",
@@ -53,6 +54,7 @@ const refundReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         refund: action.refund,
+        refundById: {},
         isLoading: false,
       };
 

@@ -36,7 +36,10 @@ export const modifyItensPerPage = (e, dispatch) => {
   dispatch(loading);
 };
 
-export const navigateToPages = (dispatch, navigate, page) => {
+export const navigateToPages = (dispatch, navigate, page, actualPage) => {
+  if (page === actualPage) {
+    return;
+  }
   navigate(page);
   const clear = {
     type: "SET_CLEAR",

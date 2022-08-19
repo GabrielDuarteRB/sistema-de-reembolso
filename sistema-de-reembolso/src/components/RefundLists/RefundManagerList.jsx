@@ -2,7 +2,7 @@ import moment from "moment";
 import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
-import { List, ListItem } from "../List/List";
+import { ItemInfo, List, ListItem } from "../List/List";
 import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
 import {
@@ -11,19 +11,12 @@ import {
 } from "../../store/actions/refundActions";
 import { NotRegister } from "../NotRegister/NotRegister";
 
-const RefundManagerList = ({
-  dispatch,
-  statusRefund,
-  page,
-  size,
-  refund,
-}) => {
-
+const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
   if (refund.length === 0) {
-    return <NotRegister>Nenhum reembolso encontrado</NotRegister>
+    return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
 
-  return (    
+  return (
     <List>
       {refund.map((reembolso) => (
         <ListItem
@@ -33,11 +26,25 @@ const RefundManagerList = ({
           columns="6"
           key={reembolso.idReembolso}
         >
-          <span>{reembolso.titulo}</span>
-          <span>{reembolso.usuario.nome}</span>
-          <span>{moment(reembolso.data).format("DD/MM/YYYY")}</span>
-          <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
-          <span>{reembolso.statusDoReembolso}</span>
+          <ItemInfo>
+            <strong>Titulo: </strong>
+            {reembolso.titulo}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Nome: </strong>
+            {reembolso.usuario.nome}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Data: </strong>
+            {moment(reembolso.data).format("DD/MM/YYYY")}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Valor: </strong>R$ {parseFloat(reembolso.valor).toFixed(2)}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Status: </strong>
+            {reembolso.statusDoReembolso}
+          </ItemInfo>
 
           <div>
             <Button

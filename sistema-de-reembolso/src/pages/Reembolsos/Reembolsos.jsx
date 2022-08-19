@@ -37,12 +37,12 @@ const Reembolsos = ({
   }, []);
 
   useEffect(() => {
-    chooseGet(dispatch, nameSearch, statusRefund, page, size, role)
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   }, [page, size, nameSearch, statusRefund]);
 
   return (
     <>
-      <Header />
+      <Header actualPage="/reembolsos" />
       <Container>
         <Button
           background={primaryColor}
@@ -74,12 +74,7 @@ const Reembolsos = ({
             <span>Status</span>
             <span>Ações</span>
           </ListTitles>
-          {isLoading 
-            ? 
-              <Loading/> 
-            : 
-              <RefundList/>
-          }
+          {isLoading ? <Loading /> : <RefundList />}
         </ListContainer>
       </Container>
     </>

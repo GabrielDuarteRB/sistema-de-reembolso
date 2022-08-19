@@ -9,7 +9,11 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       titulo: values.titulo,
       valor: values.valor,
     });
-    handleAnexo(data.idReembolso, { file: values.file }, data.usuario.idUsuario);
+    handleAnexo(
+      data.idReembolso,
+      { file: values.file },
+      data.usuario.idUsuario,
+    );
 
     const create = {
       type: "LOADING_TRUE",
@@ -30,10 +34,13 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
 
 export const handleAnexo = async (idRefund, anexo, idUser) => {
   try {
-    
-    await apiRefund.post(`/upload/anexo/reembolso/usuario?idReembolso=${idRefund}&idUsuario=${idUser}`, anexo, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    await apiRefund.post(
+      `/upload/anexo/reembolso/usuario?idReembolso=${idRefund}&idUsuario=${idUser}`,
+      anexo,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    );
   } catch (error) {
     console.log(error);
   }
@@ -129,7 +136,6 @@ export const getRefundByName = async (
     };
     dispatch(get);
 
-    console.log(data)
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
@@ -141,23 +147,30 @@ export const getRefundByName = async (
   }
 };
 
-export const handleDeleteRefund = async (dispatch, idRefund, page, size, idUser, nameSearch, statusRefund, role) => {
+export const handleDeleteRefund = async (
+  dispatch,
+  idRefund,
+  page,
+  size,
+  idUser,
+  nameSearch,
+  statusRefund,
+  role,
+) => {
   try {
     const loading = {
       type: "LOADING_TRUE",
     };
     dispatch(loading);
 
-    await apiRefund.delete(
-      `/reembolso/delete/${idRefund}/usuario/${idUser}`,
-    );
+    await apiRefund.delete(`/reembolso/delete/${idRefund}/usuario/${idUser}`);
 
     toast.fire({
       icon: "success",
       title: "Reembolso deletado",
     });
 
-    chooseGet(dispatch, nameSearch, statusRefund, page, size, role)
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   } catch (error) {
     console.log(error);
   }
@@ -171,14 +184,17 @@ export const handleUpdateRefund = async (
   navigate,
 ) => {
   try {
-    await apiRefund.put(`/reembolso/update/${idRefund}/usuario/${idUser}`, values);
+    await apiRefund.put(
+      `/reembolso/update/${idRefund}/usuario/${idUser}`,
+      values,
+    );
     handleAnexo(idRefund, { file: values.file }, idUser);
 
     const upload = {
       type: "LOADING_TRUE",
     };
     dispatch(upload);
-    
+
     handleForm(dispatch, "enable");
 
     toast.fire({
@@ -298,6 +314,7 @@ export const navigateToUpdate = (dispatch, navigate, idRefund) => {
   };
   dispatch(loading);
 };
+
 
 export const validationButtonManager = (
   dispatch,

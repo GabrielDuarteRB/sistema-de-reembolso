@@ -24,19 +24,19 @@ const Financier = ({
   refund,
   page,
   size,
-  role
+  role,
 }) => {
   useEffect(() => {
     getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    chooseGet(dispatch, nameSearch, statusRefund, page, size, role)
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   }, [page, size, nameSearch, statusRefund]);
 
   return (
     <>
-      <Header title={"Financeiro"} />
+      <Header title="Financeiro" actualPage="/financeiro" />
       <Container>
         <ListContainer>
           <ListHeader>
@@ -54,19 +54,14 @@ const Financier = ({
           </ListHeader>
 
           <ListTitles columns="6">
-            <span>Título</span>
-            <span>Nome</span>
-            <span>Data</span>
-            <span>Valor</span>
-            <span>Status</span>
-            <span>Ações</span>
+            <strong>Título</strong>
+            <strong>Nome</strong>
+            <strong>Data</strong>
+            <strong>Valor</strong>
+            <strong>Status</strong>
+            <strong>Ações</strong>
           </ListTitles>
-          {isLoading 
-          ?
-            <Loading/>
-          :
-            <RefundFinancialList />
-          }
+          {isLoading ? <Loading /> : <RefundFinancialList />}
         </ListContainer>
       </Container>
     </>

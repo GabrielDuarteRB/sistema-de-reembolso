@@ -2,21 +2,26 @@ import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { FaTrash, FaEdit, FaFileAlt } from "react-icons/fa";
 import { Button } from "../Button/Button";
-import { List, ListItem } from "../List/List";
+import { ItemInfo, List, ListItem } from "../List/List";
 import moment from "moment";
-import {
-  navigateToUpdate,
-  readUrl,
-} from "../../store/actions/refundActions";
+import { navigateToUpdate, readUrl } from "../../store/actions/refundActions";
 import { useNavigate } from "react-router-dom";
 import { confirmDeleteModal } from "../Toaster/Toaster";
 import { NotRegister } from "../NotRegister/NotRegister";
 
-const RefundList = ({ dispatch, refund, page, size, isLoading, nameSearch, statusRefund, role }) => {
+const RefundList = ({
+  dispatch,
+  refund,
+  page,
+  size,
+  nameSearch,
+  statusRefund,
+  role,
+}) => {
   const navigate = useNavigate();
 
   if (refund.length === 0) {
-    return <NotRegister>Nenhum reembolso encontrado</NotRegister>
+    return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
 
   return (
@@ -24,7 +29,7 @@ const RefundList = ({ dispatch, refund, page, size, isLoading, nameSearch, statu
       {refund.map((reembolso) => (
         <ListItem
           backgroundColor={
-            reembolso.statusDoReembolso !== "aberto" ? secondaryColor : "#fff"
+            reembolso.statusDoReembolso !== "aberto" ? "#dcdde1" : "#fff"
           }
           borderColor={
             reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
@@ -32,10 +37,21 @@ const RefundList = ({ dispatch, refund, page, size, isLoading, nameSearch, statu
           columns="5"
           key={reembolso.idReembolso}
         >
-          <span>{reembolso.titulo}</span>
-          <span>{moment(reembolso.dataEntrada).format("DD/MM/YYYY")}</span>
-          <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
-          <span>{reembolso.statusDoReembolso}</span>
+          <ItemInfo>
+            <strong>Titulo: </strong>
+            {reembolso.titulo}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Data: </strong>
+            {moment(reembolso.dataEntrada).format("DD/MM/YYYY")}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Valor: </strong>R$ {parseFloat(reembolso.valor).toFixed(2)}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Status: </strong>
+            {reembolso.statusDoReembolso}
+          </ItemInfo>
           <div>
             <Button
               background={primaryColor}
@@ -61,7 +77,13 @@ const RefundList = ({ dispatch, refund, page, size, isLoading, nameSearch, statu
               onClick={() =>
                 navigateToUpdate(dispatch, navigate, reembolso.idReembolso)
               }
-              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
+              disabled={
+                role === "ROLE_ADMIN"
+                  ? false
+                  : reembolso.statusDoReembolso !== "aberto"
+                  ? true
+                  : false
+              }
             >
               <FaEdit />
             </Button>
@@ -82,10 +104,16 @@ const RefundList = ({ dispatch, refund, page, size, isLoading, nameSearch, statu
                   reembolso.usuario.idUsuario,
                   nameSearch,
                   statusRefund,
-                  role
+                  role,
                 )
               }
-              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
+              disabled={
+                role === "ROLE_ADMIN"
+                  ? false
+                  : reembolso.statusDoReembolso !== "aberto"
+                  ? true
+                  : false
+              }
             >
               <FaTrash />
             </Button>

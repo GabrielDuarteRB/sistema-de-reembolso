@@ -25,19 +25,19 @@ const Manager = ({
   refund,
   page,
   size,
-  role
+  role,
 }) => {
   useEffect(() => {
     getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    chooseGet(dispatch, nameSearch, statusRefund, page, size, role)
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   }, [page, size, nameSearch, statusRefund]);
 
   return (
     <>
-      <Header title={"Gestor"} />
+      <Header title="Gestor" actualPage="/gestor" />
       <Container>
         <ListContainer>
           <ListHeader>
@@ -61,12 +61,7 @@ const Manager = ({
             <span>Status</span>
             <span>Ações</span>
           </ListTitles>
-          {isLoading 
-            ? 
-              <Loading/> 
-            : 
-              <RefundManagerList /> 
-          }
+          {isLoading ? <Loading /> : <RefundManagerList />}
         </ListContainer>
       </Container>
     </>

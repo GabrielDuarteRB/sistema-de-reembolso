@@ -47,7 +47,7 @@ const FormLogin = ({ typePassword, disabled, dispatch }) => {
             <FormItem>
               <label htmlFor="email">email*</label>
               <Field
-                type="text"
+                type="email"
                 name="email"
                 placeholder="Email"
                 disabled={disabled}

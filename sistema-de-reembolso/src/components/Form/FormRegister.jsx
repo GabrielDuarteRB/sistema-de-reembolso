@@ -11,7 +11,7 @@ import {
   TextError,
 } from "./Form.style";
 import { handleSignUp } from "../../store/actions/authActions";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { validationRegister } from "../../utils/validationsForm";
 import { Button } from "../Button/Button";
 import { FaEye, FaRegArrowAltCircleLeft, FaTrash } from "react-icons/fa";
