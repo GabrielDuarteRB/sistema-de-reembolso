@@ -126,7 +126,6 @@ export const getRefundByName = async (
     };
     dispatch(getPages);
 
-    console.log(data.content);
     const get = {
       type: "GET_REFUNDS_BY_USER",
       refund: data.content,

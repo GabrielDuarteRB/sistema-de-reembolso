@@ -53,6 +53,7 @@ const refundReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         refund: action.refund,
+        refundById: {},
         isLoading: false,
       };
 

@@ -46,16 +46,30 @@ const Header = ({ name, foto, dispatch, title }) => {
 
               <DropdownContent>
                 <span>Páginas</span>
-                <button onClick={() => navigateToPages(dispatch, navigate, '/usarios')}>
+                <button
+                  onClick={() =>
+                    navigateToPages(dispatch, navigate, "/usarios")
+                  }
+                >
                   Usuários <FaUsers />
                 </button>
-                <button onClick={() => navigateToPages(dispatch, navigate, '/reembolsos')}>
+                <button
+                  onClick={() =>
+                    navigateToPages(dispatch, navigate, "/reembolsos")
+                  }
+                >
                   Reembolsos <FaExchangeAlt />
                 </button>
-                <button onClick={() => navigateToPages(dispatch, navigate, '/gestor')}>
+                <button
+                  onClick={() => navigateToPages(dispatch, navigate, "/gestor")}
+                >
                   Gestor <FaUserTie />
                 </button>
-                <button onClick={() => navigateToPages(dispatch, navigate, '/financeiro')}>
+                <button
+                  onClick={() =>
+                    navigateToPages(dispatch, navigate, "/financeiro")
+                  }
+                >
                   Financeiro <FaMoneyBill />
                 </button>
               </DropdownContent>
@@ -66,7 +80,11 @@ const Header = ({ name, foto, dispatch, title }) => {
         )}
 
         <span>
-          {name ? name : <LoadingElement width={"120px"} height={"24px"} />}
+          {name ? (
+            name.split(" ")[0]
+          ) : (
+            <LoadingElement width={"120px"} height={"24px"} />
+          )}
         </span>
 
         <Img

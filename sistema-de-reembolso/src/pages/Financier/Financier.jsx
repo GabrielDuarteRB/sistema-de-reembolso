@@ -65,12 +65,12 @@ const Financier = ({
           </ListHeader>
 
           <ListTitles columns="6">
-            <span>Título</span>
-            <span>Nome</span>
-            <span>Data</span>
-            <span>Valor</span>
-            <span>Status</span>
-            <span>Ações</span>
+            <strong>Título</strong>
+            <strong>Nome</strong>
+            <strong>Data</strong>
+            <strong>Valor</strong>
+            <strong>Status</strong>
+            <strong>Ações</strong>
           </ListTitles>
           {refund.length === 0 ? (
             <NotRegister>Nenhum reembolso solicitado</NotRegister>

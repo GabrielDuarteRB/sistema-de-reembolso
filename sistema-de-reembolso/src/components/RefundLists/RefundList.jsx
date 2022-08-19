@@ -25,7 +25,7 @@ const RefundList = ({ dispatch, refund, page, size, isLoading, role }) => {
       {refund.map((reembolso) => (
         <ListItem
           backgroundColor={
-            reembolso.statusDoReembolso !== "aberto" ? secondaryColor : "#fff"
+            reembolso.statusDoReembolso !== "aberto" ? "#dcdde1" : "#fff"
           }
           borderColor={
             reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
@@ -33,10 +33,21 @@ const RefundList = ({ dispatch, refund, page, size, isLoading, role }) => {
           columns="5"
           key={reembolso.idReembolso}
         >
-          <span>{reembolso.titulo}</span>
-          <span>{moment(reembolso.dataEntrada).format("DD/MM/YYYY")}</span>
-          <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
-          <span>{reembolso.statusDoReembolso}</span>
+          <span>
+            <strong>Titulo: </strong>
+            {reembolso.titulo}
+          </span>
+          <span>
+            <strong>Data: </strong>
+            {moment(reembolso.dataEntrada).format("DD/MM/YYYY")}
+          </span>
+          <span>
+            <strong>Valor: </strong>R$ {parseFloat(reembolso.valor).toFixed(2)}
+          </span>
+          <span>
+            <strong>Status: </strong>
+            {reembolso.statusDoReembolso}
+          </span>
           <div>
             <Button
               background={primaryColor}
