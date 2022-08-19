@@ -22,6 +22,10 @@ export const CardForm = styled.div`
       text-decoration: underline;
     }
   }
+
+  @media (max-width: 425px) {
+    padding: 32px 16px;
+  }
 `;
 
 export const FieldForm = styled.form`

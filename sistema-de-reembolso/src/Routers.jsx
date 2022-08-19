@@ -48,7 +48,7 @@ const Routers = ({ isLogged, role, isLoading, dispatch }) => {
             {role === "ROLE_ADMIN" && (
               <>
                 <Route path="/usuarios" element={<Usuarios />} />
-                <Route path="/cadastro/:byAdmin" element={<Register />} />
+                <Route path="/cadastro" element={<Register />} />
               </>
             )}
           </>

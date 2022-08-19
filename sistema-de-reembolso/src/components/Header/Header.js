@@ -7,20 +7,19 @@ import {
   FaUserTie,
 } from "react-icons/fa";
 import { connect } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { handleLogout } from "../../store/actions/authActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import { Button } from "../Button/Button";
 import { HeaderContainer } from "./Header.styled";
 import LogoBranca from "../../img/logoBranca.png";
 import noUser from "../../img/noUser.jpeg";
-
 import { Dropdown, DropdownContent } from "../Dropdown/Dropdown";
 import { Img } from "../Image/Img";
 import { LoadingElement } from "../Loading/Loading.styled";
-import { navigateToPages } from "../../store/actions/refundActions";
+import { navigateToPages } from "../../store/actions/pageActions";
 
-const Header = ({ name, foto, dispatch, title }) => {
+const Header = ({ name, foto, dispatch, title, actualPage }) => {
   const navigate = useNavigate();
   const role = localStorage.getItem("role");
 
@@ -46,16 +45,42 @@ const Header = ({ name, foto, dispatch, title }) => {
 
               <DropdownContent>
                 <span>Páginas</span>
-                <button onClick={() => navigateToPages(dispatch, navigate, '/usarios')}>
+                <button
+                  onClick={() =>
+                    navigateToPages(dispatch, navigate, "/usuarios", actualPage)
+                  }
+                >
                   Usuários <FaUsers />
                 </button>
-                <button onClick={() => navigateToPages(dispatch, navigate, '/reembolsos')}>
+                <button
+                  onClick={() =>
+                    navigateToPages(
+                      dispatch,
+                      navigate,
+                      "/reembolsos",
+                      actualPage,
+                    )
+                  }
+                >
                   Reembolsos <FaExchangeAlt />
                 </button>
-                <button onClick={() => navigateToPages(dispatch, navigate, '/gestor')}>
+                <button
+                  onClick={() =>
+                    navigateToPages(dispatch, navigate, "/gestor", actualPage)
+                  }
+                >
                   Gestor <FaUserTie />
                 </button>
-                <button onClick={() => navigateToPages(dispatch, navigate, '/financeiro')}>
+                <button
+                  onClick={() =>
+                    navigateToPages(
+                      dispatch,
+                      navigate,
+                      "/financeiro",
+                      actualPage,
+                    )
+                  }
+                >
                   Financeiro <FaMoneyBill />
                 </button>
               </DropdownContent>
@@ -66,7 +91,11 @@ const Header = ({ name, foto, dispatch, title }) => {
         )}
 
         <span>
-          {name ? name : <LoadingElement width={"120px"} height={"24px"} />}
+          {name ? (
+            name.split(" ")[0]
+          ) : (
+            <LoadingElement width={"120px"} height={"24px"} />
+          )}
         </span>
 
         <Img

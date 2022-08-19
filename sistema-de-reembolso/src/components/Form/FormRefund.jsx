@@ -1,4 +1,4 @@
-import { Field, Formik, validateYupSchema } from "formik";
+import { Field, Formik } from "formik";
 import logoAzul from "../../img/logoAzul.png";
 import { connect } from "react-redux";
 import {
@@ -76,11 +76,10 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
               titulo: values.titulo,
               valor: formatNumber(values.valor.toString()),
               file: values.file,
-              // file: new File([file], values.file.name, {type: 'file'}),
             };
 
             idRefund
-              ? handleUpdateRefund(dispatch, newValues, idRefund, navigate)
+              ? handleUpdateRefund(dispatch, newValues, idRefund, refundById.usuario.idUsuario, navigate)
               : handleCreateRefund(dispatch, newValues, navigate);
           }}
         >

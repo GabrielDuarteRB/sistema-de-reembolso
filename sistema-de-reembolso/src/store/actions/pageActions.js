@@ -1,4 +1,8 @@
 export const modifyPage = (dispatch, page, action) => {
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
   switch (action) {
     case "sum":
       const sumPage = {
@@ -25,4 +29,26 @@ export const modifyItensPerPage = (e, dispatch) => {
     size: e.target.value,
   };
   dispatch(itensPerPage);
+
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
 };
+
+export const navigateToPages = (dispatch, navigate, page, actualPage) => {
+  if (page === actualPage) {
+    return;
+  }
+  navigate(page);
+  const clear = {
+    type: "SET_CLEAR",
+  };
+  dispatch(clear);
+  
+  const resetPages = {
+    type: "SET_RESET",
+  };
+  dispatch(resetPages);
+};
+

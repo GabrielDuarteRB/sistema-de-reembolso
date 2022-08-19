@@ -1,5 +1,6 @@
 import { apiRefund } from "../../api";
 import { toast } from "../../components/Toaster/Toaster";
+import { chooseGet } from "../../utils/validationGetRefund";
 import { handleForm } from "./formActions";
 
 export const handleCreateRefund = async (dispatch, values, navigate) => {
@@ -8,16 +9,19 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       titulo: values.titulo,
       valor: values.valor,
     });
+    handleAnexo(
+      data.idReembolso,
+      { file: values.file },
+      data.usuario.idUsuario,
+    );
+
     const create = {
       type: "LOADING_TRUE",
     };
-
     dispatch(create);
 
-    handleAnexo(data.idReembolso, { file: values.file });
-
-    handleForm(dispatch, "enable");
     navigate("/reembolsos");
+    handleForm(dispatch, "enable");
     toast.fire({
       icon: "success",
       title: "Reembolso Solicitado!",
@@ -28,17 +32,21 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
   }
 };
 
-export const handleAnexo = async (idReembolso, anexo) => {
+export const handleAnexo = async (idRefund, anexo, idUser) => {
   try {
-    await apiRefund.post(`/upload/anexo?idReembolso=${idReembolso}`, anexo, {
-      headers: { "Content-Type": "multipart/form-data" },
-    });
+    await apiRefund.post(
+      `/upload/anexo/reembolso/usuario?idReembolso=${idRefund}&idUsuario=${idUser}`,
+      anexo,
+      {
+        headers: { "Content-Type": "multipart/form-data" },
+      },
+    );
   } catch (error) {
     console.log(error);
   }
 };
 
-export const getRefund = async (
+export const getRefundsByUser = async (
   dispatch,
   statusRefund,
   page,
@@ -55,10 +63,9 @@ export const getRefund = async (
       totalPages: data.totalPages,
     };
     dispatch(getPages);
-    console.log(data)
 
     const get = {
-      type: "GET_REFUND_BY_USER",
+      type: "GET_REFUNDS_BY_USER",
       refund: data.content,
     };
     dispatch(get);
@@ -67,12 +74,14 @@ export const getRefund = async (
   }
 };
 
-export const getAllRefund = async (
+export const getAllRefunds = async (
   dispatch,
   statusRefund,
   page,
   quantityPerPage,
 ) => {
+
+  console.log('OI')
   try {
     const { data } = await apiRefund.get(
       `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
@@ -83,6 +92,7 @@ export const getAllRefund = async (
       page: data.page,
       totalPages: data.totalPages,
     };
+
     dispatch(getPages);
 
     const get = {
@@ -120,55 +130,47 @@ export const getRefundByName = async (
       `/reembolso/list/nome/status?nome=${name}&statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${size}`,
     );
 
+    const get = {
+      type: "GET_REFUNDS_BY_USER",
+      refund: data.content,
+    };
+    dispatch(get);
+
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
     };
     dispatch(getPages);
-
-    console.log(data.content)
-    const get = {
-      type: "GET_REFUND_BY_USER",
-      refund: data.content,
-    };
-    dispatch(get);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
+export const handleDeleteRefund = async (
+  dispatch,
+  idRefund,
+  page,
+  size,
+  idUser,
+  nameSearch,
+  statusRefund,
+  role,
+) => {
   try {
     const loading = {
       type: "LOADING_TRUE",
     };
     dispatch(loading);
 
-    const { data } = await apiRefund.delete(
-      `/reembolso/logged/delete/${idRefund}?pagina=${page}&quantidadeDeRegistros=${size}`,
-    );
+    await apiRefund.delete(`/reembolso/delete/${idRefund}/usuario/${idUser}`);
 
     toast.fire({
       icon: "success",
       title: "Reembolso deletado",
     });
 
-    const getPages = {
-      type: "GET_PAGES",
-      totalPages: data.totalPages,
-      page:
-        Math.ceil(data.totalElements / data.size) >= data.page + 1
-          ? data.page
-          : data.page - 1,
-    };
-    dispatch(getPages);
-
-    const get = {
-      type: "GET_REFUNDS_BY_USER",
-      refundsByUser: data.content,
-    };
-    dispatch(get);
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   } catch (error) {
     console.log(error);
   }
@@ -178,25 +180,35 @@ export const handleUpdateRefund = async (
   dispatch,
   values,
   idRefund,
+  idUser,
   navigate,
 ) => {
   try {
-    await apiRefund.put(`/reembolso/logged/update/${idRefund}`, values);
+    await apiRefund.put(
+      `/reembolso/update/${idRefund}/usuario/${idUser}`,
+      values,
+    );
+    handleAnexo(idRefund, { file: values.file }, idUser);
+
     const upload = {
       type: "LOADING_TRUE",
     };
-
-    handleAnexo(idRefund, { file: values.file });
-
     dispatch(upload);
+
     handleForm(dispatch, "enable");
+
+    toast.fire({
+      icon: "success",
+      title: "Reembolso atualizado com sucesso",
+    });
+
     navigate("/reembolsos");
   } catch (error) {
     handleForm(dispatch, "enable");
     console.log(error);
     toast.fire({
       icon: "error",
-      title: "Erro ao atualizar Reembolso",
+      title: "Erro ao atualizar reembolso",
     });
   }
 };
@@ -211,7 +223,7 @@ export const managerAprove = async (
 ) => {
   try {
     await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`);
-    getAllRefund(dispatch, statusRefund, page, size);
+    getAllRefunds(dispatch, statusRefund, page, size);
     toast.fire({
       icon: "success",
       title: `Reembolso ${action === "true" ? "Aprovado" : "Negado"}!`,
@@ -230,7 +242,7 @@ export const financierAprove = async (
 ) => {
   try {
     await apiRefund.put(`/financeiro/pagar/${idRefund}?pagar=${action}`);
-    getAllRefund(dispatch, "APROVADO_GESTOR", page, size);
+    getAllRefunds(dispatch, "APROVADO_GESTOR", page, size);
     toast.fire({
       icon: "success",
       title: `Reembolso ${action === "true" ? "Pago" : "Negado"}!`,
@@ -241,19 +253,44 @@ export const financierAprove = async (
 };
 
 export const changeStatus = (value, dispatch) => {
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
+
   const status = {
     type: "SET_STATUS",
     statusRefund: value,
   };
   dispatch(status);
+
+  const resetPages = {
+    type: "SET_RESET",
+  };
+  dispatch(resetPages);
 };
 
-export const changeNameSearch = (value, dispatch) => {
+export const changeNameSearch = (value, dispatch, lastValue) => {
+
+  if(value === lastValue){
+    return 
+  }
+
   const name = {
     type: "SET_NAME_SEARCH",
     nameSearch: value,
   };
   dispatch(name);
+
+  const loading = {
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
+
+  const resetPages = {
+    type: "SET_RESET",
+  };
+  dispatch(resetPages);
 };
 
 export const readUrl = (anexo) => {
@@ -278,13 +315,6 @@ export const navigateToUpdate = (dispatch, navigate, idRefund) => {
   dispatch(loading);
 };
 
-export const navigateToPages = (dispatch, navigate, page) => {
-  navigate(page);
-  const clear = {
-    type: "SET_CLEAR",
-  };
-  dispatch(clear);
-};
 
 export const validationButtonManager = (
   dispatch,

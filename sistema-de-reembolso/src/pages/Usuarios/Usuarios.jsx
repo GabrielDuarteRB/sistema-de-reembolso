@@ -13,14 +13,12 @@ import {
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
-import {
-  getAllUsers,
-  getUser,
-  getUsersByName,
-} from "../../store/actions/usersActions";
+import { getUser } from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
 import UsersList from "../../components/UsersList/UsersList";
+import { chooseGetUsers } from "../../utils/validationGetRefund";
+import { navigateToPages } from "../../store/actions/pageActions";
 
 const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   const navigate = useNavigate();
@@ -30,20 +28,12 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   }, []);
 
   useEffect(() => {
-    if (nameSearch === "") {
-      getAllUsers(dispatch, page, size);
-      return;
-    }
-    getUsersByName(dispatch, nameSearch, page, size);
+    chooseGetUsers(dispatch, nameSearch, page, size);
   }, [page, size, nameSearch]);
-
-  if (isLoading) {
-    return <Loading height="80vh" />;
-  }
 
   return (
     <>
-      <Header title={"Usuários"} />
+      <Header actualPage="/usuarios" />
       <Container>
         <Button
           background={primaryColor}
@@ -52,7 +42,7 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
           color={secondaryColor}
           colorHover={primaryColor}
           borderColor={primaryColor}
-          onClick={() => navigate("/cadastro/byAdmin")}
+          onClick={() => navigateToPages(dispatch, navigate, '/cadastro', '/usuarios')}
         >
           Cadastrar usuário <FaUserPlus />
         </Button>
@@ -70,12 +60,12 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
             </ListHeader>
 
             <ListTitles columns="4">
-              <span>Email</span>
-              <span>Nome</span>
-              <span>Tipo</span>
-              <span>Editar</span>
+              <strong>Email</strong>
+              <strong>Nome</strong>
+              <strong>Tipo</strong>
+              <strong>Editar</strong>
             </ListTitles>
-            {!users ? <h2>Nenhum usuário cadastrado</h2> : <UsersList />}
+            {isLoading ? <Loading /> : <UsersList />}
           </ListContainer>
         </>
       </Container>

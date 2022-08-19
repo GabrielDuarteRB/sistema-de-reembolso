@@ -6,7 +6,12 @@ import {
   modifyPage,
 } from "../../store/actions/pageActions";
 
-const Pager = ({ dispatch, size, page, totalPages }) => {
+const Pager = ({ dispatch, refund, users, size, page, totalPages, isLoadingRefund, isLoadingUsers }) => {
+
+  if(refund.length === 0 && users.length === 0) {
+    return
+  }
+
   return (
     <PaginationContainer>
       <div>
@@ -15,6 +20,7 @@ const Pager = ({ dispatch, size, page, totalPages }) => {
           onChange={(e) => modifyItensPerPage(e, dispatch)}
           name="itens"
           defaultValue={size}
+          disabled={isLoadingRefund && isLoadingUsers}
         >
           <option value="5">5</option>
           <option value="10">10</option>
@@ -27,12 +33,12 @@ const Pager = ({ dispatch, size, page, totalPages }) => {
           Página: {page + 1} de {totalPages}
         </span>
         {page >= 1 ? (
-          <button onClick={() => modifyPage(dispatch, page, "less")}>
+          <button disabled={isLoadingRefund && isLoadingUsers} onClick={() => modifyPage(dispatch, page, "less")}>
             <FaArrowLeft />
           </button>
         ) : null}
         {page + 1 !== totalPages ? (
-          <button onClick={() => modifyPage(dispatch, page, "sum")}>
+          <button disabled={isLoadingRefund  && isLoadingUsers} onClick={() => modifyPage(dispatch, page, "sum")}>
             <FaArrowRight />
           </button>
         ) : null}
@@ -42,6 +48,10 @@ const Pager = ({ dispatch, size, page, totalPages }) => {
 };
 
 const mapStateToProps = (state) => ({
+  refund: state.refundReducer.refund,
+  isLoadingRefund: state.refundReducer.isLoading,
+  users: state.usersReducer.users,
+  isLoadingUsers: state.usersReducer.isLoading,
   page: state.pageReducer.page,
   totalPages: state.pageReducer.totalPages,
   size: state.pageReducer.size,

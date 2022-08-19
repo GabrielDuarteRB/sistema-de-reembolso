@@ -9,16 +9,12 @@ import {
   ListTitles,
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
-import { NotRegister } from "../../components/NotRegister/NotRegister";
 import Pager from "../../components/Pager/Pager";
 import RefundFinancialList from "../../components/RefundLists/RefundFinancialList";
 import Search from "../../components/Search/Search";
 import Status from "../../components/Status/Status";
-import {
-  getAllRefund,
-  getRefundByName,
-} from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
+import { chooseGet } from "../../utils/validationGetRefund";
 
 const Financier = ({
   dispatch,
@@ -28,26 +24,19 @@ const Financier = ({
   refund,
   page,
   size,
+  role,
 }) => {
   useEffect(() => {
     getUser(dispatch);
   }, []);
 
   useEffect(() => {
-    if (nameSearch === "" && statusRefund === "TODOS") {
-      getAllRefund(dispatch, "TODOS", page, size);
-      return;
-    }
-    getRefundByName(dispatch, nameSearch, statusRefund, page, size);
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   }, [page, size, nameSearch, statusRefund]);
-
-  if (isLoading) {
-    return <Loading height="80vh" />;
-  }
 
   return (
     <>
-      <Header title={"Financeiro"} />
+      <Header title="Financeiro" actualPage="/financeiro" />
       <Container>
         <ListContainer>
           <ListHeader>
@@ -65,18 +54,14 @@ const Financier = ({
           </ListHeader>
 
           <ListTitles columns="6">
-            <span>Título</span>
-            <span>Nome</span>
-            <span>Data</span>
-            <span>Valor</span>
-            <span>Status</span>
-            <span>Ações</span>
+            <strong>Título</strong>
+            <strong>Nome</strong>
+            <strong>Data</strong>
+            <strong>Valor</strong>
+            <strong>Status</strong>
+            <strong>Ações</strong>
           </ListTitles>
-          {refund.length === 0 ? (
-            <NotRegister>Nenhum reembolso solicitado</NotRegister>
-          ) : (
-            <RefundFinancialList />
-          )}
+          {isLoading ? <Loading /> : <RefundFinancialList />}
         </ListContainer>
       </Container>
     </>
@@ -90,6 +75,7 @@ const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  role: state.authReducer.role,
 });
 
 export default connect(mapStateToProps)(Financier);
