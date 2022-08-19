@@ -132,7 +132,6 @@ const FormRegister = ({ typePassword, disabled, dispatch }) => {
             {byAdmin ? (
               <FormItem>
                 <label htmlFor="tipoUser">Tipo do usuário</label>
-
                 <Field component="select" name="tipoUser" multiple={false}>
                   <option defaultValue value="COLABORADOR">
                     Colaborador

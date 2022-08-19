@@ -1,21 +1,22 @@
 import { connect } from "react-redux";
 import { changeStatus } from "../../store/actions/refundActions";
-import { RefundSituation } from "./Status.styled"
+import { RefundSituation } from "./Status.styled";
 
-const Status = ({dispatch}) => {
+const Status = ({ dispatch }) => {
   return (
-    <section>
+    <div>
+      <span>Filtrar por tipo</span>
       <RefundSituation onChange={(e) => changeStatus(e.target.value, dispatch)}>
-        <option value='TODOS'>Todos</option>
-        <option value='ABERTO'>Aberto</option>
-        <option value='APROVADO_GESTOR'>Aprovado pelo gestor</option>
-        <option value='REPROVADO_GESTOR'>Reprovado pelo gestor</option>
-        <option value='REPROVADO_FINANCEIRO'>Reprovado pelo financeiro</option>
-        <option value='FECHADO_PAGO'>Pago</option>
+        <option value="TODOS">Todos</option>
+        <option value="ABERTO">Aberto</option>
+        <option value="APROVADO_GESTOR">Aprovado pelo gestor</option>
+        <option value="REPROVADO_GESTOR">Reprovado pelo gestor</option>
+        <option value="REPROVADO_FINANCEIRO">Reprovado pelo financeiro</option>
+        <option value="FECHADO_PAGO">Pago</option>
       </RefundSituation>
-    </section>
-  )
-}
+    </div>
+  );
+};
 const mapStateToProps = (state) => ({
   statusRefund: state.refundReducer.statusRefund,
 });

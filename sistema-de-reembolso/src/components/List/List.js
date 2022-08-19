@@ -13,36 +13,44 @@ export const ListContainer = styled.section`
 
 export const ListHeader = styled.div`
   display: grid;
-  padding: 0 32px;
+  padding: 0 32px 32px;
   gap: 32px;
 
-  & div:first-child {
+  & > div:first-child {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
+`;
 
-  & > section {
+export const ListFilters = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: ${(props) => props.justify};
+  gap: 24px;
+
+  & input {
+    padding: 4px;
+    border: 2px solid ${primaryColor};
+    border-radius: 4px;
+  }
+
+  & > div {
     display: flex;
     align-items: center;
     gap: 8px;
-    justify-self: flex-end;
-
-    & input {
-      padding: 4px;
-      border: 2px solid ${primaryColor};
-      border-radius: 4px;
-    }
   }
 `;
 
 export const ListTitles = styled.div`
   display: grid;
   gap: 24px;
-
   grid-template-columns: repeat(${(props) => props.columns}, 1fr);
+  padding: 24px 32px 0;
+  border-top: 1px solid #000;
   margin-bottom: 8px;
   color: #9fa2b4;
+  font-weight: bold;
 `;
 
 export const List = styled.ul`

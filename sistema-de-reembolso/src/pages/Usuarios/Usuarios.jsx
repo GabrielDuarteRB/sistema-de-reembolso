@@ -7,12 +7,17 @@ import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
 import {
   ListContainer,
+  ListFilters,
   ListHeader,
   ListTitles,
 } from "../../components/List/List";
 import Loading from "../../components/Loading/Loading";
 import Pager from "../../components/Pager/Pager";
-import { getAllUsers, getUser, getUsersByName } from "../../store/actions/usersActions";
+import {
+  getAllUsers,
+  getUser,
+  getUsersByName,
+} from "../../store/actions/usersActions";
 import { primaryColor, secondaryColor } from "../../utils/colors";
 import Search from "../../components/Search/Search";
 import UsersList from "../../components/UsersList/UsersList";
@@ -25,11 +30,11 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
   }, []);
 
   useEffect(() => {
-    if(nameSearch === '') {
+    if (nameSearch === "") {
       getAllUsers(dispatch, page, size);
-      return
+      return;
     }
-    getUsersByName(dispatch, nameSearch, page, size)
+    getUsersByName(dispatch, nameSearch, page, size);
   }, [page, size, nameSearch]);
 
   if (isLoading) {
@@ -57,16 +62,19 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
             <ListHeader>
               <div>
                 <h2>Usuários</h2>
-                <Pager />
               </div>
-              <Search />
-              <ListTitles columns="4">
-                <span>Email</span>
-                <span>Nome</span>
-                <span>Tipo</span>
-                <span>Editar</span>
-              </ListTitles>
+              <ListFilters justify="space-between">
+                <Search />
+                <Pager />
+              </ListFilters>
             </ListHeader>
+
+            <ListTitles columns="4">
+              <span>Email</span>
+              <span>Nome</span>
+              <span>Tipo</span>
+              <span>Editar</span>
+            </ListTitles>
             {!users ? <h2>Nenhum usuário cadastrado</h2> : <UsersList />}
           </ListContainer>
         </>

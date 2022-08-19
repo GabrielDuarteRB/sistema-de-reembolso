@@ -4,6 +4,7 @@ import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
 import {
   ListContainer,
+  ListFilters,
   ListHeader,
   ListTitles,
 } from "../../components/List/List";
@@ -51,20 +52,26 @@ const Financier = ({
         <ListContainer>
           <ListHeader>
             <div>
-              <h2>Reembolsos em aberto</h2>
+              <h2>
+                Reembolsos ({statusRefund.toLowerCase().replace("_", " - ")})
+              </h2>
+
               <Pager />
             </div>
-            <Status />
-            <Search />
-            <ListTitles columns="6">
-              <span>Título</span>
-              <span>Nome</span>
-              <span>Data</span>
-              <span>Valor</span>
-              <span>Status</span>
-              <span>Ações</span>
-            </ListTitles>
+            <ListFilters justify="end">
+              <Status />
+              <Search />
+            </ListFilters>
           </ListHeader>
+
+          <ListTitles columns="6">
+            <span>Título</span>
+            <span>Nome</span>
+            <span>Data</span>
+            <span>Valor</span>
+            <span>Status</span>
+            <span>Ações</span>
+          </ListTitles>
           {refund.length === 0 ? (
             <NotRegister>Nenhum reembolso solicitado</NotRegister>
           ) : (
