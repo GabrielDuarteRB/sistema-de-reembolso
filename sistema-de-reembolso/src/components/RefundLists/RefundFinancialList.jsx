@@ -12,11 +12,12 @@ const RefundFinancialList = ({
   statusRefund,
   page,
   size,
-  allRefunds,
+  refund,
 }) => {
+
   return (
     <List>
-      {allRefunds.map((reembolso) => (
+      {refund.map((reembolso) => (
         
         <ListItem
           borderColor={
@@ -98,7 +99,7 @@ const RefundFinancialList = ({
 };
 
 const mapStateToProps = (state) => ({
-  allRefunds: state.refundReducer.allRefunds,
+  refund: state.refundReducer.refund,
   statusRefund: state.refundReducer.statusRefund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
