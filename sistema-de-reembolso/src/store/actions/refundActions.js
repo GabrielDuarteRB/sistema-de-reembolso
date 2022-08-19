@@ -38,7 +38,7 @@ export const handleAnexo = async (idReembolso, anexo) => {
   }
 };
 
-export const getRefund = async (
+export const getRefundsByUser = async (
   dispatch,
   statusRefund,
   page,
@@ -55,10 +55,9 @@ export const getRefund = async (
       totalPages: data.totalPages,
     };
     dispatch(getPages);
-    console.log(data)
 
     const get = {
-      type: "GET_REFUND_BY_USER",
+      type: "GET_REFUNDS_BY_USER",
       refund: data.content,
     };
     dispatch(get);
@@ -67,7 +66,7 @@ export const getRefund = async (
   }
 };
 
-export const getAllRefund = async (
+export const getAllRefunds = async (
   dispatch,
   statusRefund,
   page,
@@ -127,9 +126,9 @@ export const getRefundByName = async (
     };
     dispatch(getPages);
 
-    console.log(data.content)
+    console.log(data.content);
     const get = {
-      type: "GET_REFUND_BY_USER",
+      type: "GET_REFUNDS_BY_USER",
       refund: data.content,
     };
     dispatch(get);
@@ -166,8 +165,9 @@ export const handleDeleteRefund = async (dispatch, idRefund, page, size) => {
 
     const get = {
       type: "GET_REFUNDS_BY_USER",
-      refundsByUser: data.content,
+      refund: data.content,
     };
+
     dispatch(get);
   } catch (error) {
     console.log(error);
@@ -190,13 +190,19 @@ export const handleUpdateRefund = async (
 
     dispatch(upload);
     handleForm(dispatch, "enable");
+
+    toast.fire({
+      icon: "success",
+      title: "Reembolso atualizado com sucesso",
+    });
+
     navigate("/reembolsos");
   } catch (error) {
     handleForm(dispatch, "enable");
     console.log(error);
     toast.fire({
       icon: "error",
-      title: "Erro ao atualizar Reembolso",
+      title: "Erro ao atualizar reembolso",
     });
   }
 };
@@ -211,7 +217,7 @@ export const managerAprove = async (
 ) => {
   try {
     await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`);
-    getAllRefund(dispatch, statusRefund, page, size);
+    getAllRefunds(dispatch, statusRefund, page, size);
     toast.fire({
       icon: "success",
       title: `Reembolso ${action === "true" ? "Aprovado" : "Negado"}!`,
@@ -230,7 +236,7 @@ export const financierAprove = async (
 ) => {
   try {
     await apiRefund.put(`/financeiro/pagar/${idRefund}?pagar=${action}`);
-    getAllRefund(dispatch, "APROVADO_GESTOR", page, size);
+    getAllRefunds(dispatch, "APROVADO_GESTOR", page, size);
     toast.fire({
       icon: "success",
       title: `Reembolso ${action === "true" ? "Pago" : "Negado"}!`,

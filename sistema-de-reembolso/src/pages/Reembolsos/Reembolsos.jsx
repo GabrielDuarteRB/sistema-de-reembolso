@@ -16,8 +16,8 @@ import { connect } from "react-redux";
 import Loading from "../../components/Loading/Loading";
 import { useNavigate } from "react-router-dom";
 import {
-  getAllRefund,
-  getRefund,
+  getAllRefunds,
+  getRefundsByUser,
   getRefundByName,
 } from "../../store/actions/refundActions";
 import Search from "../../components/Search/Search";
@@ -33,7 +33,6 @@ const Reembolsos = ({
   size,
   isLoadingRefund,
   refund,
-  refundsByUser,
   dispatch,
 }) => {
   const navigate = useNavigate();
@@ -43,13 +42,13 @@ const Reembolsos = ({
   }, []);
 
   useEffect(() => {
-    if(role === 'ROLE_COLABORADOR') {
-      getRefund(dispatch, statusRefund, page, size)
-      return
+    if (role === "ROLE_COLABORADOR") {
+      getRefundsByUser(dispatch, statusRefund, page, size);
+      return;
     }
 
     if (nameSearch === "") {
-      getAllRefund(dispatch, statusRefund, page, size);
+      getAllRefunds(dispatch, statusRefund, page, size);
       return;
     }
     getRefundByName(dispatch, nameSearch, statusRefund, page, size);
@@ -113,7 +112,6 @@ const Reembolsos = ({
 const mapStateToProps = (state) => ({
   isLoadingRefund: state.refundReducer.isLoading,
   refund: state.refundReducer.refund,
-  refundsByUser: state.refundReducer.refundsByUser,
   statusRefund: state.refundReducer.statusRefund,
   nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,

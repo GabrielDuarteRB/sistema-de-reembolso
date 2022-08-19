@@ -76,7 +76,6 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
               titulo: values.titulo,
               valor: formatNumber(values.valor.toString()),
               file: values.file,
-              // file: new File([file], values.file.name, {type: 'file'}),
             };
 
             idRefund

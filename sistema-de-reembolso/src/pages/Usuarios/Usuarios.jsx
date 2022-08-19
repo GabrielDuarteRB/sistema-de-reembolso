@@ -43,7 +43,7 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
 
   return (
     <>
-      <Header title={"Usuários"} />
+      <Header />
       <Container>
         <Button
           background={primaryColor}

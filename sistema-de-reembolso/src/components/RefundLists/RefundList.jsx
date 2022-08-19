@@ -1,25 +1,19 @@
 import { connect } from "react-redux";
 import { primaryColor, secondaryColor } from "../../utils/colors";
-import { FaTrash, FaEdit } from "react-icons/fa";
+import { FaTrash, FaEdit, FaFileAlt } from "react-icons/fa";
 import { Button } from "../Button/Button";
 import { List, ListItem } from "../List/List";
 import moment from "moment";
 import {
   handleDeleteRefund,
   navigateToUpdate,
+  readUrl,
 } from "../../store/actions/refundActions";
 import { useNavigate } from "react-router-dom";
 import { confirmDeleteModal } from "../Toaster/Toaster";
 import Loading from "../Loading/Loading";
 
-const RefundList = ({
-  dispatch,
-  refund,
-  page,
-  size,
-  isLoading,
-  role,
-}) => {
+const RefundList = ({ dispatch, refund, page, size, isLoading, role }) => {
   const navigate = useNavigate();
 
   if (isLoading) {
@@ -44,6 +38,20 @@ const RefundList = ({
           <span>R$ {parseFloat(reembolso.valor).toFixed(2)}</span>
           <span>{reembolso.statusDoReembolso}</span>
           <div>
+            <Button
+              background={primaryColor}
+              backgroundHover={secondaryColor}
+              color={secondaryColor}
+              colorHover={primaryColor}
+              borderColor={primaryColor}
+              padding={"8px"}
+              onClick={() => {
+                readUrl(reembolso);
+              }}
+            >
+              <FaFileAlt />
+            </Button>
+
             <Button
               background={primaryColor}
               backgroundHover={secondaryColor}
@@ -86,7 +94,7 @@ const RefundList = ({
   );
 };
 
-const mapStateToProps = (state) => ({ 
+const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
   isLoading: state.refundReducer.isLoading,
   page: state.pageReducer.page,

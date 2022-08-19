@@ -1,7 +1,9 @@
+import { FaUserCog } from "react-icons/fa";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { handleRole } from "../../store/actions/authActions";
-import { secondaryColor } from "../../utils/colors";
+import { primaryColor, secondaryColor } from "../../utils/colors";
+import { Button } from "../Button/Button";
 import { List, ListItem } from "../List/List";
 import Loading from "../Loading/Loading";
 import { confirmUpdateModal } from "../Toaster/Toaster";
@@ -19,30 +21,21 @@ const UsersList = ({ users, isLoading }) => {
           <span>{user.email}</span>
           <span>{user.nome}</span>
           <span>{user.rolesDTO.nome.split("ROLE_")}</span>
-          <select
-            name="tipoUser"
-            onChange={(e) =>
-              confirmUpdateModal(
-                "Confirmar alteração?",
-                user.idUsuario,
-                handleRole,
-                e.target.value,
-                navigate,
-              )
+
+          <Button
+            background={primaryColor}
+            backgroundHover={secondaryColor}
+            color={secondaryColor}
+            colorHover={primaryColor}
+            borderColor={primaryColor}
+            padding={"8px"}
+            onClick={() =>
+              confirmUpdateModal(user.idUsuario, handleRole, navigate)
             }
           >
-            <option
-              defaultValue
-              hidden
-              value={user.rolesDTO.nome.split("ROLE_")}
-            >
-              {user.rolesDTO.nome.split("ROLE_")}
-            </option>
-            <option value="COLABORADOR">COLABORADOR</option>
-            <option value="GESTOR">GESTOR</option>
-            <option value="FINANCEIRO">FINANCEIRO</option>
-            <option value="ADMINISTRADOR">ADMINISTRADOR</option>
-          </select>
+            Alterar tipo
+            <FaUserCog />
+          </Button>
         </ListItem>
       ))}
     </List>

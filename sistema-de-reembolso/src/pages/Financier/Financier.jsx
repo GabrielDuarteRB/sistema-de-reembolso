@@ -15,7 +15,7 @@ import RefundFinancialList from "../../components/RefundLists/RefundFinancialLis
 import Search from "../../components/Search/Search";
 import Status from "../../components/Status/Status";
 import {
-  getAllRefund,
+  getAllRefunds,
   getRefundByName,
 } from "../../store/actions/refundActions";
 import { getUser } from "../../store/actions/usersActions";
@@ -35,7 +35,7 @@ const Financier = ({
 
   useEffect(() => {
     if (nameSearch === "" && statusRefund === "TODOS") {
-      getAllRefund(dispatch, "TODOS", page, size);
+      getAllRefunds(dispatch, "TODOS", page, size);
       return;
     }
     getRefundByName(dispatch, nameSearch, statusRefund, page, size);
