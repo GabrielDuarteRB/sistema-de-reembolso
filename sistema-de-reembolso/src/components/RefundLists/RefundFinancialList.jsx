@@ -5,7 +5,7 @@ import { Button } from "../Button/Button";
 import { List, ListItem } from "../List/List";
 import { FaCheckCircle, FaFileAlt } from "react-icons/fa";
 import { MdCancel } from "react-icons/md";
-import { validationButtonFinancer } from "../../store/actions/refundActions";
+import { readUrl, validationButtonFinancer } from "../../store/actions/refundActions";
 
 const RefundFinancialList = ({
   dispatch,
@@ -17,6 +17,7 @@ const RefundFinancialList = ({
   return (
     <List>
       {allRefunds.map((reembolso) => (
+        
         <ListItem
           borderColor={
             reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
@@ -38,11 +39,7 @@ const RefundFinancialList = ({
               borderColor={primaryColor}
               padding={"8px"}
               onClick={() => {
-                const blob = new Blob([reembolso.anexoDTO.data], {
-                  type: reembolso.anexoDTO.tipo,
-                });
-                const url = window.URL.createObjectURL(blob);
-                window.open(url);
+                readUrl(reembolso);
               }}
             >
               <FaFileAlt />
