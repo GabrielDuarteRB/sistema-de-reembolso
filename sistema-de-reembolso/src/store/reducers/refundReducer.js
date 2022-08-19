@@ -42,7 +42,7 @@ const refundReducer = (state = INITIAL_STATE, action) => {
         nameSearch: action.nameSearch,
       };
 
-    case "GET_REFUND_BY_USER":
+    case "GET_REFUNDS_BY_USER":
       return {
         ...state,
         refundsByUser: action.refundsByUser,

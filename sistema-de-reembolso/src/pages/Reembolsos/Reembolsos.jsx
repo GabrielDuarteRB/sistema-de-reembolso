@@ -74,7 +74,7 @@ const Reembolsos = ({
               <h2>Reembolsos</h2>
               <Pager />
             </div>
-            <ListFilters>
+            <ListFilters justify="end">
               <Status />
               {role === "ROLE_ADMIN" ? <Search /> : null}
             </ListFilters>
