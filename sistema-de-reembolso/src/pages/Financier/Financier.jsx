@@ -53,11 +53,12 @@ const Financier = ({
             </ListFilters>
           </ListHeader>
 
-          <ListTitles columns="6">
+          <ListTitles columns="7">
             <strong>Título</strong>
             <strong>Nome</strong>
             <strong>Data</strong>
             <strong>Valor</strong>
+            <strong>Valor total</strong>
             <strong>Status</strong>
             <strong>Ações</strong>
           </ListTitles>

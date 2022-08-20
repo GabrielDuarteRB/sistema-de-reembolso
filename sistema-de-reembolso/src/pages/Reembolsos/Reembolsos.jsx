@@ -38,11 +38,8 @@ const Reembolsos = ({
   }, []);
 
   useEffect(() => {
-    console.log(isLoading)
     chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   }, [page, size, nameSearch, statusRefund]);
-
-  console.log(totalValue)
 
   return (
     <>
@@ -67,19 +64,25 @@ const Reembolsos = ({
             </div>
             <ListFilters justify="end">
               <Status />
-              {role === "ROLE_ADMIN" ? <Search /> : <span>Valor total: {totalValue && convertCurrency(totalValue)}</span>}
+              {role === "ROLE_ADMIN" ? (
+                <Search />
+              ) : (
+                <span>
+                  Valor total: {totalValue && convertCurrency(totalValue)}
+                </span>
+              )}
             </ListFilters>
           </ListHeader>
 
-          <ListTitles columns={role === 'ROLE_ADMIN' ? '6' : '5'}>
-            <span>Título</span>
-            {role === 'ROLE_ADMIN' && <span>Nome</span>}
-            <span>Data</span>
-            <span>Valor</span>
-            <span>Status</span>
-            <span>Ações</span>
+          <ListTitles columns={role === "ROLE_ADMIN" ? "6" : "5"}>
+            <strong>Título</strong>
+            {role === "ROLE_ADMIN" && <strong>Nome</strong>}
+            <strong>Data</strong>
+            <strong>Valor</strong>
+            <strong>Status</strong>
+            <strong>Ações</strong>
           </ListTitles>
-          
+
           {isLoading ? <Loading /> : <RefundList />}
         </ListContainer>
       </Container>

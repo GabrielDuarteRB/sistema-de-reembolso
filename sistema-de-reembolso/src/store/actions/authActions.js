@@ -45,16 +45,15 @@ export const handleSignUp = async (dispatch, values, navigate, byAdmin) => {
     handleForm(dispatch, "enable");
 
     if (byAdmin) {
-      console.log(data.idUsuario, values.tipoUser)
+      console.log(data.idUsuario, values.tipoUser);
       await handleRole(data.idUsuario, values.tipoUser);
       navigate("/usuarios");
       toast.fire({
         icon: "sucess",
         title: "Usuario cadastrado",
       });
-      return
-    } 
-    console.log('vai ate aki?')
+      return;
+    }
     localStorage.setItem("token", data.token);
     localStorage.setItem("role", data.role);
     apiRefund.defaults.headers.common["Authorization"] = data.token;
@@ -71,14 +70,13 @@ export const handleSignUp = async (dispatch, values, navigate, byAdmin) => {
     dispatch(signUp);
     navigate("/reembolsos");
   } catch (error) {
-    
     handleForm(dispatch, "enable");
     if (error.response.status === 400) {
       toast.fire({
         icon: "error",
         title: "Email já cadastrado",
       });
-      return
+      return;
     }
     toast.fire({
       icon: "error",

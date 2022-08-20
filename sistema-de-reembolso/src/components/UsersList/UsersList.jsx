@@ -15,8 +15,6 @@ const UsersList = ({ users, isLoading }) => {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
 
-  console.log(users)
-
   return (
     <List>
       {users.map((user) => (
@@ -28,14 +26,20 @@ const UsersList = ({ users, isLoading }) => {
           key={user.idUsuario}
         >
           <ItemInfo>
-            <strong>Email</strong> {user.email}
+            <strong>Email:</strong>
+            {user.email}
           </ItemInfo>
           <ItemInfo>
-            <strong>Nome</strong>
+            <strong>Nome:</strong>
             {user.nome}
           </ItemInfo>
+          {/* Corrigir aqui */}
           <ItemInfo>
-            <strong>Tipo</strong>
+            <strong>Valor total: {console.log(user)}</strong>
+          </ItemInfo>
+          {/* ------------- */}
+          <ItemInfo>
+            <strong>Tipo:</strong>
             {user.rolesDTO.nome.split("ROLE_")}
           </ItemInfo>
 

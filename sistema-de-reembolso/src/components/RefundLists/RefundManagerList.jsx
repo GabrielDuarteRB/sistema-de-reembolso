@@ -24,7 +24,7 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
           borderColor={
             reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
           }
-          columns="6"
+          columns="7"
           key={reembolso.idReembolso}
         >
           <ItemInfo>
@@ -40,7 +40,12 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
             {moment(reembolso.data).format("DD/MM/YYYY")}
           </ItemInfo>
           <ItemInfo>
-            <strong>Valor: </strong>{convertCurrency(reembolso.valor)}
+            <strong>Valor: </strong>
+            {convertCurrency(reembolso.valor)}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Valor total:</strong>
+            {convertCurrency(reembolso.usuario.valorTotal)}
           </ItemInfo>
           <ItemInfo>
             <strong>Status: </strong>

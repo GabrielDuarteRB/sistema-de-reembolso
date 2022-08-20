@@ -34,27 +34,26 @@ const RefundList = ({
           borderColor={
             reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
           }
-          columns={role === 'ROLE_ADMIN' ? '6' : '5'}
+          columns={role === "ROLE_ADMIN" ? "6" : "5"}
           key={reembolso.idReembolso}
         >
           <ItemInfo>
             <strong>Titulo: </strong>
             {reembolso.titulo}
           </ItemInfo>
-          {
-            role === 'ROLE_ADMIN'
-            &&
-              <ItemInfo>
-                <strong>Nome: </strong>
-                {reembolso.usuario.nome}
-              </ItemInfo>
-          }
+          {role === "ROLE_ADMIN" && (
+            <ItemInfo>
+              <strong>Nome: </strong>
+              {reembolso.usuario.nome}
+            </ItemInfo>
+          )}
           <ItemInfo>
             <strong>Data: </strong>
             {moment(reembolso.dataEntrada).format("DD/MM/YYYY")}
           </ItemInfo>
           <ItemInfo>
-            <strong>Valor: </strong>{convertCurrency(reembolso.valor)}
+            <strong>Valor: </strong>
+            {convertCurrency(reembolso.valor)}
           </ItemInfo>
           <ItemInfo>
             <strong>Status: </strong>
@@ -116,7 +115,6 @@ const RefundList = ({
                 )
               }
               disabled={
-                //(role !== "ROLE_ADMIN" || reembolso.statusDoReembolso === "aberto") && true
                 role === "ROLE_ADMIN"
                   ? false
                   : reembolso.statusDoReembolso !== "aberto"
