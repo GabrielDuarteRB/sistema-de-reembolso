@@ -281,6 +281,11 @@ export const changeStatus = (value, dispatch) => {
   };
   dispatch(resetPages);
 
+  const loading = {
+    type: 'LOADING_TRUE'
+  }
+  dispatch(loading)
+
   const status = {
     type: "SET_STATUS",
     statusRefund: value,
@@ -297,6 +302,11 @@ export const changeNameSearch = (value, dispatch, lastValue) => {
     type: "CLEAR_PAGES",
   };
   dispatch(resetPages);
+
+  const loading = {
+    type: 'LOADING_TRUE'
+  }
+  dispatch(loading)
 
   const name = {
     type: "SET_NAME_SEARCH",
