@@ -19,6 +19,11 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       type: "SET_CLEAR",
     };
     dispatch(clear);
+    
+    const resetPages = {
+      type: "SET_RESET",
+    };
+    dispatch(resetPages);    
 
     const upload = {
       type: "LOADING_TRUE",
@@ -200,6 +205,11 @@ export const handleUpdateRefund = async (
       type: "SET_CLEAR",
     };
     dispatch(clear);
+
+    const resetPages = {
+      type: "SET_RESET",
+    };
+    dispatch(resetPages);
    
     const upload = {
       type: "LOADING_TRUE",
