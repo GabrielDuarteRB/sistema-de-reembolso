@@ -22,7 +22,6 @@ const Manager = ({
   statusRefund,
   nameSearch,
   isLoading,
-  refund,
   page,
   size,
   role,
@@ -53,13 +52,14 @@ const Manager = ({
             </ListFilters>
           </ListHeader>
 
-          <ListTitles columns="6">
-            <span>Título</span>
-            <span>Nome</span>
-            <span>Data</span>
-            <span>Valor</span>
-            <span>Status</span>
-            <span>Ações</span>
+          <ListTitles columns="7">
+            <strong>Título</strong>
+            <strong>Nome</strong>
+            <strong>Data</strong>
+            <strong>Valor</strong>
+            <strong>Valor total</strong>
+            <strong>Status</strong>
+            <strong>Ações</strong>
           </ListTitles>
           {isLoading ? <Loading /> : <RefundManagerList />}
         </ListContainer>

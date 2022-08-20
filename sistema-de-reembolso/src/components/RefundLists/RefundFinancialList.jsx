@@ -10,6 +10,7 @@ import {
   validationButtonFinancer,
 } from "../../store/actions/refundActions";
 import { NotRegister } from "../NotRegister/NotRegister";
+import { convertCurrency } from "../../utils/regex";
 
 const RefundFinancialList = ({
   dispatch,
@@ -29,7 +30,7 @@ const RefundFinancialList = ({
           borderColor={
             reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
           }
-          columns="6"
+          columns="7"
           key={reembolso.idReembolso}
         >
           <ItemInfo>
@@ -45,7 +46,12 @@ const RefundFinancialList = ({
             {moment(reembolso.data).format("DD/MM/YYYY")}
           </ItemInfo>
           <ItemInfo>
-            <strong>Valor: </strong>R$ {parseFloat(reembolso.valor).toFixed(2)}
+            <strong>Valor: </strong>
+            {convertCurrency(reembolso.valor)}
+          </ItemInfo>
+          <ItemInfo>
+            <strong>Valor total:</strong>
+            {convertCurrency(reembolso.usuario.valorTotal)}
           </ItemInfo>
           <ItemInfo>
             <strong>Status: </strong>

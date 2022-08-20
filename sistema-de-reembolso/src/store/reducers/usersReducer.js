@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   email: "",
   foto: "",
   isLoading: true,
+  totalValue: 0
 };
 
 const usersReducer = (state = INITIAL_STATE, action) => {
@@ -21,6 +22,7 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         email: action.email,
         foto: action.foto,
         isLoading: false,
+        totalValue: action.totalValue
       };
     case "SET_CLEAR":
       return {

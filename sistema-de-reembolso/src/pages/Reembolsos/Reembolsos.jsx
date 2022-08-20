@@ -19,6 +19,7 @@ import Search from "../../components/Search/Search";
 import Status from "../../components/Status/Status";
 import RefundList from "../../components/RefundLists/RefundList";
 import { chooseGet } from "../../utils/validationGetRefund";
+import { convertCurrency } from "../../utils/regex";
 
 const Reembolsos = ({
   page,
@@ -27,7 +28,7 @@ const Reembolsos = ({
   nameSearch,
   size,
   isLoading,
-  refund,
+  totalValue,
   dispatch,
 }) => {
   const navigate = useNavigate();
@@ -63,17 +64,25 @@ const Reembolsos = ({
             </div>
             <ListFilters justify="end">
               <Status />
-              {role === "ROLE_ADMIN" ? <Search /> : null}
+              {role === "ROLE_ADMIN" ? (
+                <Search />
+              ) : (
+                <span>
+                  Valor total: {totalValue && convertCurrency(totalValue)}
+                </span>
+              )}
             </ListFilters>
           </ListHeader>
 
-          <ListTitles columns="5">
-            <span>Título</span>
-            <span>Data</span>
-            <span>Valor</span>
-            <span>Status</span>
-            <span>Ações</span>
+          <ListTitles columns={role === "ROLE_ADMIN" ? "6" : "5"}>
+            <strong>Título</strong>
+            {role === "ROLE_ADMIN" && <strong>Nome</strong>}
+            <strong>Data</strong>
+            <strong>Valor</strong>
+            <strong>Status</strong>
+            <strong>Ações</strong>
           </ListTitles>
+
           {isLoading ? <Loading /> : <RefundList />}
         </ListContainer>
       </Container>
@@ -83,7 +92,7 @@ const Reembolsos = ({
 
 const mapStateToProps = (state) => ({
   isLoading: state.refundReducer.isLoading,
-  refund: state.refundReducer.refund,
+  totalValue: state.usersReducer.totalValue,
   statusRefund: state.refundReducer.statusRefund,
   nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,

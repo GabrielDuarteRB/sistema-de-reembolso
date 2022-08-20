@@ -1,5 +1,7 @@
 import Swal from "sweetalert2";
+import { handleRole } from "../../store/actions/authActions";
 import { handleDeleteRefund } from "../../store/actions/refundActions";
+import { chooseGetUsers } from "../../utils/validationGetRefund";
 
 export const toast = Swal.mixin({
   toast: true,
@@ -33,7 +35,7 @@ export const confirmDeleteModal = (
   });
 };
 
-export const confirmUpdateModal = async (id, handleUpdate, navigate) => {
+export const confirmUpdateModal = async (id, dispatch, nameSearch, page, size ) => {
   Swal.fire({
     showConfirmButton: true,
     confirmButtonText: "Confirmar",
@@ -53,12 +55,12 @@ export const confirmUpdateModal = async (id, handleUpdate, navigate) => {
     input: "select",
     inputPlaceholder: "Selecione",
 
-    inputValidator: (value) => {
-      return new Promise((resolve) => {
+    inputValidator:  (value) => {
+      return new Promise( async (resolve) => {
         if (value) {
-          resolve();
-          handleUpdate(id, value);
-          navigate(0);
+          await handleRole(id, value);
+          Swal.close()
+          chooseGetUsers(dispatch, nameSearch, page, size)
         } else {
           resolve("Selecione um tipo");
         }

@@ -9,3 +9,7 @@ export const onlyNumber = (number) => {
 export const formatNumber = (number) => {
   return number.replace("R$", "").replace(".", "").replace(",", ".");
 };
+
+export const convertCurrency = (number) => {
+  return number.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+} 

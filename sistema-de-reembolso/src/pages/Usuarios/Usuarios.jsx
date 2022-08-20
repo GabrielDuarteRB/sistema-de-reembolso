@@ -52,16 +52,17 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
             <ListHeader>
               <div>
                 <h2>Usuários</h2>
-              </div>
-              <ListFilters justify="space-between">
-                <Search />
                 <Pager />
+              </div>
+              <ListFilters justify="end">
+                <Search />
               </ListFilters>
             </ListHeader>
 
-            <ListTitles columns="4">
+            <ListTitles columns="5">
               <strong>Email</strong>
               <strong>Nome</strong>
+              <strong>Valor total</strong>
               <strong>Tipo</strong>
               <strong>Editar</strong>
             </ListTitles>
