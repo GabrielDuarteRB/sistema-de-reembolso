@@ -18,6 +18,8 @@ const RefundFinancialList = ({
   page,
   size,
   refund,
+  nameSearch,
+  itensPerPage
 }) => {
   if (refund.length === 0) {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
@@ -87,6 +89,8 @@ const RefundFinancialList = ({
                   reembolso.idReembolso,
                   page,
                   statusRefund,
+                  nameSearch,
+                  itensPerPage,
                   "true",
                   "aprovado gestor",
                 )
@@ -110,6 +114,8 @@ const RefundFinancialList = ({
                   reembolso.idReembolso,
                   page,
                   statusRefund,
+                  nameSearch,
+                  itensPerPage,
                   "false",
                   "aprovado gestor",
                 )
@@ -127,8 +133,10 @@ const RefundFinancialList = ({
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
   statusRefund: state.refundReducer.statusRefund,
+  nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  itensPerPage: state.pageReducer.itensPerPage,
 });
 
 export default connect(mapStateToProps)(RefundFinancialList);
