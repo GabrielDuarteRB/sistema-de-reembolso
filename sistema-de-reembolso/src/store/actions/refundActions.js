@@ -85,7 +85,7 @@ export const getAllRefunds = async (
   page,
   quantityPerPage,
 ) => {
-
+  console.log('oi')
   try {
     const { data } = await apiRefund.get(
       `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
@@ -264,10 +264,10 @@ export const financierAprove = async (
 };
 
 export const changeStatus = (value, dispatch) => {
-  const loading = {
-    type: "LOADING_TRUE",
+  const resetPages = {
+    type: "SET_RESET",
   };
-  dispatch(loading);
+  dispatch(resetPages);
 
   const status = {
     type: "SET_STATUS",
@@ -275,10 +275,6 @@ export const changeStatus = (value, dispatch) => {
   };
   dispatch(status);
 
-  const resetPages = {
-    type: "SET_RESET",
-  };
-  dispatch(resetPages);
 };
 
 export const changeNameSearch = (value, dispatch, lastValue) => {
@@ -287,21 +283,17 @@ export const changeNameSearch = (value, dispatch, lastValue) => {
     return 
   }
 
+  const resetPages = {
+    type: "SET_RESET",
+  };
+  dispatch(resetPages);
+
   const name = {
     type: "SET_NAME_SEARCH",
     nameSearch: value,
   };
   dispatch(name);
 
-  const loading = {
-    type: "LOADING_TRUE",
-  };
-  dispatch(loading);
-
-  const resetPages = {
-    type: "SET_RESET",
-  };
-  dispatch(resetPages);
 };
 
 export const readUrl = (anexo) => {

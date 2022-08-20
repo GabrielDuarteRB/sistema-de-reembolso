@@ -26,12 +26,13 @@ const usersReducer = (state = INITIAL_STATE, action) => {
       };
     case "SET_RESET":
       return {
+        ...state,
         users: [],
-        name: "",
-        email: "",
-        foto: "",
-        isLoading: true,
-        totalValue: 0,
+        // name: "",
+        // email: "",
+        // foto: "",
+        // isLoading: true,
+        // totalValue: 0,
       };
 
     case "SET_LOGOUT":

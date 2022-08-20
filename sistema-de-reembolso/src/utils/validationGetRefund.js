@@ -5,7 +5,7 @@ import {
 } from "../store/actions/refundActions";
 import { getAllUsers, getUsersByName } from "../store/actions/usersActions";
 
-export const chooseGet = (
+export const chooseGet = async (
   dispatch,
   nameSearch,
   statusRefund,
@@ -14,15 +14,16 @@ export const chooseGet = (
   role,
 ) => {
   if (role === "ROLE_COLABORADOR") {
-    getRefundsByUser(dispatch, statusRefund, page, size);
+    await getRefundsByUser(dispatch, statusRefund, page, size);
     return;
   }
 
+  console.log(nameSearch)
   if (nameSearch === "") {
-    getAllRefunds(dispatch, statusRefund, page, size);
+    await getAllRefunds(dispatch, statusRefund, page, size);
     return;
   }
-  getRefundByName(dispatch, nameSearch, statusRefund, page, size);
+  await getRefundByName(dispatch, nameSearch, statusRefund, page, size);
 };
 
 export const chooseGetUsers = (dispatch, nameSearch, page, size) => {
