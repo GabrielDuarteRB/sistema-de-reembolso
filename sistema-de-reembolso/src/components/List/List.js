@@ -54,16 +54,21 @@ export const ListHeader = styled.div`
       gap: 24px;
       justify-items: center;
       justify-content: center;
-
-      & > div {
-        display: grid;
-      }
     }
 
     & > div:last-child {
       gap: 24px;
       justify-items: left;
       justify-content: center;
+    }
+  }
+
+  @media (max-width: 700px) {
+    & > div:first-child {
+      & > div {
+        display: grid;
+        justify-items: center;
+      }
     }
   }
 `;
@@ -119,6 +124,7 @@ export const ListItem = styled.li`
   display: grid;
   text-align: center;
   align-items: center;
+  gap: 8px;
   grid-template-columns: repeat(${(props) => props.columns}, 1fr);
   padding: 16px;
   border-top: 2px solid ${(props) => props.borderColor};
@@ -145,36 +151,27 @@ export const ListItem = styled.li`
   }
 
   @media (max-width: 768px) {
-    grid-template-areas:
-      "titulo titulo titulo"
-      "nome data valor"
-      "status status acoes";
-    grid-template-columns: ${(props) =>
-      props.mdColumns ? props.mdColumns : "1fr 1fr 1fr"};
+    grid-template-areas: ${(props) => props.gridArea};
+    grid-template-columns: ${(props) => props.mdColumns || "1fr 1fr 1fr"};
     align-items: center;
     justify-items: left;
     text-align: left;
     gap: 16px 8px;
+
+    & > div {
+      grid-area: actions;
+    }
   }
 
   @media (max-width: 700px) {
     grid-template-areas:
-      "titulo titulo"
-      "nome data"
-      "valor status"
-      "acoes acoes";
-    grid-template-columns: ${(props) =>
-      props.smColumns ? props.smColumns : "1fr 1fr"};
-  }
-
-  @media (max-width: 425px) {
-    grid-template-areas:
-      "titulo"
-      "nome"
-      "data"
-      "valor"
-      "status"
-      "acoes";
+      "first"
+      "second"
+      "third"
+      "fourth"
+      "fifth"
+      "sixth"
+      "actions";
     grid-template-columns: 1fr;
   }
 `;
@@ -195,32 +192,35 @@ export const ItemInfo = styled.span`
 
   @media (max-width: 768px) {
     :first-child {
-      grid-area: titulo;
+      grid-area: first;
       max-width: auto;
     }
 
     :nth-child(2) {
-      grid-area: nome;
+      grid-area: second;
     }
 
     :nth-child(3) {
-      grid-area: data;
+      grid-area: third;
     }
 
     :nth-child(4) {
-      grid-area: valor;
+      grid-area: fourth;
     }
 
     :nth-child(5) {
-      grid-area: status;
+      grid-area: fifth;
     }
 
     :nth-child(6) {
-      grid-area: acoes;
+      grid-area: sixth;
     }
-
     & strong {
       display: inline-block;
     }
+  }
+
+  @media (max-width: 375px) {
+    justify-content: flex-start;
   }
 `;

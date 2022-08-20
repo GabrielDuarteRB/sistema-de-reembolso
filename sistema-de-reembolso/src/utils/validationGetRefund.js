@@ -18,7 +18,6 @@ export const chooseGet = async (
     return;
   }
 
-  console.log(nameSearch)
   if (nameSearch === "") {
     await getAllRefunds(dispatch, statusRefund, page, size);
     return;
