@@ -24,6 +24,9 @@ const RefundList = ({
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
 
+  const gridArea7Cols = `"first first sixth" "second third fourth" "fifth fifth actions"`;
+  const gridArea5Cols = `"first first fourth" "second third actions"`;
+
   return (
     <List>
       {refund.map((reembolso) => (
@@ -34,8 +37,9 @@ const RefundList = ({
           borderColor={
             reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
           }
-          columns={role === "ROLE_ADMIN" ? "6" : "5"}
+          columns={role === "ROLE_ADMIN" ? "7" : "5"}
           key={reembolso.idReembolso}
+          gridArea={role === "ROLE_ADMIN" ? gridArea7Cols : gridArea5Cols}
         >
           <ItemInfo>
             <strong>Titulo: </strong>
@@ -55,6 +59,12 @@ const RefundList = ({
             <strong>Valor: </strong>
             {convertCurrency(reembolso.valor)}
           </ItemInfo>
+          {role === "ROLE_ADMIN" && (
+            <ItemInfo>
+              <strong>Total do usuário: </strong>
+              {convertCurrency(reembolso.usuario.valorTotal)}
+            </ItemInfo>
+          )}
           <ItemInfo>
             <strong>Status: </strong>
             {reembolso.statusDoReembolso}

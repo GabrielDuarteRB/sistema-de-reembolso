@@ -34,6 +34,7 @@ const RefundFinancialList = ({
           }
           columns="7"
           key={reembolso.idReembolso}
+          gridArea={`"first first sixth" "second third fourth" "fifth fifth actions"`}
         >
           <ItemInfo>
             <strong>Titulo: </strong>
@@ -52,7 +53,7 @@ const RefundFinancialList = ({
             {convertCurrency(reembolso.valor)}
           </ItemInfo>
           <ItemInfo>
-            <strong>Valor total:</strong>
+            <strong>Total do usuário:</strong>
             {convertCurrency(reembolso.usuario.valorTotal)}
           </ItemInfo>
           <ItemInfo>

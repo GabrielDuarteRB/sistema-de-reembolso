@@ -14,11 +14,11 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       { file: values.file },
       data.usuario.idUsuario,
     );
-    
+
     const reset = {
       type: "SET_RESET",
     };
-    dispatch(reset);    
+    dispatch(reset);
 
     const upload = {
       type: "LOADING_TRUE",
@@ -86,7 +86,6 @@ export const getAllRefunds = async (
   page,
   quantityPerPage,
 ) => {
-  console.log('oi')
   try {
     const { data } = await apiRefund.get(
       `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
@@ -141,7 +140,7 @@ export const getRefundByName = async (
       refund: data.content,
     };
     dispatch(get);
-    
+
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
@@ -149,7 +148,6 @@ export const getRefundByName = async (
       itensPerPage: data.content.length
     };
     dispatch(getPages);
-    
   } catch (error) {
     console.log(error);
   }
@@ -203,7 +201,7 @@ export const handleUpdateRefund = async (
       type: "SET_RESET",
     };
     dispatch(reset);
-   
+
     const upload = {
       type: "LOADING_TRUE",
     };
@@ -288,13 +286,11 @@ export const changeStatus = (value, dispatch) => {
     statusRefund: value,
   };
   dispatch(status);
-
 };
 
 export const changeNameSearch = (value, dispatch, lastValue) => {
-
-  if(value === lastValue){
-    return 
+  if (value === lastValue) {
+    return;
   }
 
   const resetPages = {
@@ -307,7 +303,6 @@ export const changeNameSearch = (value, dispatch, lastValue) => {
     nameSearch: value,
   };
   dispatch(name);
-
 };
 
 export const readUrl = (anexo) => {
@@ -331,7 +326,6 @@ export const navigateToUpdate = (dispatch, navigate, idRefund) => {
   };
   dispatch(loading);
 };
-
 
 export const validationButtonManager = (
   dispatch,

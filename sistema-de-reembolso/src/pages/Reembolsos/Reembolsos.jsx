@@ -74,11 +74,12 @@ const Reembolsos = ({
             </ListFilters>
           </ListHeader>
 
-          <ListTitles columns={role === "ROLE_ADMIN" ? "6" : "5"}>
+          <ListTitles columns={role === "ROLE_ADMIN" ? "7" : "5"}>
             <strong>Título</strong>
             {role === "ROLE_ADMIN" && <strong>Nome</strong>}
             <strong>Data</strong>
             <strong>Valor</strong>
+            {role === "ROLE_ADMIN" && <strong>Total do usuário</strong>}
             <strong>Status</strong>
             <strong>Ações</strong>
           </ListTitles>
