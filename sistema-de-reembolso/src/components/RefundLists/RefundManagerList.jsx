@@ -67,6 +67,7 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund, nameSea
             >
               <FaFileAlt />
             </Button>
+
             <Button
               background={primaryColor}
               backgroundHover={secondaryColor}
@@ -88,6 +89,7 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund, nameSea
                   "aberto",
                 )
               }
+              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
             >
               <FaCheckCircle />
             </Button>
@@ -113,6 +115,7 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund, nameSea
                   "aberto",
                 )
               }
+              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
             >
               <MdCancel fontSize={"18px"} />
             </Button>
