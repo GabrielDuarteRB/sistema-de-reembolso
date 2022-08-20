@@ -41,6 +41,7 @@ export const DropdownContent = styled.div`
 export const Dropdown = styled.div`
   position: relative;
   display: inline-block !important;
+  z-index: 1;
 
   :hover ${DropdownContent} {
     display: block !important;

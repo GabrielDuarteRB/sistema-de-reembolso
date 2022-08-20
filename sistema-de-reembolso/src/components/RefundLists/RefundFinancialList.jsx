@@ -92,6 +92,9 @@ const RefundFinancialList = ({
                   "aprovado gestor",
                 )
               }
+              disabled={
+                reembolso.statusDoReembolso !== "aprovado gestor" ? true : false
+              }
             >
               <FaCheckCircle />
             </Button>
@@ -114,6 +117,9 @@ const RefundFinancialList = ({
                   "false",
                   "aprovado gestor",
                 )
+              }
+              disabled={
+                reembolso.statusDoReembolso !== "aprovado gestor" ? true : false
               }
             >
               <MdCancel fontSize={"18px"} />
