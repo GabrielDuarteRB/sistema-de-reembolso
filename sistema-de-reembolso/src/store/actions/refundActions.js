@@ -14,16 +14,11 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       { file: values.file },
       data.usuario.idUsuario,
     );
-
-    const clear = {
-      type: "SET_CLEAR",
-    };
-    dispatch(clear);
     
-    const resetPages = {
+    const reset = {
       type: "SET_RESET",
     };
-    dispatch(resetPages);    
+    dispatch(reset);    
 
     const upload = {
       type: "LOADING_TRUE",
@@ -201,15 +196,10 @@ export const handleUpdateRefund = async (
 
     await handleAnexo(idRefund, { file: values.file }, idUser);
 
-    const clear = {
-      type: "SET_CLEAR",
-    };
-    dispatch(clear);
-
-    const resetPages = {
+    const reset = {
       type: "SET_RESET",
     };
-    dispatch(resetPages);
+    dispatch(reset);
    
     const upload = {
       type: "LOADING_TRUE",

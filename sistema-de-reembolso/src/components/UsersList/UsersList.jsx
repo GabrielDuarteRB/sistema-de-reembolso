@@ -13,8 +13,6 @@ const UsersList = ({ dispatch, users, nameSearch, page, size}) => {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
 
-
-
   return (
     <List>
       {users.map((user) => (
