@@ -15,6 +15,8 @@ const UsersList = ({ users, isLoading }) => {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
 
+  console.log(users)
+
   return (
     <List>
       {users.map((user) => (

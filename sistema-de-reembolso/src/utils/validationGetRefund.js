@@ -9,6 +9,7 @@ export const chooseGet = (dispatch, nameSearch, statusRefund, page, size, role) 
 
     if (nameSearch === "") {
         getAllRefunds(dispatch, statusRefund, page, size);
+        console.log(getAllRefunds)
         return
       }
       getRefundByName(dispatch, nameSearch, statusRefund, page, size);

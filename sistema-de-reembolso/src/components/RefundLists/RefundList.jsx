@@ -8,6 +8,7 @@ import { navigateToUpdate, readUrl } from "../../store/actions/refundActions";
 import { useNavigate } from "react-router-dom";
 import { confirmDeleteModal } from "../Toaster/Toaster";
 import { NotRegister } from "../NotRegister/NotRegister";
+import { convertCurrency } from "../../utils/regex";
 
 const RefundList = ({
   dispatch,
@@ -19,7 +20,6 @@ const RefundList = ({
   role,
 }) => {
   const navigate = useNavigate();
-
   if (refund.length === 0) {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
@@ -34,19 +34,27 @@ const RefundList = ({
           borderColor={
             reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
           }
-          columns="5"
+          columns={role === 'ROLE_ADMIN' ? '6' : '5'}
           key={reembolso.idReembolso}
         >
           <ItemInfo>
             <strong>Titulo: </strong>
             {reembolso.titulo}
           </ItemInfo>
+          {
+            role === 'ROLE_ADMIN'
+            &&
+              <ItemInfo>
+                <strong>Nome: </strong>
+                {reembolso.usuario.nome}
+              </ItemInfo>
+          }
           <ItemInfo>
             <strong>Data: </strong>
             {moment(reembolso.dataEntrada).format("DD/MM/YYYY")}
           </ItemInfo>
           <ItemInfo>
-            <strong>Valor: </strong>R$ {parseFloat(reembolso.valor).toFixed(2)}
+            <strong>Valor: </strong>{convertCurrency(reembolso.valor)}
           </ItemInfo>
           <ItemInfo>
             <strong>Status: </strong>
@@ -108,6 +116,7 @@ const RefundList = ({
                 )
               }
               disabled={
+                //(role !== "ROLE_ADMIN" || reembolso.statusDoReembolso === "aberto") && true
                 role === "ROLE_ADMIN"
                   ? false
                   : reembolso.statusDoReembolso !== "aberto"

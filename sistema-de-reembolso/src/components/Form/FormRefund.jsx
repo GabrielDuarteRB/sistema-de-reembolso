@@ -37,12 +37,12 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
   };
 
   useEffect(() => {
+    !idRefund && dispatch({ type: "LOADING_FALSE" });
     if (idRefund) {
       getRefundById(dispatch, idRefund);
     }
   }, []);
 
-  !idRefund ? dispatch({ type: "LOADING_FALSE" }) : <></>;
 
   useEffect(() => {
     refundById.anexoDTO && setSelectedFile(refundById.anexoDTO.nome);

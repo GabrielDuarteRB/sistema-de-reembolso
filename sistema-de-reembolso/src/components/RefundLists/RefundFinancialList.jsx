@@ -10,6 +10,7 @@ import {
   validationButtonFinancer,
 } from "../../store/actions/refundActions";
 import { NotRegister } from "../NotRegister/NotRegister";
+import { convertCurrency } from "../../utils/regex";
 
 const RefundFinancialList = ({
   dispatch,
@@ -45,7 +46,7 @@ const RefundFinancialList = ({
             {moment(reembolso.data).format("DD/MM/YYYY")}
           </ItemInfo>
           <ItemInfo>
-            <strong>Valor: </strong>R$ {parseFloat(reembolso.valor).toFixed(2)}
+            <strong>Valor: </strong>{convertCurrency(reembolso.valor)}
           </ItemInfo>
           <ItemInfo>
             <strong>Status: </strong>

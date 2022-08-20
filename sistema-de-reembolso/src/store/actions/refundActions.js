@@ -9,16 +9,21 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       titulo: values.titulo,
       valor: values.valor,
     });
-    handleAnexo(
+    await handleAnexo(
       data.idReembolso,
       { file: values.file },
       data.usuario.idUsuario,
     );
 
-    const create = {
+    const clear = {
+      type: "SET_CLEAR",
+    };
+    dispatch(clear);
+
+    const upload = {
       type: "LOADING_TRUE",
     };
-    dispatch(create);
+    dispatch(upload);
 
     navigate("/reembolsos");
     handleForm(dispatch, "enable");
@@ -81,7 +86,6 @@ export const getAllRefunds = async (
   quantityPerPage,
 ) => {
 
-  console.log('OI')
   try {
     const { data } = await apiRefund.get(
       `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
@@ -135,13 +139,14 @@ export const getRefundByName = async (
       refund: data.content,
     };
     dispatch(get);
-
+    
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
     };
     dispatch(getPages);
+    
   } catch (error) {
     console.log(error);
   }
@@ -188,8 +193,14 @@ export const handleUpdateRefund = async (
       `/reembolso/update/${idRefund}/usuario/${idUser}`,
       values,
     );
-    handleAnexo(idRefund, { file: values.file }, idUser);
 
+    await handleAnexo(idRefund, { file: values.file }, idUser);
+
+    const clear = {
+      type: "SET_CLEAR",
+    };
+    dispatch(clear);
+   
     const upload = {
       type: "LOADING_TRUE",
     };

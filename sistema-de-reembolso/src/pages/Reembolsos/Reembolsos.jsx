@@ -19,6 +19,7 @@ import Search from "../../components/Search/Search";
 import Status from "../../components/Status/Status";
 import RefundList from "../../components/RefundLists/RefundList";
 import { chooseGet } from "../../utils/validationGetRefund";
+import { convertCurrency } from "../../utils/regex";
 
 const Reembolsos = ({
   page,
@@ -27,7 +28,7 @@ const Reembolsos = ({
   nameSearch,
   size,
   isLoading,
-  refund,
+  totalValue,
   dispatch,
 }) => {
   const navigate = useNavigate();
@@ -37,8 +38,11 @@ const Reembolsos = ({
   }, []);
 
   useEffect(() => {
+    console.log(isLoading)
     chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   }, [page, size, nameSearch, statusRefund]);
+
+  console.log(totalValue)
 
   return (
     <>
@@ -63,17 +67,19 @@ const Reembolsos = ({
             </div>
             <ListFilters justify="end">
               <Status />
-              {role === "ROLE_ADMIN" ? <Search /> : null}
+              {role === "ROLE_ADMIN" ? <Search /> : <span>Valor total: {totalValue && convertCurrency(totalValue)}</span>}
             </ListFilters>
           </ListHeader>
 
-          <ListTitles columns="5">
+          <ListTitles columns={role === 'ROLE_ADMIN' ? '6' : '5'}>
             <span>Título</span>
+            {role === 'ROLE_ADMIN' && <span>Nome</span>}
             <span>Data</span>
             <span>Valor</span>
             <span>Status</span>
             <span>Ações</span>
           </ListTitles>
+          
           {isLoading ? <Loading /> : <RefundList />}
         </ListContainer>
       </Container>
@@ -83,7 +89,7 @@ const Reembolsos = ({
 
 const mapStateToProps = (state) => ({
   isLoading: state.refundReducer.isLoading,
-  refund: state.refundReducer.refund,
+  totalValue: state.usersReducer.totalValue,
   statusRefund: state.refundReducer.statusRefund,
   nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,

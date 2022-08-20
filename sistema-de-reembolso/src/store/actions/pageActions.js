@@ -34,6 +34,9 @@ export const modifyItensPerPage = (e, dispatch) => {
     type: "LOADING_TRUE",
   };
   dispatch(loading);
+
+  
+
 };
 
 export const navigateToPages = (dispatch, navigate, page, actualPage) => {

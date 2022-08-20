@@ -52,10 +52,10 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
             <ListHeader>
               <div>
                 <h2>Usuários</h2>
-              </div>
-              <ListFilters justify="space-between">
-                <Search />
                 <Pager />
+              </div>
+              <ListFilters justify="end">
+                <Search />
               </ListFilters>
             </ListHeader>
 
