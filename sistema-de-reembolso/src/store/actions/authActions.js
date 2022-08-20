@@ -97,6 +97,8 @@ export const signUpImage = async (foto) => {
 };
 
 export const handleRole = async (idUser, role) => {
+
+  console.log('oii')
   try {
     await apiRefund.post(
       `/admin/atribuir/role?idUsuario=${idUser}&role=${role}`,

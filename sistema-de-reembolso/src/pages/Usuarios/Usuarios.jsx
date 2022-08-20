@@ -59,9 +59,10 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
               </ListFilters>
             </ListHeader>
 
-            <ListTitles columns="4">
+            <ListTitles columns="5">
               <strong>Email</strong>
               <strong>Nome</strong>
+              <strong>Valor total</strong>
               <strong>Tipo</strong>
               <strong>Editar</strong>
             </ListTitles>
