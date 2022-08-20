@@ -7,13 +7,10 @@ import { ItemInfo, List, ListItem } from "../List/List";
 import { NotRegister } from "../NotRegister/NotRegister";
 import { confirmUpdateModal } from "../Toaster/Toaster";
 
-const UsersList = ({ dispatch, users, nameSearch, page, size}) => {
-
+const UsersList = ({ dispatch, users, nameSearch, page, size }) => {
   if (users.length === 0) {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
-
-
 
   return (
     <List>
@@ -22,7 +19,9 @@ const UsersList = ({ dispatch, users, nameSearch, page, size}) => {
           borderColor={secondaryColor}
           columns="5"
           mdColumns="1fr 1fr"
-          smColumns="1fr"
+          gridArea={`"first first"
+                     "second third" 
+                     "fourth actions"`}
           key={user.idUsuario}
         >
           <ItemInfo>
@@ -34,7 +33,7 @@ const UsersList = ({ dispatch, users, nameSearch, page, size}) => {
             {user.nome}
           </ItemInfo>
           <ItemInfo>
-            <strong>Valor total:</strong> 
+            <strong>Total do usuário:</strong>
             {convertCurrency(user.valorTotal)}
           </ItemInfo>
           <ItemInfo>
@@ -42,20 +41,28 @@ const UsersList = ({ dispatch, users, nameSearch, page, size}) => {
             {user.rolesDTO.nome.split("ROLE_")}
           </ItemInfo>
 
-          <Button
-            background={primaryColor}
-            backgroundHover={secondaryColor}
-            color={secondaryColor}
-            colorHover={primaryColor}
-            borderColor={primaryColor}
-            padding={"8px"}
-            onClick={() =>
-              confirmUpdateModal(user.idUsuario, dispatch, nameSearch, page, size)
-            }
-          >
-            Alterar tipo
-            <FaUserCog />
-          </Button>
+          <div>
+            <Button
+              background={primaryColor}
+              backgroundHover={secondaryColor}
+              color={secondaryColor}
+              colorHover={primaryColor}
+              borderColor={primaryColor}
+              padding={"8px"}
+              onClick={() =>
+                confirmUpdateModal(
+                  user.idUsuario,
+                  dispatch,
+                  nameSearch,
+                  page,
+                  size,
+                )
+              }
+            >
+              Alterar tipo
+              <FaUserCog />
+            </Button>
+          </div>
         </ListItem>
       ))}
     </List>

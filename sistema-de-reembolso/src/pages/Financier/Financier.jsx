@@ -21,7 +21,6 @@ const Financier = ({
   statusRefund,
   nameSearch,
   isLoading,
-  refund,
   page,
   size,
   role,
@@ -58,7 +57,7 @@ const Financier = ({
             <strong>Nome</strong>
             <strong>Data</strong>
             <strong>Valor</strong>
-            <strong>Valor total</strong>
+            <strong>Total do usuário</strong>
             <strong>Status</strong>
             <strong>Ações</strong>
           </ListTitles>
@@ -73,7 +72,6 @@ const mapStateToProps = (state) => ({
   isLoading: state.refundReducer.isLoading,
   statusRefund: state.refundReducer.statusRefund,
   nameSearch: state.refundReducer.nameSearch,
-  refund: state.refundReducer.refund,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
   role: state.authReducer.role,

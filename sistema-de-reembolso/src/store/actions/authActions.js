@@ -45,7 +45,6 @@ export const handleSignUp = async (dispatch, values, navigate, byAdmin) => {
     handleForm(dispatch, "enable");
 
     if (byAdmin) {
-      console.log(data.idUsuario, values.tipoUser);
       await handleRole(data.idUsuario, values.tipoUser);
       navigate("/usuarios");
       toast.fire({
@@ -97,8 +96,6 @@ export const signUpImage = async (foto) => {
 };
 
 export const handleRole = async (idUser, role) => {
-
-  console.log('oii')
   try {
     await apiRefund.post(
       `/admin/atribuir/role?idUsuario=${idUser}&role=${role}`,

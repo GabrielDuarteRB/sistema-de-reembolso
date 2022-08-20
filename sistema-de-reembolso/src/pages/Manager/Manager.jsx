@@ -57,7 +57,7 @@ const Manager = ({
             <strong>Nome</strong>
             <strong>Data</strong>
             <strong>Valor</strong>
-            <strong>Valor total</strong>
+            <strong>Total do usuário</strong>
             <strong>Status</strong>
             <strong>Ações</strong>
           </ListTitles>

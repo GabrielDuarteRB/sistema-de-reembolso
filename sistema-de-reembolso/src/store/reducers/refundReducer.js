@@ -20,7 +20,7 @@ const refundReducer = (state = INITIAL_STATE, action) => {
         isLoading: false,
       };
 
-    case "SET_CLEAR":
+    case "SET_RESET":
       return {
         ...state,
         refund: [],

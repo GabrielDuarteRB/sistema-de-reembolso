@@ -18,6 +18,8 @@ const RefundFinancialList = ({
   page,
   size,
   refund,
+  nameSearch,
+  itensPerPage
 }) => {
   if (refund.length === 0) {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
@@ -32,6 +34,7 @@ const RefundFinancialList = ({
           }
           columns="7"
           key={reembolso.idReembolso}
+          gridArea={`"first first sixth" "second third fourth" "fifth fifth actions"`}
         >
           <ItemInfo>
             <strong>Titulo: </strong>
@@ -50,7 +53,7 @@ const RefundFinancialList = ({
             {convertCurrency(reembolso.valor)}
           </ItemInfo>
           <ItemInfo>
-            <strong>Valor total:</strong>
+            <strong>Total do usuário:</strong>
             {convertCurrency(reembolso.usuario.valorTotal)}
           </ItemInfo>
           <ItemInfo>
@@ -87,9 +90,14 @@ const RefundFinancialList = ({
                   reembolso.idReembolso,
                   page,
                   statusRefund,
+                  nameSearch,
+                  itensPerPage,
                   "true",
                   "aprovado gestor",
                 )
+              }
+              disabled={
+                reembolso.statusDoReembolso !== "aprovado gestor" ? true : false
               }
             >
               <FaCheckCircle />
@@ -110,9 +118,14 @@ const RefundFinancialList = ({
                   reembolso.idReembolso,
                   page,
                   statusRefund,
+                  nameSearch,
+                  itensPerPage,
                   "false",
                   "aprovado gestor",
                 )
+              }
+              disabled={
+                reembolso.statusDoReembolso !== "aprovado gestor" ? true : false
               }
             >
               <MdCancel fontSize={"18px"} />
@@ -127,8 +140,10 @@ const RefundFinancialList = ({
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
   statusRefund: state.refundReducer.statusRefund,
+  nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  itensPerPage: state.pageReducer.itensPerPage,
 });
 
 export default connect(mapStateToProps)(RefundFinancialList);

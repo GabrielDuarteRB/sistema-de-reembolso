@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { changeNameSearch } from "../../store/actions/refundActions";
 
 const Search = ({ dispatch, isLoadingRefund, isLoadingUsers, nameSearch }) => {
-
   return (
     <div>
       <span>Filtrar por nome</span>

@@ -12,7 +12,7 @@ import {
 import { NotRegister } from "../NotRegister/NotRegister";
 import { convertCurrency } from "../../utils/regex";
 
-const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
+const RefundManagerList = ({ dispatch, statusRefund, page, size, refund, nameSearch, itensPerPage }) => {
   if (refund.length === 0) {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
@@ -25,6 +25,7 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
             reembolso.statusDoReembolso !== "aberto" ? "#fff" : secondaryColor
           }
           columns="7"
+          gridArea={`"first first sixth" "second third fourth" "fifth fifth actions"`}
           key={reembolso.idReembolso}
         >
           <ItemInfo>
@@ -44,7 +45,7 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
             {convertCurrency(reembolso.valor)}
           </ItemInfo>
           <ItemInfo>
-            <strong>Valor total:</strong>
+            <strong>Total do usuário:</strong>
             {convertCurrency(reembolso.usuario.valorTotal)}
           </ItemInfo>
           <ItemInfo>
@@ -66,6 +67,7 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
             >
               <FaFileAlt />
             </Button>
+
             <Button
               background={primaryColor}
               backgroundHover={secondaryColor}
@@ -81,10 +83,13 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
                   reembolso.idReembolso,
                   page,
                   statusRefund,
+                  nameSearch,
+                  itensPerPage,
                   "true",
                   "aberto",
                 )
               }
+              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
             >
               <FaCheckCircle />
             </Button>
@@ -104,10 +109,13 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
                   reembolso.idReembolso,
                   page,
                   statusRefund,
+                  nameSearch,
+                  itensPerPage,
                   "false",
                   "aberto",
                 )
               }
+              disabled={reembolso.statusDoReembolso !== "aberto" ? true : false}
             >
               <MdCancel fontSize={"18px"} />
             </Button>
@@ -120,8 +128,10 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
   statusRefund: state.refundReducer.statusRefund,
+  nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  itensPerPage: state.pageReducer.itensPerPage,
 });
 
 export default connect(mapStateToProps)(RefundManagerList);

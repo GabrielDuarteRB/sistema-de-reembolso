@@ -3,11 +3,13 @@ import { changeStatus } from "../../store/actions/refundActions";
 import { RefundSituation } from "./Status.styled";
 
 const Status = ({ dispatch, isLoading }) => {
-
   return (
     <div>
       <span>Filtrar por tipo</span>
-      <RefundSituation disabled={isLoading} onChange={(e) => changeStatus(e.target.value, dispatch)}>
+      <RefundSituation
+        disabled={isLoading}
+        onChange={(e) => changeStatus(e.target.value, dispatch)}
+      >
         <option value="TODOS">Todos</option>
         <option value="ABERTO">Aberto</option>
         <option value="APROVADO_GESTOR">Aprovado pelo gestor</option>

@@ -42,7 +42,9 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
           color={secondaryColor}
           colorHover={primaryColor}
           borderColor={primaryColor}
-          onClick={() => navigateToPages(dispatch, navigate, '/cadastro', '/usuarios')}
+          onClick={() =>
+            navigateToPages(dispatch, navigate, "/cadastro", "/usuarios")
+          }
         >
           Cadastrar usuário <FaUserPlus />
         </Button>
@@ -62,7 +64,7 @@ const Usuarios = ({ dispatch, nameSearch, users, isLoading, page, size }) => {
             <ListTitles columns="5">
               <strong>Email</strong>
               <strong>Nome</strong>
-              <strong>Valor total</strong>
+              <strong>Total do usuário</strong>
               <strong>Tipo</strong>
               <strong>Editar</strong>
             </ListTitles>

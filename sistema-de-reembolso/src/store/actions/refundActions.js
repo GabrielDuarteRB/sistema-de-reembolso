@@ -15,15 +15,10 @@ export const handleCreateRefund = async (dispatch, values, navigate) => {
       data.usuario.idUsuario,
     );
 
-    const clear = {
-      type: "SET_CLEAR",
-    };
-    dispatch(clear);
-    
-    const resetPages = {
+    const reset = {
       type: "SET_RESET",
     };
-    dispatch(resetPages);    
+    dispatch(reset);
 
     const upload = {
       type: "LOADING_TRUE",
@@ -71,6 +66,7 @@ export const getRefundsByUser = async (
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
+      itensPerPage: data.content.length
     };
     dispatch(getPages);
 
@@ -90,7 +86,6 @@ export const getAllRefunds = async (
   page,
   quantityPerPage,
 ) => {
-
   try {
     const { data } = await apiRefund.get(
       `/reembolso/list/status?statusReembolso=${statusRefund}&pagina=${page}&quantidadeDeRegistros=${quantityPerPage}`,
@@ -100,6 +95,7 @@ export const getAllRefunds = async (
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
+      itensPerPage: data.content.length
     };
 
     dispatch(getPages);
@@ -144,14 +140,14 @@ export const getRefundByName = async (
       refund: data.content,
     };
     dispatch(get);
-    
+
     const getPages = {
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
+      itensPerPage: data.content.length
     };
     dispatch(getPages);
-    
   } catch (error) {
     console.log(error);
   }
@@ -201,16 +197,11 @@ export const handleUpdateRefund = async (
 
     await handleAnexo(idRefund, { file: values.file }, idUser);
 
-    const clear = {
-      type: "SET_CLEAR",
-    };
-    dispatch(clear);
-
-    const resetPages = {
+    const reset = {
       type: "SET_RESET",
     };
-    dispatch(resetPages);
-   
+    dispatch(reset);
+
     const upload = {
       type: "LOADING_TRUE",
     };
@@ -241,10 +232,15 @@ export const managerAprove = async (
   page,
   size,
   statusRefund,
+  nameSearch
 ) => {
   try {
+    const loading = {
+      type: 'LOADING_TRUE'
+    }
+    dispatch(loading)
     await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`);
-    getAllRefunds(dispatch, statusRefund, page, size);
+    await chooseGet(dispatch, nameSearch, statusRefund, page, size, 'ROLE_GESTOR')
     toast.fire({
       icon: "success",
       title: `Reembolso ${action === "true" ? "Aprovado" : "Negado"}!`,
@@ -254,16 +250,22 @@ export const managerAprove = async (
   }
 };
 
-export const financierAprove = async (
+export const financierAprove = async (  
   dispatch,
   idRefund,
   action,
   page,
   size,
+  statusRefund,
+  nameSearch
 ) => {
   try {
+    const loading = {
+      type: 'LOADING_TRUE'
+    }
+    dispatch(loading)
     await apiRefund.put(`/financeiro/pagar/${idRefund}?pagar=${action}`);
-    getAllRefunds(dispatch, "APROVADO_GESTOR", page, size);
+    await chooseGet(dispatch, nameSearch, statusRefund, page, size, 'ROLE_FINANCEIRO')
     toast.fire({
       icon: "success",
       title: `Reembolso ${action === "true" ? "Pago" : "Negado"}!`,
@@ -274,44 +276,43 @@ export const financierAprove = async (
 };
 
 export const changeStatus = (value, dispatch) => {
-  const loading = {
-    type: "LOADING_TRUE",
+  const resetPages = {
+    type: "CLEAR_PAGES",
   };
-  dispatch(loading);
+  dispatch(resetPages);
+
+  const loading = {
+    type: 'LOADING_TRUE'
+  }
+  dispatch(loading)
 
   const status = {
     type: "SET_STATUS",
     statusRefund: value,
   };
   dispatch(status);
-
-  const resetPages = {
-    type: "SET_RESET",
-  };
-  dispatch(resetPages);
 };
 
 export const changeNameSearch = (value, dispatch, lastValue) => {
-
-  if(value === lastValue){
-    return 
+  if (value === lastValue) {
+    return;
   }
+
+  const resetPages = {
+    type: "CLEAR_PAGES",
+  };
+  dispatch(resetPages);
+
+  const loading = {
+    type: 'LOADING_TRUE'
+  }
+  dispatch(loading)
 
   const name = {
     type: "SET_NAME_SEARCH",
     nameSearch: value,
   };
   dispatch(name);
-
-  const loading = {
-    type: "LOADING_TRUE",
-  };
-  dispatch(loading);
-
-  const resetPages = {
-    type: "SET_RESET",
-  };
-  dispatch(resetPages);
 };
 
 export const readUrl = (anexo) => {
@@ -336,7 +337,6 @@ export const navigateToUpdate = (dispatch, navigate, idRefund) => {
   dispatch(loading);
 };
 
-
 export const validationButtonManager = (
   dispatch,
   size,
@@ -344,11 +344,17 @@ export const validationButtonManager = (
   idRefund,
   page,
   actualStatusRefund,
+  nameSearch,
+  itensPerPage,
   bool,
   status,
 ) => {
+  let actualpage = page
+  if(itensPerPage === 1 && actualpage > 0) {
+    actualpage = actualpage - 1
+  }
   statusRefund === status
-    ? managerAprove(dispatch, idRefund, bool, page, size, actualStatusRefund)
+    ? managerAprove(dispatch, idRefund, bool, actualpage, size, actualStatusRefund, nameSearch)
     : toast.fire({
         icon: "error",
         title: "Não é possivel mais modificar o status desse reembolso",
@@ -362,11 +368,17 @@ export const validationButtonFinancer = (
   idRefund,
   page,
   actualStatusRefund,
+  nameSearch,
+  itensPerPage,
   bool,
   status,
 ) => {
+  let actualpage = page
+  if(itensPerPage === 1 && actualpage > 0) {
+    actualpage = actualpage - 1
+  }
   statusRefund === status
-    ? financierAprove(dispatch, idRefund, bool, page, size, actualStatusRefund)
+    ? financierAprove(dispatch, idRefund, bool, actualpage, size, actualStatusRefund, nameSearch)
     : toast.fire({
         icon: "error",
         title: "Não é possivel mais modificar o status desse reembolso",

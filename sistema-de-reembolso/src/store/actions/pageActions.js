@@ -47,14 +47,10 @@ export const navigateToPages = (dispatch, navigate, page, actualPage) => {
     return;
   }
   navigate(page);
-  const clear = {
-    type: "SET_CLEAR",
-  };
-  dispatch(clear);
-  
-  const resetPages = {
+  const reset = {
     type: "SET_RESET",
   };
-  dispatch(resetPages);
+  dispatch(reset);
+  
 };
 
