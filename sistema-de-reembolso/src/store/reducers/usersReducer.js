@@ -4,16 +4,16 @@ const INITIAL_STATE = {
   email: "",
   foto: "",
   isLoading: true,
-  totalValue: 0
+  totalValue: 0,
 };
 
 const usersReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case "LOADING_TRUE":
-      return{
+      return {
         ...state,
-        isLoading:true
-      }
+        isLoading: true,
+      };
 
     case "GET_USER":
       return {
@@ -22,17 +22,12 @@ const usersReducer = (state = INITIAL_STATE, action) => {
         email: action.email,
         foto: action.foto,
         isLoading: false,
-        totalValue: action.totalValue
+        totalValue: action.totalValue,
       };
     case "SET_RESET":
       return {
         ...state,
         users: [],
-        // name: "",
-        // email: "",
-        // foto: "",
-        // isLoading: true,
-        // totalValue: 0,
       };
 
     case "SET_LOGOUT":
