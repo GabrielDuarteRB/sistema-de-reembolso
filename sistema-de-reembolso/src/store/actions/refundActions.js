@@ -66,7 +66,7 @@ export const getRefundsByUser = async (
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
-      itensPerPage: data.content.length
+      itensPerPage: data.content.length,
     };
     dispatch(getPages);
 
@@ -95,7 +95,7 @@ export const getAllRefunds = async (
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
-      itensPerPage: data.content.length
+      itensPerPage: data.content.length,
     };
 
     dispatch(getPages);
@@ -145,7 +145,7 @@ export const getRefundByName = async (
       type: "GET_PAGES",
       page: data.page,
       totalPages: data.totalPages,
-      itensPerPage: data.content.length
+      itensPerPage: data.content.length,
     };
     dispatch(getPages);
   } catch (error) {
@@ -232,15 +232,22 @@ export const managerAprove = async (
   page,
   size,
   statusRefund,
-  nameSearch
+  nameSearch,
 ) => {
   try {
     const loading = {
-      type: 'LOADING_TRUE'
-    }
-    dispatch(loading)
+      type: "LOADING_TRUE",
+    };
+    dispatch(loading);
     await apiRefund.put(`/gestor/aprovar/${idRefund}?aprovado=${action}`);
-    await chooseGet(dispatch, nameSearch, statusRefund, page, size, 'ROLE_GESTOR')
+    await chooseGet(
+      dispatch,
+      nameSearch,
+      statusRefund,
+      page,
+      size,
+      "ROLE_GESTOR",
+    );
     toast.fire({
       icon: "success",
       title: `Reembolso ${action === "true" ? "Aprovado" : "Negado"}!`,
@@ -250,22 +257,29 @@ export const managerAprove = async (
   }
 };
 
-export const financierAprove = async (  
+export const financierAprove = async (
   dispatch,
   idRefund,
   action,
   page,
   size,
   statusRefund,
-  nameSearch
+  nameSearch,
 ) => {
   try {
     const loading = {
-      type: 'LOADING_TRUE'
-    }
-    dispatch(loading)
+      type: "LOADING_TRUE",
+    };
+    dispatch(loading);
     await apiRefund.put(`/financeiro/pagar/${idRefund}?pagar=${action}`);
-    await chooseGet(dispatch, nameSearch, statusRefund, page, size, 'ROLE_FINANCEIRO')
+    await chooseGet(
+      dispatch,
+      nameSearch,
+      statusRefund,
+      page,
+      size,
+      "ROLE_FINANCEIRO",
+    );
     toast.fire({
       icon: "success",
       title: `Reembolso ${action === "true" ? "Pago" : "Negado"}!`,
@@ -277,14 +291,14 @@ export const financierAprove = async (
 
 export const changeStatus = (value, dispatch) => {
   const resetPages = {
-    type: "CLEAR_PAGES",
+    type: "SET_PAGES",
   };
   dispatch(resetPages);
 
   const loading = {
-    type: 'LOADING_TRUE'
-  }
-  dispatch(loading)
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
 
   const status = {
     type: "SET_STATUS",
@@ -299,14 +313,14 @@ export const changeNameSearch = (value, dispatch, lastValue) => {
   }
 
   const resetPages = {
-    type: "CLEAR_PAGES",
+    type: "SET_CLEAR",
   };
   dispatch(resetPages);
 
   const loading = {
-    type: 'LOADING_TRUE'
-  }
-  dispatch(loading)
+    type: "LOADING_TRUE",
+  };
+  dispatch(loading);
 
   const name = {
     type: "SET_NAME_SEARCH",
@@ -349,12 +363,20 @@ export const validationButtonManager = (
   bool,
   status,
 ) => {
-  let actualpage = page
-  if(itensPerPage === 1 && actualpage > 0) {
-    actualpage = actualpage - 1
+  let actualpage = page;
+  if (itensPerPage === 1 && actualpage > 0) {
+    actualpage = actualpage - 1;
   }
   statusRefund === status
-    ? managerAprove(dispatch, idRefund, bool, actualpage, size, actualStatusRefund, nameSearch)
+    ? managerAprove(
+        dispatch,
+        idRefund,
+        bool,
+        actualpage,
+        size,
+        actualStatusRefund,
+        nameSearch,
+      )
     : toast.fire({
         icon: "error",
         title: "Não é possivel mais modificar o status desse reembolso",
@@ -373,12 +395,20 @@ export const validationButtonFinancer = (
   bool,
   status,
 ) => {
-  let actualpage = page
-  if(itensPerPage === 1 && actualpage > 0) {
-    actualpage = actualpage - 1
+  let actualpage = page;
+  if (itensPerPage === 1 && actualpage > 0) {
+    actualpage = actualpage - 1;
   }
   statusRefund === status
-    ? financierAprove(dispatch, idRefund, bool, actualpage, size, actualStatusRefund, nameSearch)
+    ? financierAprove(
+        dispatch,
+        idRefund,
+        bool,
+        actualpage,
+        size,
+        actualStatusRefund,
+        nameSearch,
+      )
     : toast.fire({
         icon: "error",
         title: "Não é possivel mais modificar o status desse reembolso",

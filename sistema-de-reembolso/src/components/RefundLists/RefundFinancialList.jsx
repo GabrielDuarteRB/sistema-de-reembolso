@@ -19,12 +19,11 @@ const RefundFinancialList = ({
   size,
   refund,
   nameSearch,
-  itensPerPage
+  itensPerPage,
 }) => {
   if (refund.length === 0) {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
-
   return (
     <List>
       {refund.map((reembolso) => (
@@ -46,7 +45,7 @@ const RefundFinancialList = ({
           </ItemInfo>
           <ItemInfo>
             <strong>Data: </strong>
-            {moment(reembolso.data).format("DD/MM/YYYY")}
+            {moment(reembolso.dataEntrada).format("DD/MM/YYYY")}
           </ItemInfo>
           <ItemInfo>
             <strong>Valor: </strong>

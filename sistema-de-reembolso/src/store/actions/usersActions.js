@@ -9,7 +9,7 @@ export const getUser = async (dispatch) => {
       name: data.nome,
       email: data.email,
       foto: data.fotoDTO && data.fotoDTO.data,
-      totalValue: data.valorTotal
+      totalValue: data.valorTotal,
     };
     dispatch(user);
   } catch (error) {
@@ -20,7 +20,7 @@ export const getUser = async (dispatch) => {
 export const getAllUsers = async (dispatch, page, size) => {
   try {
     const { data } = await apiRefund.get(
-      `/usuario/listar?pagina=${page}&quantidadeDeRegistros=${size}`
+      `/usuario/listar?pagina=${page}&quantidadeDeRegistros=${size}`,
     );
 
     const users = {
@@ -43,7 +43,9 @@ export const getAllUsers = async (dispatch, page, size) => {
 
 export const getUsersByName = async (dispatch, name, page, size) => {
   try {
-    const {data} = await apiRefund.get(`/usuario/listar/nome?nome=${name}&pagina=${page}&quantidadeDeRegistros=${size}`)
+    const { data } = await apiRefund.get(
+      `/usuario/listar/nome?nome=${name}&pagina=${page}&quantidadeDeRegistros=${size}`,
+    );
 
     const users = {
       type: "GET_ALL_USERS",
@@ -61,4 +63,4 @@ export const getUsersByName = async (dispatch, name, page, size) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
