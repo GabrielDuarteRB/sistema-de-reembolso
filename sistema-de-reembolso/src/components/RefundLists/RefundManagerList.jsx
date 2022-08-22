@@ -38,7 +38,7 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund, nameSea
           </ItemInfo>
           <ItemInfo>
             <strong>Data: </strong>
-            {moment(reembolso.data).format("DD/MM/YYYY")}
+            {moment(reembolso.dataEntrada).format("DD/MM/YYYY")}
           </ItemInfo>
           <ItemInfo>
             <strong>Valor: </strong>
