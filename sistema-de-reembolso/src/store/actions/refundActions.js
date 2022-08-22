@@ -291,7 +291,7 @@ export const financierAprove = async (
 
 export const changeStatus = (value, dispatch) => {
   const resetPages = {
-    type: "SET_PAGES",
+    type: "SET_RESET",
   };
   dispatch(resetPages);
 
