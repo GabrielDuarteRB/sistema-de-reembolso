@@ -12,7 +12,7 @@ import {
 import { NotRegister } from "../NotRegister/NotRegister";
 import { convertCurrency } from "../../utils/regex";
 
-const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
+const RefundManagerList = ({ dispatch, statusRefund, page, size, refund, nameSearch, itensPerPage }) => {
   if (refund.length === 0) {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
@@ -83,6 +83,8 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
                   reembolso.idReembolso,
                   page,
                   statusRefund,
+                  nameSearch,
+                  itensPerPage,
                   "true",
                   "aberto",
                 )
@@ -107,6 +109,8 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
                   reembolso.idReembolso,
                   page,
                   statusRefund,
+                  nameSearch,
+                  itensPerPage,
                   "false",
                   "aberto",
                 )
@@ -124,8 +128,10 @@ const RefundManagerList = ({ dispatch, statusRefund, page, size, refund }) => {
 const mapStateToProps = (state) => ({
   refund: state.refundReducer.refund,
   statusRefund: state.refundReducer.statusRefund,
+  nameSearch: state.refundReducer.nameSearch,
   page: state.pageReducer.page,
   size: state.pageReducer.size,
+  itensPerPage: state.pageReducer.itensPerPage,
 });
 
 export default connect(mapStateToProps)(RefundManagerList);

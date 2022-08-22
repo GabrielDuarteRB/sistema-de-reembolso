@@ -24,10 +24,6 @@ export const modifyPage = (dispatch, page, action) => {
 };
 
 export const modifyItensPerPage = (e, dispatch) => {
-  const resetPages = {
-    type: "SET_RESET",
-  };
-  dispatch(resetPages);
 
   const itensPerPage = {
     type: "MODIFY_ITENS_PER_PAGE",
