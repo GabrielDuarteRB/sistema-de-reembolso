@@ -27,6 +27,7 @@ const Financier = ({
 }) => {
   useEffect(() => {
     getUser(dispatch);
+    dispatch({ type: "SET_STATUS", statusRefund: "APROVADO_GESTOR" });
   }, []);
 
   useEffect(() => {
@@ -43,11 +44,10 @@ const Financier = ({
               <h2>
                 Reembolsos ({statusRefund.toLowerCase().replace("_", " - ")})
               </h2>
-
               <Pager />
             </div>
             <ListFilters justify="end">
-              <Status />
+              <Status defaultValue={"APROVADO_GESTOR"} />
               <Search />
             </ListFilters>
           </ListHeader>

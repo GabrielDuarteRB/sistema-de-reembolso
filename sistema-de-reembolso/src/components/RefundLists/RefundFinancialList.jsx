@@ -19,12 +19,11 @@ const RefundFinancialList = ({
   size,
   refund,
   nameSearch,
-  itensPerPage
+  itensPerPage,
 }) => {
   if (refund.length === 0) {
     return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
   }
-
   return (
     <List>
       {refund.map((reembolso) => (

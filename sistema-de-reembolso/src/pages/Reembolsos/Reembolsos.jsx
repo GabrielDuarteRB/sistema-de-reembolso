@@ -63,7 +63,7 @@ const Reembolsos = ({
               <Pager />
             </div>
             <ListFilters justify="end">
-              <Status />
+              <Status defaultValue={"ABERTO"} />
               {role === "ROLE_ADMIN" ? (
                 <Search />
               ) : (

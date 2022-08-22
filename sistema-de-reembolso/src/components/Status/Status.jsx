@@ -2,13 +2,14 @@ import { connect } from "react-redux";
 import { changeStatus } from "../../store/actions/refundActions";
 import { RefundSituation } from "./Status.styled";
 
-const Status = ({ dispatch, isLoading }) => {
+const Status = ({ dispatch, isLoading, defaultValue }) => {
   return (
     <div>
       <span>Filtrar por tipo</span>
       <RefundSituation
         disabled={isLoading}
         onChange={(e) => changeStatus(e.target.value, dispatch)}
+        defaultValue={defaultValue}
       >
         <option value="TODOS">Todos</option>
         <option value="ABERTO">Aberto</option>

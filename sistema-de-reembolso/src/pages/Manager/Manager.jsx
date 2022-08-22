@@ -47,7 +47,7 @@ const Manager = ({
               <Pager />
             </div>
             <ListFilters justify="end">
-              <Status />
+              <Status defaultValue={"ABERTO"} />
               <Search />
             </ListFilters>
           </ListHeader>
