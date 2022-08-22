@@ -28,6 +28,7 @@ const Manager = ({
 }) => {
   useEffect(() => {
     getUser(dispatch);
+    dispatch({ type: "SET_STATUS", statusRefund: "ABERTO" });
   }, []);
 
   useEffect(() => {

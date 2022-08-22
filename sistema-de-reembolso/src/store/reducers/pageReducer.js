@@ -23,6 +23,7 @@ const pageReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         size: action.size,
+        page: 0,
       };
     case "SET_RESET":
       return {

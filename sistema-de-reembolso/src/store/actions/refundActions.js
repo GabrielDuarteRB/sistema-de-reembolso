@@ -291,7 +291,7 @@ export const financierAprove = async (
 
 export const changeStatus = (value, dispatch) => {
   const resetPages = {
-    type: "CLEAR_PAGES",
+    type: "SET_PAGES",
   };
   dispatch(resetPages);
 
@@ -313,7 +313,7 @@ export const changeNameSearch = (value, dispatch, lastValue) => {
   }
 
   const resetPages = {
-    type: "CLEAR_PAGES",
+    type: "SET_CLEAR",
   };
   dispatch(resetPages);
 
