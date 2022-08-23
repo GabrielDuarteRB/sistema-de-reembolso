@@ -177,8 +177,8 @@ export const handleDeleteRefund = async (
       title: "Reembolso deletado",
     });
 
-    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
     getUser(dispatch);
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   } catch (error) {
     console.log(error);
   }
