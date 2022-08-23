@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Container } from "../../components/Container/Container";
 import Header from "../../components/Header/Header";
@@ -25,12 +25,20 @@ const Financier = ({
   size,
   role,
 }) => {
+
+  const [startPage, setStartPage] = useState(true);
+
   useEffect(() => {
     getUser(dispatch);
-    dispatch({ type: "SET_STATUS", statusRefund: "APROVADO_GESTOR" });
   }, []);
 
   useEffect(() => {
+    if(startPage) {
+      chooseGet(dispatch, nameSearch, 'APROVADO_GESTOR', page, size, role);
+      dispatch({ type: "SET_STATUS", statusRefund: "APROVADO_GESTOR" });
+      setStartPage(false);
+      return;
+    };
     chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   }, [page, size, nameSearch, statusRefund]);
 
