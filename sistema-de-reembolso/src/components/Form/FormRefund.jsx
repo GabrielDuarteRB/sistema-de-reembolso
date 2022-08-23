@@ -43,7 +43,6 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
     }
   }, []);
 
-
   useEffect(() => {
     refundById.anexoDTO && setSelectedFile(refundById.anexoDTO.nome);
   }, [refundById.anexoDTO]);
@@ -79,7 +78,13 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
             };
 
             idRefund
-              ? handleUpdateRefund(dispatch, newValues, idRefund, refundById.usuario.idUsuario, navigate)
+              ? handleUpdateRefund(
+                  dispatch,
+                  newValues,
+                  idRefund,
+                  refundById.usuario.idUsuario,
+                  navigate,
+                )
               : handleCreateRefund(dispatch, newValues, navigate);
           }}
         >
@@ -134,6 +139,7 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
 
                     <button
                       type="button"
+                      disabled={disabled}
                       onClick={() => handleFile("", setFieldValue)}
                     >
                       <FaTrash />
@@ -153,6 +159,7 @@ const FormRefund = ({ dispatch, disabled, refundById, isLoading }) => {
                 color={secondaryColor}
                 colorHover={primaryColor}
                 borderColor={primaryColor}
+                disabled={disabled}
               >
                 {idRefund ? "Atualizar" : "Solicitar"} reembolso
               </Button>

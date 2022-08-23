@@ -130,7 +130,9 @@ const FormRegister = ({ typePassword, disabled, dispatch, isLogged }) => {
 
             {isLogged ? (
               <FormItem>
-                <label htmlFor="tipoUser">Tipo do usuário</label>
+                <label htmlFor="tipoUser" disabled={disabled}>
+                  Tipo do usuário
+                </label>
                 <Field component="select" name="tipoUser" multiple={false}>
                   <option value="COLABORADOR">Colaborador</option>
                   <option value="GESTOR">Gestor</option>
@@ -187,7 +189,8 @@ const FormRegister = ({ typePassword, disabled, dispatch, isLogged }) => {
       </Formik>
 
       <Link to="/usuarios">
-        <FaRegArrowAltCircleLeft /> Voltar para {isLogged ? 'a tela principal' : 'o login'}
+        <FaRegArrowAltCircleLeft /> Voltar para{" "}
+        {isLogged ? "a tela principal" : "o login"}
       </Link>
     </CardForm>
   );
