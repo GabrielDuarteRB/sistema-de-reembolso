@@ -2,6 +2,7 @@ import { apiRefund } from "../../api";
 import { toast } from "../../components/Toaster/Toaster";
 import { chooseGet } from "../../utils/validationGetRefund";
 import { handleForm } from "./formActions";
+import { getUser } from "./usersActions";
 
 export const handleCreateRefund = async (dispatch, values, navigate) => {
   try {
@@ -177,6 +178,7 @@ export const handleDeleteRefund = async (
     });
 
     chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
+    getUser(dispatch);
   } catch (error) {
     console.log(error);
   }
