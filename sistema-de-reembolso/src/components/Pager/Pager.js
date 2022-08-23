@@ -18,8 +18,8 @@ const Pager = ({ dispatch, refund, users, size, page, totalPages, isLoadingRefun
         <span>Itens por página</span>
         <select
           onChange={(e) => modifyItensPerPage(e, dispatch)}
-          name="itens"
-          defaultValue={size}
+          name="itens"  
+          value={size}
           disabled={isLoadingRefund && isLoadingUsers}
         >
           <option value="5">5</option>
