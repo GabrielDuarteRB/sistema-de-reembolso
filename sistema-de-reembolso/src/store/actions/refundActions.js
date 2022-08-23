@@ -177,8 +177,8 @@ export const handleDeleteRefund = async (
       title: "Reembolso deletado",
     });
 
-    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
     getUser(dispatch);
+    chooseGet(dispatch, nameSearch, statusRefund, page, size, role);
   } catch (error) {
     console.log(error);
   }
@@ -293,7 +293,7 @@ export const financierAprove = async (
 
 export const changeStatus = (value, dispatch) => {
   const resetPages = {
-    type: "SET_RESET",
+    type: "SET_CLEAR",
   };
   dispatch(resetPages);
 
