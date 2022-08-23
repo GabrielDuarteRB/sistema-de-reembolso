@@ -9,7 +9,7 @@ import { confirmUpdateModal } from "../Toaster/Toaster";
 
 const UsersList = ({ dispatch, users, nameSearch, page, size }) => {
   if (users.length === 0) {
-    return <NotRegister>Nenhum reembolso encontrado</NotRegister>;
+    return <NotRegister>Nenhum usuário encontrado</NotRegister>;
   }
 
   return (
