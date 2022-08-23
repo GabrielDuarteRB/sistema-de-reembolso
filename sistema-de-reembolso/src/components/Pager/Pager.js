@@ -14,12 +14,11 @@ const Pager = ({ dispatch, refund, users, size, page, totalPages, isLoadingRefun
 
   return (
     <PaginationContainer>
-      {console.log(size)}
       <div>
         <span>Itens por página</span>
         <select
           onChange={(e) => modifyItensPerPage(e, dispatch)}
-          name="itens"
+          name="itens"  
           value={size}
           disabled={isLoadingRefund && isLoadingUsers}
         >
