@@ -48,7 +48,7 @@ export const handleSignUp = async (dispatch, values, navigate, byAdmin) => {
       await handleRole(data.idUsuario, values.tipoUser);
       navigate("/usuarios");
       toast.fire({
-        icon: "sucess",
+        icon: "success",
         title: "Usuario cadastrado",
       });
       return;
@@ -67,6 +67,12 @@ export const handleSignUp = async (dispatch, values, navigate, byAdmin) => {
       role: data.role,
     };
     dispatch(signUp);
+
+    toast.fire({
+      icon: "success",
+      title: "Cadastrado com sucesso!",
+    });
+
     navigate("/reembolsos");
   } catch (error) {
     handleForm(dispatch, "enable");

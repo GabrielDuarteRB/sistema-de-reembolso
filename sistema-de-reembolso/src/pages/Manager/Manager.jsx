@@ -28,7 +28,6 @@ const Manager = ({
 }) => {
   useEffect(() => {
     getUser(dispatch);
-    dispatch({ type: "SET_STATUS", statusRefund: "ABERTO" });
   }, []);
 
   useEffect(() => {
@@ -48,7 +47,7 @@ const Manager = ({
               <Pager />
             </div>
             <ListFilters justify="end">
-              <Status defaultValue={"ABERTO"} />
+              <Status defaultValue={"TODOS"} />
               <Search />
             </ListFilters>
           </ListHeader>
